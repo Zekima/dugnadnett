@@ -1,0 +1,86 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider        = "prisma-client-js"
+}
+
+model Account {
+  id                 String  @id @default(cuid())
+  userId             String
+  type               String
+  provider           String
+  providerAccountId  String
+  refresh_token      String?  @db.Text
+  access_token       String?  @db.Text
+  expires_at         Int?
+  token_type         String?
+  scope              String?
+  id_token           String?  @db.Text
+  session_state      String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime?
+  image         String?
+  accounts      Account[]
+  Job Job[] @relation ("Userjob")
+  befriended Friendship[] @relation("userfriend")
+  friends Friendship[] @relation("friendusers")
+  reveiws Review[]
+}
+
+model Job {
+    id Int @id @default(autoincrement())
+    ownerId String 
+    jobName String
+    jobType String 
+    owner User @relation(fields: [ownerId], references: [id], name: "Userjob")
+    participants Participants[]
+    categories Category[] @relation()
+    reviews Review[] 
+}
+
+model Participants { 
+    id Int @id @default(autoincrement())
+    userID String
+    jobId Int 
+    status String
+    job Job @relation(fields: [jobId], references: [id])
+}
+
+model Category {
+    id Int @id @default(autoincrement())
+    categoryName String
+    JobId Int
+    Job Job @relation(fields: [JobId], references: id)
+}
+
+model Friendship {
+    id Int @id @default(autoincrement())
+    userId String
+    friendId String
+    user User @relation("userfriend", fields: [userId], references: id)
+    friend User @relation("friendusers",fields: [friendId] , references: id)
+    createdAt DateTime @default(now())
+}
+
+model Review {
+    id Int @id @default(autoincrement())
+    writerId String
+    jobId Int
+    title String
+    text String
+    rating Int
+    writer User @relation(fields: [writerId], references: id)
+    job Job @relation(fields: [jobId], references: id)
+}
