@@ -1,6 +1,5 @@
 import "./hero-section.css";
 import Image from "next/image";
-import { FaPeopleCarry, FaSortAmountUp, FaStar } from "react-icons/fa";
 
 const HeroSection = () => {
   return (
@@ -24,7 +23,7 @@ const HeroSection = () => {
       <Image
         src="/hero.webp"
         width={1280}
-        height={426}
+        height={362}
         alt="dugnad"
         className="py-8"
         priority
