@@ -4,7 +4,7 @@ import { FaPeopleCarry, FaSortAmountUp, FaStar } from "react-icons/fa";
 
 const HeroSection = () => {
   return (
-    <div className="max-w-[1300px] m-auto py-10 text-center">
+    <div className="max-w-[1280px] m-auto py-10 text-center">
       <div className="eclipse-background bg-cover sm:bg-auto">
         <h1 className="text-6xl font-bold mb-3 sm:pt-[100px] pt-[10px]">
           Bli med i fellesskapet, skap en forskjell.
@@ -23,27 +23,14 @@ const HeroSection = () => {
       </div>
       <Image
         src="/hero.webp"
-        width={1600}
-        height={50}
+        width={1280}
+        height={426}
         alt="dugnad"
         className="py-8"
         priority
       />
 
-      <div className="features-grid py-8">
-        <div className="feature bg-green-100">
-          <FaPeopleCarry size="45" color="black" className="m-auto" />
-          <p className="text-green-900">Samarbeidsverktøy for enkel organisering</p>
-        </div>
-        <div className="feature bg-green-100">
-          <FaSortAmountUp size="45" color="black" className="m-auto" />
-          <p className="text-green-900">Samarbeidsverktøy for enkel organisering</p>
-        </div>
-        <div className="feature bg-green-100">
-          <FaStar size="45" color="black" className="m-auto" />
-          <p className="text-green-900">Samarbeidsverktøy for enkel organisering</p>
-        </div>
-      </div>
+
     </div>
   );
 };

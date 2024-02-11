@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 const Footer = () => {
   return (
     <div className="p-10 mt-10 bg-green-400 flex">
@@ -11,7 +13,7 @@ const Footer = () => {
         </div>
         <div>
           <h1 className="font-bold text-md mb-4">Ressuser</h1>
-          <p>Blogg</p>
+          <Link href="https://blogg.dugnadnett.no"><p>Blogg</p></Link>
           <p>Persornvernregler</p>
           <p>Brukervilkår</p>
         </div>
