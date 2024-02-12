@@ -34,8 +34,8 @@ export default function CTASection() {
       <div className="bg-gray-200 px-5 py-10 mt-[120px] text-center">
           <h1 className="font-medium text-2xl mt-5">Jeg ønsker å</h1>
           <div className="gap-3 flex justify-center my-5">
-            <button className="bg-green-700 py-20 w-1/3 hover:bg-green-600 text-white font-bold text-lg">Organisere En Dugnad</button>
-            <button className="bg-green-700 py-20 w-1/3 hover:bg-green-600 text-white font-bold text-lg">Delta i En Dugnad</button>
+            <button className="bg-black py-20 w-1/3 hover:bg-green-900 text-white font-bold text-lg">Organisere En Dugnad</button>
+            <button className="bg-black py-20 w-1/3 hover:bg-green-900 text-white font-bold text-lg">Delta i En Dugnad</button>
           </div>
         </div>
     </div>
