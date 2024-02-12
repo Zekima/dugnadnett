@@ -1,5 +1,6 @@
 import "./hero-section.css";
 import Image from "next/image";
+import Link from "next/link";
 
 const HeroSection = () => {
   return (
@@ -15,9 +16,9 @@ const HeroSection = () => {
           <button className="px-4 py-3 bg-green-500 font-medium rounded-lg text-white hover:bg-green-600">
             Utforsk Dugnader →
           </button>
-          <button className="px-4 py-3 border-2 font-semibold border-green-500 rounded-lg text-green-500 hover:bg-green-100 hover:text-green-900">
+          <Link href="/auth/register"><button className="px-4 py-3 border-2 font-semibold border-green-500 rounded-lg text-green-500 hover:bg-green-100 hover:text-green-900">
             Registrer Deg for å Delta
-          </button>
+          </button></Link>
         </div>
       </div>
       <Image
