@@ -73,7 +73,7 @@ const RegisterForm = () => {
                       type="name"
                     />
                   </FormControl>
-                  <FormMessage />
+                  <FormMessage className="text-red-500" />
                 </FormItem>
               )}
             />
@@ -91,7 +91,7 @@ const RegisterForm = () => {
                       type="email"
                     />
                   </FormControl>
-                  <FormMessage />
+                  <FormMessage className="text-red-500" />
                 </FormItem>
               )}
             />
@@ -109,12 +109,11 @@ const RegisterForm = () => {
                       type="password"
                     />
                   </FormControl>
-                  <FormMessage />
+                  <FormMessage className="text-red-500" />
                 </FormItem>
               )}
             />
           </div>
-          <FormError message={error} />
           <Button type="submit" disabled={isPending} className="w-full mt-2">
             Registrer
           </Button>

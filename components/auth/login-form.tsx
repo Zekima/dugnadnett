@@ -78,7 +78,7 @@ const LoginForm = () => {
                       type="email"
                     />
                   </FormControl>
-                  <FormMessage />
+                  <FormMessage className="text-red-500"/>
                 </FormItem>
               )}
             />
@@ -96,7 +96,7 @@ const LoginForm = () => {
                       type="password"
                     />
                   </FormControl>
-                  <FormMessage />
+                  <FormMessage className="text-red-500" />
                 </FormItem>
               )}
             />

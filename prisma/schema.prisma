@@ -33,25 +33,28 @@ enum Status {
 }
 
 model User {
-  id            String    @id @default(cuid())
-  name          String?
-  email         String?   @unique
-  emailVerified DateTime?
-  image         String?
-  password      String?
-  accounts      Account[]
-  reviews       Review[]
+  id             String          @id @default(cuid())
+  name           String?
+  email          String?         @unique
+  emailVerified  DateTime?
+  image          String?
+  password       String?
+  accounts       Account[]
+  reviews        Review[]
   participations Participation[]
-  dugnads    Dugnad[] @relation("UserDugnad")
-  friends    User[]   @relation("UserFriends")
-  befriended User[]   @relation("UserFriends")
+  dugnads        Dugnad[]        @relation("UserDugnad")
+  friends        User[]          @relation("UserFriends")
+  befriended     User[]          @relation("UserFriends")
 }
 
 model Dugnad {
-  id           Int            @id @default(autoincrement())
+  id           Int             @id @default(autoincrement())
   ownerId      String
-  name         String
-  type         String
+  image        String?
+  title        String
+  area         String
+  date         DateTime
+  info         String
   participants Participation[]
   categories   Category[]
   reviews      Review[]
@@ -65,13 +68,13 @@ model Participation {
   dugnadId Int
   status   Status
 
-  user User @relation(fields: [userId], references: [id])
+  user   User   @relation(fields: [userId], references: [id])
   dugnad Dugnad @relation(fields: [dugnadId], references: [id])
 }
 
 model Category {
   id      Int      @id @default(autoincrement())
-  name    String
+  name    String @unique
   dugnads Dugnad[]
 }
 

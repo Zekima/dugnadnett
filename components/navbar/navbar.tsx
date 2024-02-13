@@ -35,7 +35,7 @@ const NavBar = () => {
           <div className="flex gap-4">
           <Link href="/utforsk"><p>Utforsk</p></Link>
           <Link href="/minside"><p>Min Side</p></Link>
-          <Link href="/nydugnad"><p>Ny Dugnad</p></Link>
+          <Link href="/dugnad/opprett"><p>Ny Dugnad</p></Link>
           </div>
             <div className="flex items-center gap-3.5">
               <IoChatbubbleOutline size={26} />

@@ -11,12 +11,51 @@ export const LoginSchema = z.object({
 
 export const RegisterSchema = z.object({
   email: z.string().email({
-    message: "Email er obligatorisk",
+    message: "Email er påkrevd",
   }),
   name: z.string().min(1, {
-    message: "Navn er obligatorisk",
+    message: "Navn er påkrevd",
   }),
   password: z.string().min(6, {
     message: "Minimum 6 bokstaver",
   }),
+});
+
+const MAX_FILE_SIZE = 450000;
+const ACCEPTED_IMAGE_TYPES = [
+  "image/jpeg",
+  "image/jpg",
+  "image/png",
+  "image/webp",
+];
+
+export const DugnadSchema = z.object({
+  title: z.string().min(1, "Tittel er påkrevd"),
+  area: z.string().min(1, "Område er påkrevd"),
+  date: z.string().min(1, "Dato er påkrevd"),
+  info: z.string().min(1, "Informasjon er påkrevd"),
+  categories: z.array(z.string()).min(1, "Velg minst en kategori"),
+  image: z.unknown().optional().refine((files: any) => {
+    let allowedImage = true;
+
+    if (!files || !Array.isArray(files)) {
+      return true;
+    }
+
+    for (let i = 0; i < files.length; i++) {
+      if (
+        // @ts-expect-error
+        files.item(i)!.size > MAX_FILE_SIZE ||
+        // @ts-expect-error
+        !ACCEPTED_IMAGE_TYPES.includes(files.item(i)!.type)
+      ) {
+        allowedImage = false
+        break
+      }
+      
+    }
+
+    return allowedImage;
+  }, "Maks filstørelse er 4.5MB"),
+
 });
