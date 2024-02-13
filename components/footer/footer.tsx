@@ -7,7 +7,6 @@ const Footer = () => {
         <div>
           <h1 className="font-bold text-md mb-4">Navigasjon</h1>
           <p>Om oss</p>
-          <p>Slik Fungerer Det</p>
           <p>FAQ</p>
           <p>Kontakt Oss</p>
         </div>

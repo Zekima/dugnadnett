@@ -5,7 +5,7 @@ import Filtrer from '@/components/utforsk/filtrer'
 
 const UtforskPage = () => {
   return (
-    <div className=" m-auto max-w-[1280px] flex flex-col sm:flex-row">
+    <div className="h-screen m-auto max-w-[1280px] flex flex-col sm:flex-row">
       <div className="w-full bg-gray-200 p-4 h-full md:w-1/4">
         <Filtrer/>
       </div>
