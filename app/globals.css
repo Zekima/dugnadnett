@@ -4,7 +4,7 @@
  
 @layer base {
   :root {
-    --background: 0 0% 100%;
+    --background: #f9f9f9;
     --foreground: 0 0% 3.9%;
 
     --card: 0 0% 100%;
@@ -38,6 +38,10 @@
 }
 button {
   transition: all 0.1s linear;
+}
+
+:root {
+  background-color: #f9f9f9
 }
  
 @layer base {
