@@ -21,10 +21,12 @@ export default async function RootLayout({
   const session = await auth();
   return (
     <html lang="en">
-      <body className={inter.className + " w-screen overflow-x-hidden"}>
+      <body className={inter.className + " w-screen overflow-x-hidden flex flex-col min-h-screen"}>
         <SessionProvider session={session}>
           <NavBar />
+          <div className="grow">
           {children}
+          </div>
           <Footer />
         </SessionProvider>
       </body>
