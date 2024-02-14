@@ -3,6 +3,7 @@
 import { signOut, useSession } from "next-auth/react";
 import UserImage from "@/components/user-image";
 import Link from "next/link";
+import { Bell, MessageCircle, Menu } from "lucide-react";
 import { MdLogout, MdSettings, MdAccountCircle } from "react-icons/md";
 
 import {
@@ -14,33 +15,78 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
+import React, { useState, useEffect } from "react";
+
+import { usePathname } from "next/navigation";
+
 import { IoIosArrowDropdownCircle } from "react-icons/io";
-import { IoNotificationsOutline } from "react-icons/io5";
-import { IoChatbubbleOutline } from "react-icons/io5";
+import { useRouter } from "next/router";
+import { X } from "lucide-react";
 
 const NavBar = () => {
+  const pathname = usePathname();
   const session = useSession();
   const user = session.data?.user;
 
   const userProfileHref = `/profil/${user?.id}`;
 
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  useEffect(() => {
+    setIsMenuOpen(false);
+  }, [pathname]);
+
   return (
     <div className="border-b-2 border-gray">
       <div className="flex py-5 h-16 px-5 2xl:px-0 justify-between m-auto max-w-[1280px] items-center">
-        <Link href="/">
-          <h1 className="font-bold text-xl">DugnadNett</h1>
-        </Link>
         {user ? (
           <>
-          <div className="flex gap-4">
-          <Link href="/utforsk"><p>Utforsk</p></Link>
-          <Link href="/minside"><p>Min Side</p></Link>
-          <Link href="/dugnad/opprett"><p>Ny Dugnad</p></Link>
-          </div>
-            <div className="flex items-center gap-3.5">
-              <IoChatbubbleOutline size={26} />
+            <Link href="/" className="hidden lg:block">
+              <h1 className="font-bold text-xl">DugnadNett</h1>
+            </Link>
+            <button
+              className="lg:hidden"
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+            >
+              <Menu size={26} />
+            </button>
+            <div className="flex gap-4 hidden lg:flex">
+              <Link href="/utforsk">
+                <p>Utforsk</p>
+              </Link>
+              <Link href="/minside">
+                <p>Min Side</p>
+              </Link>
+              <Link href="/dugnad/opprett">
+                <p>Ny Dugnad</p>
+              </Link>
+            </div>
 
-              <IoNotificationsOutline size={26} />
+            <div
+              className={`top-0 left-0 lg:hidden gap-3 absolute h-full flex-col p-3 text-xl bg-green-200 w-2/6 z-10 ${
+                isMenuOpen ? "flex" : "hidden"
+              }`}
+            >
+              <X
+                size={26}
+                onClick={() => setIsMenuOpen(!isMenuOpen)}
+                className="right-3 absolute cursor-pointer"
+              />
+              <div className="my-4"></div>
+              <Link href="/utforsk">
+                <p>Utforsk</p>
+              </Link>
+              <Link href="/minside">
+                <p>Min Side</p>
+              </Link>
+              <Link href="/dugnad/opprett">
+                <p>Ny Dugnad</p>
+              </Link>
+            </div>
+            <div className="flex items-center gap-3.5">
+              <MessageCircle size={26} />
+
+              <Bell size={26} />
 
               <DropdownMenu>
                 <DropdownMenuTrigger className="flex items-center select-none relative">
@@ -82,7 +128,12 @@ const NavBar = () => {
             </div>
           </>
         ) : (
-          <Link href="/auth/login">Login/Register</Link>
+          <>
+            <Link href="/">
+              <h1 className="font-bold text-xl">DugnadNett</h1>
+            </Link>
+            <Link href="/auth/login">Login/Register</Link>
+          </>
         )}
       </div>
     </div>
