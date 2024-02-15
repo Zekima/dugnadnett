@@ -3,6 +3,11 @@ export type Category = {
   name: string;
 };
 
+export type User = {
+  id: string;
+  name: string;
+};
+
 export interface Dugnad {
   id: number;
   ownerId: string;
