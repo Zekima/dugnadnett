@@ -6,7 +6,10 @@ import { Badge } from "@/components/ui/badge";
 
 type DugnadType = z.infer<typeof DugnadSchema>;
 
-const UtforskCard = ({ dugnad }: { dugnad: DugnadType }) => {
+const UtforskCard = ({ dugnad }: { dugnad?: DugnadType }) => {
+
+  if (!dugnad) return
+
   return (
     <div className="border-2 border-gray-300 rounded-md cursor-pointer">
       <div className="h-40 relative select-none">
@@ -28,7 +31,7 @@ const UtforskCard = ({ dugnad }: { dugnad: DugnadType }) => {
         <p className="font-semibold text-sm mb-2">{dugnad.title}</p>
 
         <div className="gap-1 flex">
-          {dugnad && dugnad.categories.map((category) => (
+          {dugnad.categories.map((category) => (
             //@ts-ignore
             <Badge key={category.id}>{category.name}</Badge>
           ))}
