@@ -18,8 +18,8 @@ export const getFilteredDugnads = async (
   categories: string[]
 ) => {
   const sortBy = {
-    publisert: "asc",
-    eldste: "desc",
+    publisert: "desc",
+    eldste: "asc",
   };
 
   const offset = (currentPage - 1) * ITEMS_PER_PAGE;
@@ -52,7 +52,7 @@ export const getFilteredDugnads = async (
       },
       orderBy: {
         //@ts-ignore
-        createdAt: sortBy[sort] || "asc",
+        createdAt: sortBy[sort] || "desc",
       },
     });
   } catch (error) {
