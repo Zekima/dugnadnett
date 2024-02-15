@@ -24,7 +24,7 @@ import {
 import * as z from "zod";
 
 import React from "react";
-import { createDugnad } from "@/actions/dugnad";
+import { createDugnad } from "@/actions/dugnadActions/createDugnad";
 
 const OprettForm = ({ categories }: any) => {
   const form = useForm<z.infer<typeof DugnadSchema>>({
@@ -60,10 +60,11 @@ const OprettForm = ({ categories }: any) => {
     }
   };
 
-  const { errors } = form.formState;
   return (
-    <div className="h-[85vh] flex items-center justify-center">
-      <div className="w-[500px] p-6 bg-white rounded-lg">
+    <div className="">
+    <div className="h-screen flex justify-center relative">
+      <div className="w-[500px]">
+        <div className="p-6 bg-white mt-3 rounded-md">
         <h1 className="text-2xl py-4 font-semibold text-center">Lag Dugnad</h1>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
@@ -196,7 +197,9 @@ const OprettForm = ({ categories }: any) => {
             </Button>
           </form>
         </Form>
+        </div>
       </div>
+    </div>
     </div>
   );
 };

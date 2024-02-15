@@ -11,12 +11,25 @@ import {
     SelectValue,
   } from "@/components/ui/select";
 
+  import { useSearchParams, usePathname, useRouter } from 'next/navigation';
+
 
 export default function Sorter() {
-  const [selectedValue, setSelectedValue] = useState('publisert');
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
+  const { replace } = useRouter();
+
+  const [selectedValue, setSelectedValue] = useState(searchParams.get('sort')?.toString() || 'publisert');
 
   const handleValueChange = (value: string) => {
     setSelectedValue(value);
+    const params = new URLSearchParams(searchParams);
+    if (value) {
+      params.set('sort', value);
+    } else {
+      params.delete('sort');
+    }
+    replace(`${pathname}?${params.toString()}`);
   };
 
   return (
@@ -27,7 +40,7 @@ export default function Sorter() {
       <SelectContent className="bg-white">
         <SelectGroup>
           <SelectItem value="publisert">Publisert</SelectItem>
-          <SelectItem value="popularitet">Popularitet</SelectItem>
+          <SelectItem value="eldste">Eldste</SelectItem>
           <SelectItem value="nærmest">Nærmest</SelectItem>
         </SelectGroup>
       </SelectContent>

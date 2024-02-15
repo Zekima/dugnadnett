@@ -45,7 +45,7 @@ export const createDugnad = async (formData: FormData) => {
   if (checkImage && checkImage !== "undefined") {
     try {
       const blob = await uploadImage(formData);
-      imageUrl = blob.url;
+      imageUrl = blob as string;
     } catch (error) {
       console.log("Error ved opplasting av bilde:", error);
       return { error: "Error ved opplasting av bilde" };

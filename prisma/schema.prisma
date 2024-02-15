@@ -55,6 +55,7 @@ model Dugnad {
   area         String
   date         DateTime
   info         String
+  createdAt    DateTime        @default(now())
   participants Participation[]
   categories   Category[]
   reviews      Review[]
@@ -74,7 +75,7 @@ model Participation {
 
 model Category {
   id      Int      @id @default(autoincrement())
-  name    String @unique
+  name    String   @unique
   dugnads Dugnad[]
 }
 

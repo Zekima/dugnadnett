@@ -36,6 +36,14 @@ const NavBar = () => {
     setIsMenuOpen(false);
   }, [pathname]);
 
+  useEffect(() => {
+    if (isMenuOpen) {
+      document.body.classList.add("overflow-y-hidden")
+    } else {
+      document.body.classList.remove("overflow-y-hidden")
+    }
+  }, [isMenuOpen]);
+
   return (
     <div className="border-b-2 border-gray">
       <div className="flex py-5 h-16 px-5 2xl:px-0 justify-between m-auto max-w-[1280px] items-center">
@@ -63,7 +71,7 @@ const NavBar = () => {
             </div>
 
             <div
-              className={`top-0 left-0 lg:hidden gap-3 absolute h-full flex-col p-3 text-xl bg-green-200 w-2/6 z-10 ${
+              className={`top-0 left-0 lg:hidden h-full  gap-3 absolute flex-col p-3 text-xl bg-green-200 w-2/6 z-10 ${
                 isMenuOpen ? "flex" : "hidden"
               }`}
             >

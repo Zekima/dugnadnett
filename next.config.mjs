@@ -14,6 +14,12 @@ const nextConfig = {
             port: '',
             pathname: '/**',
           },
+          {
+            protocol: 'https',
+            hostname: 'dugnadnett.s3.eu-central-003.backblazeb2.com',
+            port: '',
+            pathname: '/**',
+          },
         ],
       },
 };
