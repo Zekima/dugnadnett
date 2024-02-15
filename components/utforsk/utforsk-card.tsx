@@ -28,7 +28,7 @@ const UtforskCard = ({ dugnad }: { dugnad: DugnadType }) => {
         <p className="font-semibold text-sm mb-2">{dugnad.title}</p>
 
         <div className="gap-1 flex">
-          {dugnad.categories.map((category) => (
+          {dugnad && dugnad.categories.map((category) => (
             //@ts-ignore
             <Badge key={category.id}>{category.name}</Badge>
           ))}
