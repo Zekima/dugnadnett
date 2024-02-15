@@ -4,9 +4,9 @@ import { DugnadSchema } from "@/schemas";
 import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 
-type DugnadType = z.infer<typeof DugnadSchema>;
+import {Dugnad} from '@/types'
 
-const UtforskCard = ({ dugnad }: { dugnad?: DugnadType }) => {
+const UtforskCard = ({ dugnad }: { dugnad?: Dugnad }) => {
   if (!dugnad) return
 
   return (
