@@ -7,6 +7,7 @@ import UtforskContainerSkeleton from "@/components/skeletons/utforsk-container-s
 import { getDugnadsPages } from "@/actions/dugnadActions/getDugnads";
 
 import Pagination from "@/components/pagination";
+import { getCategories } from "@/actions/category";
 
 const UtforskPage = async ({
   searchParams,
@@ -15,18 +16,22 @@ const UtforskPage = async ({
     query?: string;
     sort?: string;
     page?: string;
+    categories?: string;
   };
 }) => {
   const query = searchParams?.query || "";
   const sort = searchParams?.sort || "";
   const currentPage = Number(searchParams?.page) || 1;
 
+  const categoryParams = searchParams?.categories ? searchParams.categories.split(',') : [];
+
+  const categories = await getCategories();
   const totalPages = await getDugnadsPages(query);
 
   return (
     <div className="h-full m-auto max-w-[1280px] flex flex-col sm:flex-row">
       <div className="w-full min-h-screen hidden lg:block bg-gray-200 p-4 lg:w-1/4">
-        <Filtrer />
+        <Filtrer categories={categories} />
       </div>
       <div className="w-full h-full min-h-screen bg-gray-100 p-4 lg:w-3/4">
         <div className="flex justify-between mb-3 gap-2 items-center">
@@ -40,13 +45,14 @@ const UtforskPage = async ({
         </div>
 
         <Suspense
-          key={query + currentPage + sort}
+          key={query + currentPage + sort + categoryParams}
           fallback={<UtforskContainerSkeleton />}
         >
           <UtforskContainer
             query={query}
             currentPage={currentPage}
             sort={sort}
+            categories={categoryParams}
           />
         </Suspense>
         {/* @ts-ignore */}
