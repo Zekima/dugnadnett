@@ -30,9 +30,9 @@ export default function Filtrer({categories}: any) {
   const handleCategoryChange = (newCategories: any) => {
     setSelectedCategories(newCategories)
     const params = new URLSearchParams(searchParams);
-    const categoriesString = newCategories.join(',');
-    if (categoriesString) {
-      params.set('categories', categoriesString);
+    const categoriesJoined = newCategories.join(',');
+    if (categoriesJoined) {
+      params.set('categories', categoriesJoined);
     } else {
       params.delete('categories');
     }
