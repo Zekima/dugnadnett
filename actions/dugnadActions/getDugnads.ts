@@ -1,5 +1,7 @@
 import {db} from '@/lib/db'
 import { off } from 'process';
+import {User} from "@/types"
+import { getCurrentUser } from '@/lib/auth';
 
 export const getDugnads = async () => {
     return db.dugnad.findMany({
@@ -8,6 +10,22 @@ export const getDugnads = async () => {
         }
     });
 }
+
+export const getUserOwnesDugnads = async () => {
+    const user = await getCurrentUser();
+    try {
+        return db.dugnad.findMany({
+            where: {
+                ownerId: user?.id
+            }
+        }
+        )
+            
+        
+    } catch (error) {
+        console.error("getUserOwnesDugnads Error: ", error)
+    }
+ }
 
 const ITEMS_PER_PAGE = 9;
 

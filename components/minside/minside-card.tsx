@@ -2,6 +2,7 @@ import React from "react";
 import {z} from "zod";
 import {User} from "@/types";
 import {getCurrentUser} from "@/lib/auth";
+import  MyDugnads from "./minside-myDugnads"
 
 const MinsideCard =  async () => {
     const user = await getCurrentUser();
@@ -9,6 +10,17 @@ const MinsideCard =  async () => {
         <div className="border-2 border-gray-300 rounded-md cursor-pointer">
             <div className="p-2">
                 {user?.name}
+            </div>
+            <div className="">
+                <div className="">
+                    <MyDugnads/>
+                </div>
+                <div className="">
+                    
+                </div>
+                <div className="">
+                    
+                </div>
             </div>
         </div>
     )
