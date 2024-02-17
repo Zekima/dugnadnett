@@ -10,6 +10,13 @@ import { CiSearch } from "react-icons/ci";
 import Image from "next/image";
 import { useSearchParams, usePathname, useRouter } from 'next/navigation';
 
+import dynamic from 'next/dynamic'
+
+const SearchLocation = dynamic(() => import('@/components/search-location'), {
+  ssr: false,
+})
+
+
 export default function Filtrer({categories}: any) {
   const searchParams = useSearchParams();
   const pathname = usePathname();
@@ -63,19 +70,8 @@ export default function Filtrer({categories}: any) {
 
       <div>
         <h1 className="font-bold">Område</h1>
-        <Image
-          src="/placeholdermap.png"
-          width={812}
-          height={947}
-          alt="placeholder"
-          className="rounded-lg border border-black"
-        />
         <div className="relative">
-          <CiSearch size={24} className="absolute right-2 bottom-2" />
-          <Input
-            placeholder="Søk etter sted eller addresse"
-            className="bg-white mt-2"
-          />
+          <SearchLocation/>
         </div>
       </div>
     </div>

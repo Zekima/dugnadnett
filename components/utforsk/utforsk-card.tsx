@@ -3,6 +3,7 @@ import { z } from "zod";
 import { DugnadSchema } from "@/schemas";
 import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
+import Link from "next/link";
 
 import {Dugnad} from '@/types'
 
@@ -10,6 +11,7 @@ const UtforskCard = ({ dugnad }: { dugnad?: Dugnad }) => {
   if (!dugnad) return
 
   return (
+  <Link href={`/dugnad/${dugnad.id}`}>
     <div className="border-2 border-gray-300 rounded-md cursor-pointer">
       <div className="h-40 relative select-none">
         {dugnad && dugnad.image ? (
@@ -37,6 +39,7 @@ const UtforskCard = ({ dugnad }: { dugnad?: Dugnad }) => {
         </div>
       </div>
     </div>
+    </Link>
   );
 };
 

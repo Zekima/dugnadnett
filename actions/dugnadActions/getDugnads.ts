@@ -1,4 +1,5 @@
 import { db } from "@/lib/db";
+import { redirect } from "next/navigation";
 import { off } from "process";
 
 export const getDugnads = async () => {
@@ -77,4 +78,36 @@ export async function getDugnadsPages(query: string) {
   } catch (error) {
     console.error("getDugnadsPages Error: ", error);
   }
+}
+
+export async function getDugnadById(dugnadId: string) {
+  try {
+    const dugnad = await db.dugnad.findFirst({
+      where: {
+        id: parseInt(dugnadId)
+      },
+      include: {
+        categories: true,
+      },
+    });
+    return dugnad;
+  } catch(error) {
+    console.error("Kunne ikke finne dugnad:", error)
+  }
+  redirect(`/utforsk`)
+}
+
+export async function getOwnerByDugnadId(ownerId: string) {
+  try {
+    const dugnadOwner = await db.user.findFirst({
+      where: {
+        id: ownerId
+      },
+      
+    });
+    return dugnadOwner;
+  } catch(error) {
+    console.error("Kunne ikke finne eier av dugnad:", error)
+  }
+  redirect(`/utforsk`)
 }

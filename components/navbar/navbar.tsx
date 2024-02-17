@@ -99,7 +99,7 @@ const NavBar = () => {
               <DropdownMenu>
                 <DropdownMenuTrigger className="flex items-center select-none relative">
                   <IoIosArrowDropdownCircle className="absolute right-0 bottom-0 bg-white rounded-xl" />
-                  <UserImage user={user} />
+                  <UserImage user={user} size={40} />
                 </DropdownMenuTrigger>
                 <DropdownMenuContent
                   className="bg-white"
