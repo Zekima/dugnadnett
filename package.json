@@ -43,6 +43,10 @@
     "vercel": "^33.5.0",
     "zod": "^3.22.4"
   },
+  "optionalDependencies": {
+    "@img/sharp-linux-arm": "^0.33.2",
+    "@img/sharp-win32-x64": "^0.33.2"
+  },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.6",
     "@types/node": "^20",

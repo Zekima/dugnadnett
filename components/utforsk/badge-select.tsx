@@ -19,15 +19,15 @@ const BadgeSelect = ({ value, onChange, categories }: any) => {
   };
 
   return (
-    <div className="flex flex-wrap gap-2">
+    <div className="flex flex-wrap gap-1">
       {categories.map(({ id, name }: any) => (
         <Badge
           key={id}
           onClick={() => toggleSelection(name)}
           className={`cursor-pointer hover:bg-grey-300 select-none ${
             value.includes(name)
-              ? "bg-green-500 text-white"
-              : "bg-gray-200 text-black"
+              ? "bg-green-600 text-white"
+              : "bg-black text-white"
           }`}
         >
           {name}

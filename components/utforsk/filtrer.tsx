@@ -1,15 +1,16 @@
 'use client'
 
-import React from "react";
+import React, {useState} from "react";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { useDebouncedCallback } from 'use-debounce';
+import BadgeSelect from '@/components/utforsk/badge-select'
 
 import { CiSearch } from "react-icons/ci";
 import Image from "next/image";
 import { useSearchParams, usePathname, useRouter } from 'next/navigation';
 
-export default function Filtrer() {
+export default function Filtrer({categories}: any) {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();
@@ -23,6 +24,21 @@ export default function Filtrer() {
     }
     replace(`${pathname}?${params.toString()}`);
   }, 350);
+
+  const [selectedCategories, setSelectedCategories] = useState([]);
+
+  const handleCategoryChange = (newCategories: any) => {
+    setSelectedCategories(newCategories)
+    const params = new URLSearchParams(searchParams);
+    const categoriesJoined = newCategories.join(',');
+    if (categoriesJoined) {
+      params.set('categories', categoriesJoined);
+    } else {
+      params.delete('categories');
+    }
+    replace(`${pathname}?${params.toString()}`);
+  }
+  
 
   return (
     <div className="gap-y-6 flex flex-col">
@@ -41,14 +57,7 @@ export default function Filtrer() {
       <div>
         <h1 className="font-bold">Kategorier</h1>
         <div className="flex gap-1 mt-2 flex-wrap">
-          <Badge>Miljø</Badge>
-          <Badge>Rengjøring</Badge>
-          <Badge>Maling</Badge>
-          <Badge>Innsamling</Badge>
-          <Badge>Matlaging</Badge>
-          <Badge>Reparasjon</Badge>
-          <Badge>Idrett</Badge>
-          <Badge>Transport</Badge>
+          <BadgeSelect categories={categories} value={selectedCategories} onChange={handleCategoryChange}/>
         </div>
       </div>
 
