@@ -29,7 +29,7 @@ const SearchLocation = () => {
         }}
         value={value}
         onChange={(e) => setValue(e)}
-        map={mapRef.current}
+        map={mapRef.current || undefined}
       />
       </form>
       <div className="w-full h-[370px] mb-2 rounded-lg border-2 border-black">

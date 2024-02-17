@@ -28,6 +28,7 @@ export default async function DugnadPage({
               <img
                 src={`${dugnad?.image}-900.webp`}
                 className="w-full h-full object-cover"
+                alt=""
               />
             ) : (
               <div className="bg-green-200 h-full w-full"></div>
