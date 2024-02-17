@@ -9,8 +9,10 @@ const SearchLocation = () => {
   const mapRef = useRef(null);
   const [value, setValue] = useState("");
 
+
   return (
-    <div><div className="my-2 mb-4">
+    <div><form className="my-2 mb-4">
+    {/* @ts-ignore */}
       <SearchBox
         placeholder="Søk etter sted eller postkode"
         accessToken={process.env.REACT_APP_MAPBOX_API_KEY as string}
@@ -29,7 +31,7 @@ const SearchLocation = () => {
         onChange={(e) => setValue(e)}
         map={mapRef.current}
       />
-      </div>
+      </form>
       <div className="w-full h-[370px] mb-2 rounded-lg border-2 border-black">
         <ReactMapGL
           ref={mapRef}

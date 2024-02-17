@@ -45,8 +45,6 @@ export default async function DugnadPage({
                 <FaStar color="yellow" /> <FaStar color="yellow" />{" "}
                 <FaStar color="gray" />{" "}
               </div>
-
-
             </div>
           </div>
         </div>
