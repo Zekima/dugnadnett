@@ -72,23 +72,24 @@ export default async function DugnadPage({
                 </div>
               </div>
             </div>
-            <Tabs defaultValue="informasjon" className="w-full">
-              <TabsList className="grid w-full grid-cols-3">
-                <TabsTrigger value="informasjon">Informasjon</TabsTrigger>
-                <TabsTrigger value="deltakere">Deltakere</TabsTrigger>
-                <TabsTrigger value="chat">Gruppechat</TabsTrigger>
-              </TabsList>
-            </Tabs>
             <p className="mt-4">{dugnad.info}</p>
-          </div>
-          <div className="w-1/3 bg-gray-200 p-5 gap-y-3 flex flex-col">
-            <div className="flex gap-1">
+            <div className="mt-5 flex gap-2">
               <button className="p-2 bg-green-800 text-white justify-center items-center w-full font-medium rounded-lg hover:bg-green-900 flex gap-2">
                 <Plus /> Be om å bli med
               </button>
-              <button className="p-2 justify-center items-center bg-white text-black w-full font-medium rounded-lg hover:bg-gray-100 flex gap-2">
+              <button className="p-2 justify-center items-center bg-gray-300 text-black w-full font-medium rounded-lg hover:bg-gray-400 flex gap-2">
                 <Share /> Del Dugnaden
               </button>
+            </div>
+          </div>
+          <div className="w-1/3 bg-gray-200 p-5 gap-y-3 flex flex-col">
+            <div className="flex gap-1">
+              <Tabs defaultValue="deltakere" className="w-full">
+                <TabsList className="grid w-full grid-cols-2">
+                  <TabsTrigger value="deltakere">Deltakere</TabsTrigger>
+                  <TabsTrigger value="chat">Gruppechat</TabsTrigger>
+                </TabsList>
+              </Tabs>
             </div>
           </div>
         </div>

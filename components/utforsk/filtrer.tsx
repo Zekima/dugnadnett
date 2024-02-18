@@ -10,13 +10,6 @@ import { CiSearch } from "react-icons/ci";
 import Image from "next/image";
 import { useSearchParams, usePathname, useRouter } from 'next/navigation';
 
-import dynamic from 'next/dynamic'
-
-const SearchLocation = dynamic(() => import('@/components/search-location'), {
-  ssr: false,
-})
-
-
 export default function Filtrer({categories}: any) {
   const searchParams = useSearchParams();
   const pathname = usePathname();
@@ -68,12 +61,9 @@ export default function Filtrer({categories}: any) {
         </div>
       </div>
 
-      <div>
+      {/* <div>
         <h1 className="font-bold">Område</h1>
-        <div className="relative">
-          <SearchLocation/>
-        </div>
-      </div>
+      </div> */}
     </div>
   );
 }
