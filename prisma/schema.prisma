@@ -91,4 +91,6 @@ model Review {
 
   writer User   @relation(fields: [writerId], references: id)
   dugnad Dugnad @relation(fields: [dugnadId], references: id)
+
+  @@unique([writerId, dugnadId])
 }
