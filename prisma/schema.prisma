@@ -32,6 +32,12 @@ enum Status {
   DECLINED
 }
 
+enum DugStatus { 
+  ACTIVE
+  CANCELLED
+  COMPLETED
+}
+
 model User {
   id             String          @id @default(cuid())
   name           String?
@@ -56,9 +62,11 @@ model Dugnad {
   date         DateTime
   info         String
   createdAt    DateTime        @default(now())
+  status DugStatus
   participants Participation[]
   categories   Category[]
   reviews      Review[]
+
 
   owner User @relation(fields: [ownerId], references: [id], name: "UserDugnad")
 }
