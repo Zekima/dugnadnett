@@ -24,7 +24,7 @@
     "@types/backblaze-b2": "^1.5.6",
     "@vercel/blob": "^0.22.0",
     "axios": "^1.6.7",
-    "backblaze-b2": "^1.7.0",
+    "backblaze-b2": "^0.9.12",
     "bcryptjs": "^2.4.3",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
@@ -45,7 +45,7 @@
     "tailwind-merge": "^2.2.1",
     "tailwindcss-animate": "^1.0.7",
     "use-debounce": "^10.0.0",
-    "vercel": "^33.5.0",
+    "vercel": "^32.3.0",
     "zod": "^3.22.4"
   },
   "optionalDependencies": {

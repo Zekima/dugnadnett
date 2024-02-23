@@ -3,23 +3,45 @@ import { redirect } from "next/navigation";
 import { off } from "process";
 import { getCurrentUser } from "@/lib/auth";
 
-export const getDugnads = async () => {
+/*export const getDugnads = async () => {
   return db.dugnad.findMany({
     include: {
       categories: true,
     },
   });
-};
+};*/ // Old function not used anymore 
 
 export const getUserOwnesDugnads = async () => {
     const user = await getCurrentUser();
     return db.dugnad.findMany({
         where: {
             ownerId: user?.id
+        },
+
+        include: {
+          categories: true,
         }
     }
     )
 }
+
+export const getUserParticpatesInDugnads = async () => {
+  const user = await getCurrentUser();
+  return db.dugnad.findMany({
+      where: {
+          participants: {some: {userId: user?.id, status: 'ACCEPTED'} }
+      },
+
+      include: {
+        categories: true,
+        participants: true,
+      }
+  }
+  )
+}
+
+
+
 
 
 const ITEMS_PER_PAGE = 9;

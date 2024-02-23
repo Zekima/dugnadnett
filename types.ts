@@ -8,6 +8,12 @@ export type User = {
   name: string;
 };
 
+export type Participant = {
+  id: number;
+  userId: string;
+  dugnadId: number;
+}
+
 export interface Dugnad {
   id: number;
   ownerId: string;
@@ -18,6 +24,7 @@ export interface Dugnad {
   info: string;
   createdAt: Date;
   categories: Category[];
+  
 }
 
 export interface Address {
