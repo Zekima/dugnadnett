@@ -60,3 +60,15 @@ export const DugnadSchema = z.object({
   }, "Maks filstørelse er 4.5MB"),
 
 });
+
+
+export const ReviewSchema = z.object({
+  title: z.string().min(1, {
+    message: "Tittel er påkrevd"
+  }),
+  text: z.string().min(1).max(100, {
+    message: "Maximum av 100 karakterer"
+  }),
+  rating: z.number().min(1).max(5)
+})
+
