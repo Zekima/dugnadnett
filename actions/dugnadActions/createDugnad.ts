@@ -64,6 +64,7 @@ export const createDugnad = async (formData: FormData) => {
         info: info,
         title: title,
         image: imageUrl,
+        status: 'ACTIVE',
         categories: {
           connect: categories.map((category) => ({ name: category })),
         },
