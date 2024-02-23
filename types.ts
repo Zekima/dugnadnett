@@ -24,7 +24,7 @@ export interface Dugnad {
   info: string;
   createdAt: Date;
   categories: Category[];
-  
+  status: string;
 }
 
 export interface Address {

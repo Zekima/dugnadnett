@@ -33,12 +33,13 @@ const ACCEPTED_IMAGE_TYPES = [
 export const DugnadSchema = z.object({
   title: z.string().min(1, "Tittel er påkrevd"),
   area: z.string().min(1, "Område er påkrevd"),
+  status: z.string().min(1, ""),
   date: z.string().min(1, "Dato er påkrevd"),
   info: z.string().min(1, "Informasjon er påkrevd"),
   categories: z.array(z.string()).min(1, "Velg minst en kategori"),
   image: z.unknown().optional().refine((files: any) => {
     let allowedImage = true;
-
+    
     if (!files || !Array.isArray(files)) {
       return true;
     }
