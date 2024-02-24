@@ -6,7 +6,10 @@ const Footer = () => {
       <div className="flex flex-wrap max-w-[1300px] m-auto gap-x-40 gap-y-10">
         <div>
           <h1 className="font-bold text-md mb-4">Navigasjon</h1>
-          <p>Om oss</p>
+          <Link href='/misc/about-us'>
+            <p>Om oss</p>
+          </Link>
+          
           <p>FAQ</p>
           <p>Kontakt Oss</p>
         </div>
