@@ -40,6 +40,25 @@ export const getUserParticpatesInDugnads = async () => {
   )
 }
 
+export const getDugnadParticipants = async (dugnadId: number) => {
+    try {
+      const participations = await db.participation.findMany({
+        where: {
+          dugnadId: dugnadId
+        },
+        include: {
+          user: true 
+        }
+      });
+      
+      const users = participations.map(participation => participation.user);
+
+      return users;
+    } catch (e) {
+      console.error("Kunne ikke hente ut deltakere for denne dugnaden:", e)
+    }
+}
+ 
 
 
 

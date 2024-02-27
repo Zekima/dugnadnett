@@ -4,10 +4,10 @@ import {
   getOwnerByDugnadId,
 } from "@/actions/dugnadActions/getDugnads";
 import UserImage from "@/components/user-image";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Badge } from "@/components/ui/badge";
+import DugnadTabs from '@/components/dugnad/dugnad-tabs'
+import DugnadContent from "@/components/dugnad/dugnad-content"
 import { FaStar } from "react-icons/fa";
-import { Mail, Plus, MapPin, Calendar, Share } from "lucide-react";
+
 
 export default async function DugnadPage({
   params,
@@ -50,51 +50,11 @@ export default async function DugnadPage({
       </div>
       <div className="bg-gray-100 w-full h-fill flex">
         <div className="w-2/3 p-5">
-          <div className="flex justify-between">
-            <div>
-              <h1 className="text-2xl text-bold font-semibold">
-                {dugnad?.title}
-              </h1>
-              <div className="mt-2 mb-0  gap-1 flex">
-                {dugnad.categories.map((category) => (
-                  <Badge key={category.id}>{category.name}</Badge>
-                ))}
-              </div>
-            </div>
-
-            <div className="flex flex-col gap-2 text-sm">
-              <div className="flex gap-2 justify-end">
-                <p>Gullbringvegen 28, 3800 Bø</p>
-                <MapPin size={18} />
-              </div>
-              <div className="flex gap-2 justify-end">
-                <p>31.02.2024 16:30 </p> <Calendar size={18} />
-              </div>
-            </div>
-          </div>
-          <div className="mt-5 flex gap-2">
-            <button className="p-2 bg-green-800 text-white justify-center items-center w-full font-medium rounded-lg hover:bg-green-900 flex gap-2">
-              <Plus /> Be om å bli med
-            </button>
-            <button className="p-2 justify-center items-center bg-gray-300 text-black w-full font-medium rounded-lg hover:bg-gray-400 flex gap-2">
-              <Share /> Del Dugnaden
-            </button>
-          </div>
-          <p className="mt-4">{dugnad.info}</p>
-
+            <DugnadContent dugnad={dugnad}/>
         </div>
+
         <div className="w-1/3 bg-gray-200 p-5 gap-y-3 flex flex-col">
-          <div className="flex gap-1">
-            <Tabs defaultValue="deltakere" className="w-full">
-              <TabsList className="grid w-full grid-cols-2">
-                <TabsTrigger value="deltakere">Deltakere</TabsTrigger>
-                <TabsTrigger value="chat">Gruppechat</TabsTrigger>
-              </TabsList>
-              <TabsContent value="deltakere" className="min-h-[29vw] mb-20 flex justify-center items-center">
-                <p>Ingen Deltakere</p>
-              </TabsContent>
-            </Tabs>
-          </div>
+          <DugnadTabs dugnadId={dugnad.id} />
         </div>
       </div>
     </div>
