@@ -22,12 +22,30 @@ export async function requestToJoin(dugnadId: number) {
   return { success: "Vellykket forespørsel" };
 }
 
+export async function removeJoinRequest(participationId: number) {
+  const user = await getCurrentUser();
+  if (!user?.id) return;
+
+  try {
+    const { dugnadId } = await db.participation.delete({
+      where: {
+        id: participationId
+      }
+    });
+    revalidatePath(`/dugnad/${dugnadId}`);
+    return;
+  } catch (error) {
+    console.error("Kunne ikke slette deltakelsen:", error);
+    return;
+  }
+}
+
 export async function getJoinRequest(dugnadId: number) {
   const user = await getCurrentUser();
   if (!user?.id) return;
 
   try {
-    const joinRequestExists = await db.participation.findUnique({
+    const joinRequest = await db.participation.findUnique({
       where: {
         userId_dugnadId: {
           userId: user.id,
@@ -35,11 +53,7 @@ export async function getJoinRequest(dugnadId: number) {
         },
       },
     });
-    if (joinRequestExists) {
-      return true;
-    } else {
-      return false;
-    }
+    return joinRequest;
   } catch {
     return false;
   }

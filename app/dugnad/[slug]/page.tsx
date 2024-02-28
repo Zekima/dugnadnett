@@ -24,9 +24,6 @@ export default async function DugnadPage({
 
   const isOwner = dugnadOwner.id === user?.id
 
-
-
-
   return (
     <div className="max-w-[1280px] m-auto">
       <div className="flex h-[350px]">
@@ -58,7 +55,7 @@ export default async function DugnadPage({
       </div>
       <div className="bg-gray-100 w-full h-fill flex">
         <div className="w-2/3 p-5">
-            <DugnadContent dugnad={dugnad}/>
+            <DugnadContent dugnad={dugnad} isOwner={isOwner}/>
         </div>
 
         <div className="w-1/3 bg-gray-200 p-5 gap-y-3 flex flex-col">

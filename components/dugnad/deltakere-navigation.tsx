@@ -63,6 +63,7 @@ const DeltakereNavigation = ({ isOwner, participants, joinRequests, declineReque
     );
 }
 
+
 export default DeltakereNavigation
 
 
