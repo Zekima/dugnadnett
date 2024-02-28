@@ -39,7 +39,7 @@ const DeltakereNavigation = ({ isOwner, participants, joinRequests, declineReque
                                     participant={participant}
                                 />
                             ))}
-                            {activeTab === 'requests' && joinRequests?.map((request) => (
+                            {activeTab === 'requests' && joinRequests?.map((request: any) => (
                                 <RequestItem
                                     key={request.id}
                                     request={request}
