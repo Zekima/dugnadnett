@@ -1,10 +1,25 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { getDugnadParticipants } from "@/actions/dugnadActions/getDugnads";
-import React from "react";
+import React, { useState } from "react";
+import { getJoinRequests } from "@/actions/dugnadActions/joinRequests";
+import DeltakereNavigation from '@/components/dugnad/deltakere-navigation'
+import { declineJoinRequest, acceptJoinRequest } from "@/actions/dugnadActions/joinRequests";
 
-const DugnadTabs = async ({ dugnadId }: any) => {
+
+const DugnadTabs = async ({ dugnadId, isOwner }: any) => {
 
     const participants = await getDugnadParticipants(dugnadId);
+    const joinRequests = await getJoinRequests(dugnadId);
+
+    const declineRequest = async (requestId: any) => {
+        "use server"
+        await declineJoinRequest(requestId)
+    }
+
+    const acceptRequest = async (requestId: any) => {
+        "use server"
+        await acceptJoinRequest(requestId)
+    }
 
     return (
         <div className="flex gap-1">
@@ -13,14 +28,14 @@ const DugnadTabs = async ({ dugnadId }: any) => {
                     <TabsTrigger value="deltakere">Deltakere</TabsTrigger>
                     <TabsTrigger value="chat">Gruppechat</TabsTrigger>
                 </TabsList>
-                <TabsContent value="deltakere" className="min-h-[29vw] mb-20 flex justify-center items-center">
-                    {participants && participants.length > 0 ? (
-                        participants.map((participant) => (
-                            <p key={participant.id}>{participant.name}</p>
-                        ))
-                    ) : (
-                        <p>Ingen Deltakere</p>
-                    )}
+                <TabsContent value="deltakere" className="min-h-[29vw] mb-20">
+                    <DeltakereNavigation
+                        isOwner={isOwner}
+                        participants={participants}
+                        joinRequests={joinRequests}
+                        declineRequest={declineRequest}
+                        acceptRequest={acceptRequest}
+                    />
                 </TabsContent>
             </Tabs>
         </div>
@@ -28,3 +43,6 @@ const DugnadTabs = async ({ dugnadId }: any) => {
 }
 
 export default DugnadTabs;
+
+
+

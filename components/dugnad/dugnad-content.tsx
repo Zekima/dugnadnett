@@ -1,10 +1,17 @@
-'use client'
-
 import React from "react";
 import { Badge } from "@/components/ui/badge";
 import { Mail, Plus, MapPin, Calendar, Share } from "lucide-react";
+import RequestButton from "@/components/dugnad/request-button";
+import { requestToJoin, getJoinRequest } from "@/actions/dugnadActions/joinRequests";
+import { revalidatePath } from "next/cache";
 
-const DugnadContent = ({ dugnad }: any) => {
+const DugnadContent = async ({ dugnad }: any) => {
+    const activeRequest = await getJoinRequest(dugnad.id)
+
+    const onSubmit = async () => {
+        'use server'
+        await requestToJoin(dugnad.id)
+    }
 
     return (
         <>
@@ -30,11 +37,9 @@ const DugnadContent = ({ dugnad }: any) => {
                     </div>
                 </div>
             </div>
-            <div className="mt-5 flex gap-2">
-                <form className="p-2 bg-green-800 text-white justify-center items-center w-full font-medium rounded-lg hover:bg-green-900 flex">
-                    <button type="submit" className="flex gap-2">
-                        <Plus /> Be om å bli med
-                    </button>
+            <div className="mt-5 flex gap-2 max-w-[380px]">
+                <form action={onSubmit} className="text-white w-full font-medium rounded-lg flex">
+                    <RequestButton activeRequest={activeRequest} />
                 </form>
 
                 <button className="p-2 justify-center items-center bg-gray-300 text-black w-full font-medium rounded-lg hover:bg-gray-400 flex gap-2">

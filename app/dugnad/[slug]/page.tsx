@@ -7,6 +7,8 @@ import UserImage from "@/components/user-image";
 import DugnadTabs from '@/components/dugnad/dugnad-tabs'
 import DugnadContent from "@/components/dugnad/dugnad-content"
 import { FaStar } from "react-icons/fa";
+import { getUserById } from "@/data/user";
+import { getCurrentUser } from "@/lib/auth";
 
 
 export default async function DugnadPage({
@@ -18,6 +20,12 @@ export default async function DugnadPage({
   if (!dugnad) return;
   const dugnadOwner = await getOwnerByDugnadId(dugnad.ownerId);
   if (!dugnadOwner) return;
+  const user = await getCurrentUser();
+
+  const isOwner = dugnadOwner.id === user?.id
+
+
+
 
   return (
     <div className="max-w-[1280px] m-auto">
@@ -54,7 +62,7 @@ export default async function DugnadPage({
         </div>
 
         <div className="w-1/3 bg-gray-200 p-5 gap-y-3 flex flex-col">
-          <DugnadTabs dugnadId={dugnad.id} />
+          <DugnadTabs dugnadId={dugnad.id} isOwner={isOwner} />
         </div>
       </div>
     </div>

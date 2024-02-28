@@ -6,7 +6,7 @@ import { SessionProvider } from "next-auth/react";
 import { auth } from "@/auth";
 import "./globals.css";
 
-const inter = Inter({ subsets: ["latin"], weight: ["400", "700", "800"] });
+const inter = Inter({ subsets: ["latin"], weight: ["400", "700", "800", "500"] });
 
 export const metadata: Metadata = {
   title: "DugnadNett",

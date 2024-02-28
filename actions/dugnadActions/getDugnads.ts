@@ -44,7 +44,8 @@ export const getDugnadParticipants = async (dugnadId: number) => {
     try {
       const participations = await db.participation.findMany({
         where: {
-          dugnadId: dugnadId
+          dugnadId: dugnadId,
+          status: 'ACCEPTED'
         },
         include: {
           user: true 
@@ -58,8 +59,6 @@ export const getDugnadParticipants = async (dugnadId: number) => {
       console.error("Kunne ikke hente ut deltakere for denne dugnaden:", e)
     }
 }
- 
-
 
 
 

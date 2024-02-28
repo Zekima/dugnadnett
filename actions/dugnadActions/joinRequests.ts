@@ -1,5 +1,6 @@
 import { getCurrentUser } from "@/lib/auth";
 import { db } from "@/lib/db";
+import { revalidatePath } from "next/cache";
 
 export async function requestToJoin(dugnadId: number) {
   const user = await getCurrentUser();
@@ -17,7 +18,7 @@ export async function requestToJoin(dugnadId: number) {
     console.error("Bruker kunne ikke delta i dugnad:", error);
     return { error: "Error ved deltakelsen av dugnad" };
   }
-
+  revalidatePath(`/dugnad/${dugnadId}`);
   return { success: "Vellykket forespørsel" };
 }
 
@@ -26,7 +27,7 @@ export async function getJoinRequest(dugnadId: number) {
   if (!user?.id) return;
 
   try {
-    const joinRequest = await db.participation.findUnique({
+    const joinRequestExists = await db.participation.findUnique({
       where: {
         userId_dugnadId: {
           userId: user.id,
@@ -34,10 +35,13 @@ export async function getJoinRequest(dugnadId: number) {
         },
       },
     });
-
-    return joinRequest;
+    if (joinRequestExists) {
+      return true;
+    } else {
+      return false;
+    }
   } catch {
-    return;
+    return false;
   }
 }
 
@@ -51,17 +55,29 @@ export async function getJoinRequests(dugnadId: number) {
         status: "PENDING",
         dugnadId: dugnadId,
       },
+      include: {
+        user: true,
+      },
     });
-    return joinRequests;
+
+    const users = joinRequests.map(joinRequest => ({
+      ...joinRequest.user,
+      participationId: joinRequest.id,
+    }));
+
+    return users;
   } catch (error) {
-    console.error("Kunne ikke hente ut forespørsel for denne dugnaden:", error);
-    return { error: "Error ved deltakelsen av dugnad" };
+    console.error(
+      "Kunne ikke hente ut forespørsler for denne dugnaden:",
+      error
+    );
+    return;
   }
 }
 
 export async function acceptJoinRequest(participationId: number) {
   try {
-    await db.participation.update({
+    const { dugnadId } = await db.participation.update({
       where: {
         id: participationId,
       },
@@ -69,6 +85,7 @@ export async function acceptJoinRequest(participationId: number) {
         status: "ACCEPTED",
       },
     });
+    revalidatePath(`/dugnad/${dugnadId}`)
   } catch (error) {
     console.error("Kunne ikke akseptere forespørselen:", error);
     return { error: "Kunne ikke akseptere forespørselen" };
@@ -77,7 +94,7 @@ export async function acceptJoinRequest(participationId: number) {
 
 export async function declineJoinRequest(participationId: number) {
   try {
-    await db.participation.update({
+    const { dugnadId } = await db.participation.update({
       where: {
         id: participationId,
       },
@@ -85,6 +102,7 @@ export async function declineJoinRequest(participationId: number) {
         status: "DECLINED",
       },
     });
+    revalidatePath(`/dugnad/${dugnadId}`)
   } catch (error) {
     console.error("Kunne ikke avslå forespørselen:", error);
     return { error: "Kunne ikke avslå forespørselen" };
