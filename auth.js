@@ -38,7 +38,7 @@ export const {
         token.name = existingUser.name;
 
         return token;
-      }
+      },
     },
     session: { strategy: "jwt"},
     adapter: PrismaAdapter(db),

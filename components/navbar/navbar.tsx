@@ -17,15 +17,16 @@ import {
 
 import React, { useState, useEffect } from "react";
 
-import { usePathname } from "next/navigation";
+import { redirect, usePathname} from "next/navigation";
 
 import { IoIosArrowDropdownCircle } from "react-icons/io";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { X } from "lucide-react";
 
 const NavBar = () => {
   const pathname = usePathname();
   const session = useSession();
+  const router = useRouter();
   const user = session.data?.user;
 
   const userProfileHref = `/profil/${user?.id}`;
@@ -125,7 +126,8 @@ const NavBar = () => {
                   <DropdownMenuItem
                     className="cursor-pointer hover:bg-gray-200"
                     onClick={async () => {
-                      await signOut();
+                      await signOut({redirect: false});
+                      router.push('/auth/login')
                     }}
                   >
                     <MdLogout className="mr-2 h-4 w-4" />
