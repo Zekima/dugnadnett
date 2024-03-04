@@ -18,6 +18,7 @@ const UtforskContainer = async ({
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 lg:grid-cols-3">
       {dugnads?.map((dugnad) => (
+        //@ts-ignore
         <UtforskCard key={dugnad.id} dugnad={dugnad} />
       ))}
     </div>
