@@ -25,9 +25,13 @@ async function uploadImage(data: FormData) {
   const targetWidths = [500, 900];
   const fileName = `${randomstring.generate(8)}`;
 
-
   const uploadPromises = targetWidths.map(async (width) => {
-    await b2.authorize();
+    try {
+      await b2.authorize();
+    } catch (e) {
+      console.error("Kunne ikke autentisere backblaze")
+    }
+    
     const uploadUrlResponse = await b2.getUploadUrl({ bucketId });
 
     const resizedBuffer = await sharp(buffer)
