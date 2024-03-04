@@ -10,7 +10,7 @@ import { CiSearch } from "react-icons/ci";
 import Image from "next/image";
 import { useSearchParams, usePathname, useRouter } from 'next/navigation';
 
-export default function Filtrer({categories}: any) {
+export default function Filtrer({categories, categoryParams}: any) {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();
@@ -25,7 +25,7 @@ export default function Filtrer({categories}: any) {
     replace(`${pathname}?${params.toString()}`);
   }, 350);
 
-  const [selectedCategories, setSelectedCategories] = useState([]);
+  const [selectedCategories, setSelectedCategories] = useState(categoryParams);
 
   const handleCategoryChange = (newCategories: any) => {
     setSelectedCategories(newCategories)
