@@ -1,9 +1,7 @@
 "use client"
 import React, { useState} from "react";
-import {Faq} from"@/types";
+import {Faq} from "@/types";
 const FaqCard = ({faq} : {faq?: Faq}) => {
-
-    if (!faq) return
 
     const [extend, setExtend] = useState(false);
 

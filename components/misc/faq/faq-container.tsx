@@ -1,5 +1,5 @@
 import React from "react";
-import {Faq} from"@/types";
+import {Faq} from "@/types";
 import FaqCard from "./faq-card";
 
 const faqs : Faq[] = [
