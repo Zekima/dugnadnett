@@ -9,6 +9,8 @@ const FaqCard = ({faq} : {faq?: Faq}) => {
         setExtend(!extend);
     }
 
+    if (!faq) return;
+
     return (
         <div>
             <div className="">
