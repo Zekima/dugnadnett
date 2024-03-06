@@ -64,6 +64,34 @@ export const getDugnadParticipants = async (dugnadId: number) => {
 
 const ITEMS_PER_PAGE = 9;
 
+//todo: area filter 
+
+function generateFilters(query: string, categories: string[]){
+  let filters = {
+    title: {
+      contains: query,
+      mode: "insensitive",
+    },
+  };
+
+  if (categories.length > 0) {
+    const categoryFilters = categories.map(category => ({
+      categories: {
+        some: {
+          name: {
+            equals: category,
+          },
+        },
+      },
+    }));
+
+    //@ts-ignore
+    filters['AND'] = categoryFilters;
+  }
+
+  return filters;
+}
+
 export const getFilteredDugnads = async (
   query: string,
   currentPage: number,
@@ -76,61 +104,42 @@ export const getFilteredDugnads = async (
   };
 
   const offset = (currentPage - 1) * ITEMS_PER_PAGE;
-
-  let whereComputed = {
-    title: {
-      contains: query,
-      mode: "insensitive" as const,
-    },
-  };
-
-  if (categories.length > 0) {
-    // @ts-expect-error
-    whereComputed.categories = {
-      some: {
-        name: {
-          in: categories,
-        },
-      },
-    };
-  }
+  const filters = generateFilters(query, categories);
 
   try {
     return db.dugnad.findMany({
-      where: whereComputed,
+      //@ts-ignore
+      where: filters,
       skip: offset,
       take: ITEMS_PER_PAGE,
       include: {
         categories: true,
       },
-      orderBy: {
+      orderBy: {      
         //@ts-ignore
         createdAt: sortBy[sort] || "desc",
       },
     });
   } catch (error) {
-    console.error("getFilteredDugnads Error: ", error);
+    console.error("Feil ved uthenting av getFilteredDugnads: ", error);
   }
 };
 
-export async function getDugnadsPages(query: string) {
+export async function getDugnadsPages(query: string, categories: string[]) {
+  const whereComputed = generateFilters(query, categories);
+
   try {
-    const totalRecords = await db.dugnad.count({
-      where: {
-        title: {
-          contains: query,
-          mode: "insensitive",
-        },
-      },
+    const count = await db.dugnad.count({
+      //@ts-ignore
+      where: whereComputed,
     });
 
-    const totalPages = Math.ceil(totalRecords / ITEMS_PER_PAGE);
-
-    return totalPages;
+    return Math.ceil(count / ITEMS_PER_PAGE);
   } catch (error) {
-    console.error("getDugnadsPages Error: ", error);
+    console.error("Feil ved uthenting av getDugnadsPages: ", error);
   }
 }
+
 
 export async function getDugnadById(dugnadId: string) {
   try {

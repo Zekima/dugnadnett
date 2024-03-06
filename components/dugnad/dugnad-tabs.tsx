@@ -22,21 +22,21 @@ const DugnadTabs = async ({ dugnadId, isOwner }: any) => {
     }
 
     return (
-        <div className="flex gap-1">
+        <div className="flex gap-1 min-h-[35vw]">
             <Tabs defaultValue="deltakere" className="w-full">
-                <TabsList className="grid w-full grid-cols-2">
+                <TabsList className="grid w-full grid-cols-2 ">
                     <TabsTrigger value="deltakere">Deltakere</TabsTrigger>
                     <TabsTrigger value="chat">Gruppechat</TabsTrigger>
                 </TabsList>
-                <TabsContent value="deltakere" className="min-h-[29vw] mb-20">
-                    <DeltakereNavigation
-                        isOwner={isOwner}
-                        participants={participants}
-                        joinRequests={joinRequests}
-                        declineRequest={declineRequest}
-                        acceptRequest={acceptRequest}
-                    />
-                </TabsContent>
+                    <TabsContent value="deltakere" className="">
+                        <DeltakereNavigation
+                            isOwner={isOwner}
+                            participants={participants}
+                            joinRequests={joinRequests}
+                            declineRequest={declineRequest}
+                            acceptRequest={acceptRequest}
+                        />
+                    </TabsContent>
             </Tabs>
         </div>
     );
