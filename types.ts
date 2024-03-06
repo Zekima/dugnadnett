@@ -14,6 +14,12 @@ export type Participant = {
   dugnadId: number;
 }
 
+export type Faq = { 
+  id: number;
+  title: string;
+  text: string;
+}
+
 export interface Dugnad {
   id: number;
   ownerId: string;

@@ -9,8 +9,9 @@ const Footer = () => {
           <Link href='/misc/about-us'>
             <p>Om oss</p>
           </Link>
-          
+          <Link href='/misc/faq'>
           <p>FAQ</p>
+          </Link>
           <p>Kontakt Oss</p>
         </div>
         <div>

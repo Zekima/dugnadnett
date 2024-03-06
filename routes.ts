@@ -1,6 +1,8 @@
 export const publicRoutes = [
     '/',
-    '/utforsk'
+    '/utforsk',
+    '/misc/about-us',
+    '/misc/faq'
 ]
 
 export const authRoutes = [
