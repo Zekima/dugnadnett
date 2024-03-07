@@ -16,7 +16,7 @@ const FaqCard = ({ faq }: { faq?: Faq }) => {
         <h2 className="text-lg font-bold">{faq.title}</h2>
         <button className="" onClick={handleExtend}>
           {" "}
-          {!extend ? "+" : "-"}{" "}
+          {!extend ? "⋁" : "⋀"}{" "}
         </button>
       </div>
       {extend && <p className="mb-2 text-lg"> {faq.text} </p>}
