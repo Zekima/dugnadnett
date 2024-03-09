@@ -8,6 +8,7 @@ import { getCategories } from "@/actions/category";
 
 
 import { getCurrentUser } from "@/lib/auth";
+import { deleteDugnad } from '@/actions/dugnadActions/deleteDugnad'
 import { redirect } from "next/navigation";
 import EditForm from "../../../../components/dugnad/edit-form";
 
@@ -31,5 +32,12 @@ export default async function DugnadEditPage({
 
     const categories = await getCategories();
 
-    return; // <EditForm categories={categories} dugnad={dugnad}></EditForm>;
+    const handleDelete = async () => {
+        "use server"
+        await deleteDugnad(dugnad.id)
+    }
+    
+
+
+    return <EditForm categories={categories} dugnad={dugnad} handleDelete={handleDelete}></EditForm>;
 }

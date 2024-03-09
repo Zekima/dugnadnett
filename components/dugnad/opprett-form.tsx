@@ -56,6 +56,8 @@ const OprettForm = ({ categories }: any) => {
     formData.append("info", data.info);
     formData.append("categories", JSON.stringify(data.categories));
 
+    
+
     try {
       await createDugnad(formData);
     } catch (error) {

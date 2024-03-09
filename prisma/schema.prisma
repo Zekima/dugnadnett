@@ -78,7 +78,7 @@ model Participation {
   status   Status
 
   user   User   @relation(fields: [userId], references: [id])
-  dugnad Dugnad @relation(fields: [dugnadId], references: [id])
+  dugnad Dugnad @relation(fields: [dugnadId], references: [id], onDelete: Cascade)
 
   @@unique([userId, dugnadId])
 }
