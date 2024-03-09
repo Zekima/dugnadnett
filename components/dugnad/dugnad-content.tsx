@@ -4,6 +4,7 @@ import { Mail, Plus, MapPin, Calendar, Share, Edit } from "lucide-react";
 import RequestButton from "@/components/dugnad/request-button";
 import { requestToJoin, getJoinRequest, removeJoinRequest } from "@/actions/dugnadActions/joinRequests";
 import { revalidatePath } from "next/cache";
+import EditDugnadButton from '@/components/dugnad/edit-dugnad-button'
 
 const DugnadContent = async ({ dugnad, isOwner }: any) => {
     const activeRequest = await getJoinRequest(dugnad.id)
@@ -44,9 +45,8 @@ const DugnadContent = async ({ dugnad, isOwner }: any) => {
             </div>
             <div className="mt-5 flex gap-2 max-w-[380px]">
                 <div className="text-white w-full font-medium rounded-lg flex">
-                    {isOwner ? <button className="p-2 justify-center items-center bg-black text-white w-full font-medium rounded-lg hover:bg-gray-900 flex gap-2">
-                        <Edit /> Rediger
-                    </button> : <RequestButton activeRequest={activeRequest} onLeave={onLeave} onJoin={onJoin} />
+                    {isOwner ?
+                        <EditDugnadButton dugnadId={dugnad.id} /> : <RequestButton activeRequest={activeRequest} onLeave={onLeave} onJoin={onJoin} />
                     }
                 </div>
 
