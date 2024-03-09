@@ -176,7 +176,7 @@ const OprettForm = ({ categories }: any) => {
                         )}
 
                       </p>
-                      <img src="/OsloMap.png" alt="" />
+                      <img src="/oslomap.webp" alt="" />
 
 
                       <FormField
