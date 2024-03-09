@@ -16,7 +16,7 @@ const HeroSection = () => {
         <Link href="/utforsk"><button className="px-4 py-3 bg-green-500 font-medium rounded-md text-white hover:bg-green-600">
             Utforsk Dugnader →
           </button></Link>
-          <Link href="/auth/register"><button className="px-4 py-3 outline outline-2 font-semibold outline-green-500 rounded-md text-green-500 hover:bg-green-100 hover:text-green-900">
+          <Link href="/auth/register"><button className="px-4 outline-offset-[-2px] py-3 outline outline-2 font-semibold outline-green-500 rounded-md text-green-500 hover:bg-green-100 hover:text-green-900">
             Registrer Deg for å Delta
           </button></Link>
         </div>
