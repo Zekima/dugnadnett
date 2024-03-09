@@ -26,6 +26,7 @@ import * as z from "zod";
 import React, { useState } from "react";
 import { createDugnad } from "@/actions/dugnadActions/createDugnad";
 import { Separator } from "@/components/ui/separator"
+import { relative } from "path";
 
 
 const OprettForm = ({ categories }: any) => {
@@ -98,11 +99,11 @@ const OprettForm = ({ categories }: any) => {
                             Bilde <FormMessage className="text-red-500" />
                           </FormLabel>
                           <FormControl>
-                            <div className="flex flex-col items-center justify-center bg-white border-4 border-dashed border-gray-200 hover:border-gray-300">
+                            <div className="flex flex-col relative items-center justify-center bg-white border-4 border-dashed border-gray-200 hover:border-gray-300">
                               {preview ? (
                                 <div className="absolute">
                                   <button className="absolute right-0 top-0 text-white bg-black cursor-pointer z-50" onClick={() => setPreview(null)}><X/></button>
-                                  <img src={preview} alt="Preview" style={{ maxWidth: '100%', maxHeight: 300 }} />
+                                  <img src={preview} alt="Preview" style={{ position: 'relative', maxHeight: 300 }} />
                                 </div>
                               ) : (
                                 <div className="absolute right-50 text-center justify-center text-sm text-gray-600">
