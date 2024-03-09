@@ -35,22 +35,22 @@ const RequestButton = ({ activeRequest, onLeave, onJoin }: any) => {
     }
 
     if (isPending && activeRequest?.status === "ACCEPTED") {
-        return <button disabled className="p-2 justify-center disabled:opacity-75 items-center bg-red-800 disabled:hover:bg-red-800 text-white w-full font-medium rounded-lg hover:bg-red-900 flex gap-2"><Loader2 className="animate-spin" /></button>;
+        return <button disabled className="p-2 justify-center disabled:opacity-75 items-center bg-red-800 disabled:hover:bg-red-800 text-white w-full font-medium rounded-md hover:bg-red-900 flex gap-2"><Loader2 className="animate-spin" /></button>;
     }
 
     if (isPending) {
-        return <button disabled className="p-2 justify-center disabled:opacity-75 items-center bg-green-800 disabled:hover:bg-green-800 text-white w-full font-medium rounded-lg hover:bg-green-900 flex gap-2"><Loader2 className="animate-spin" /></button>;
+        return <button disabled className="p-2 justify-center disabled:opacity-75 items-center bg-green-800 disabled:hover:bg-green-800 text-white w-full font-medium rounded-md hover:bg-green-900 flex gap-2"><Loader2 className="animate-spin" /></button>;
     }
 
     if (!activeRequest) {
-        return <button className="p-2 justify-center disabled:opacity-75 items-center bg-green-800 disabled:hover:bg-green-800 text-white w-full font-medium rounded-lg hover:bg-green-900 flex gap-2" onClick={() => handleJoin()}>Be om å bli med</button>;
+        return <button className="p-2 justify-center disabled:opacity-75 items-center bg-green-800 disabled:hover:bg-green-800 text-white w-full font-medium rounded-md hover:bg-green-900 flex gap-2" onClick={() => handleJoin()}>Be om å bli med</button>;
     }
 
     if (activeRequest && activeRequest.status === "ACCEPTED") {
         return (
             <AlertDialog>
                 <AlertDialogTrigger asChild>
-                    <button className="p-2 justify-center disabled:opacity-75 items-center bg-red-800 disabled:hover:bg-red-800 text-white w-full font-medium rounded-lg hover:bg-red-900 flex gap-2">Forlat dugnad</button>
+                    <button className="p-2 justify-center disabled:opacity-75 items-center bg-red-800 disabled:hover:bg-red-800 text-white w-full font-medium rounded-md hover:bg-red-900 flex gap-2">Forlat dugnad</button>
                 </AlertDialogTrigger>
                 <AlertDialogContent className="bg-white">
                     <AlertDialogHeader>
@@ -62,7 +62,7 @@ const RequestButton = ({ activeRequest, onLeave, onJoin }: any) => {
                     <AlertDialogFooter>
                         <AlertDialogCancel>Avbryt</AlertDialogCancel>
                         <AlertDialogAction asChild>
-                            <button onClick={() => handleLeave(activeRequest.id)} className="p-2 justify-center items-center bg-red-800 text-white font-medium rounded-lg hover:bg-red-900">Forlat</button>
+                            <button onClick={() => handleLeave(activeRequest.id)} className="p-2 justify-center items-center bg-red-800 text-white font-medium rounded-md hover:bg-red-900">Forlat</button>
                         </AlertDialogAction>
                     </AlertDialogFooter>
                 </AlertDialogContent>
@@ -70,10 +70,10 @@ const RequestButton = ({ activeRequest, onLeave, onJoin }: any) => {
         )
 
 
-        //<button className="p-2 justify-center disabled:opacity-75 items-center bg-red-800 disabled:hover:bg-red-800 text-white w-full font-medium rounded-lg hover:bg-red-900 flex gap-2" onClick={() => handleLeave(activeRequest.id)}>Forlat dugnad</button>;
+        //<button className="p-2 justify-center disabled:opacity-75 items-center bg-red-800 disabled:hover:bg-red-800 text-white w-full font-medium rounded-md hover:bg-red-900 flex gap-2" onClick={() => handleLeave(activeRequest.id)}>Forlat dugnad</button>;
     }
 
-    return <button disabled className="p-2 justify-center disabled:opacity-75 items-center bg-green-800 disabled:hover:bg-green-800 text-white w-full font-medium rounded-lg hover:bg-green-900 flex gap-2">Forespørsel sendt</button>;
+    return <button disabled className="p-2 justify-center disabled:opacity-75 items-center bg-green-800 disabled:hover:bg-green-800 text-white w-full font-medium rounded-md hover:bg-green-900 flex gap-2">Forespørsel sendt</button>;
 }
 
 export default RequestButton;

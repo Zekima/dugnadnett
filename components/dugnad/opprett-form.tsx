@@ -239,7 +239,7 @@ const OprettForm = ({ categories }: any) => {
                   <Button
                     type="submit"
                     disabled={form.formState.isSubmitting}
-                    className="w-full md:w-1/4 py-6 bg-green-800 hover:bg-green-900 font-medium"
+                    className="w-full md:w-1/4 py-6 text-md bg-green-800 hover:bg-green-900 font-medium"
                   >
                     {form.formState.isSubmitting ? (
                       <Loader2 className="animate-spin" />

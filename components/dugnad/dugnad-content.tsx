@@ -44,13 +44,13 @@ const DugnadContent = async ({ dugnad, isOwner }: any) => {
                 </div>
             </div>
             <div className="mt-5 flex gap-2 max-w-[380px]">
-                <div className="text-white w-full font-medium rounded-lg flex">
+                <div className="text-white w-full font-medium rounded-md flex">
                     {isOwner ?
                         <EditDugnadButton dugnadId={dugnad.id} /> : <RequestButton activeRequest={activeRequest} onLeave={onLeave} onJoin={onJoin} />
                     }
                 </div>
 
-                <button className="p-2 justify-center items-center bg-gray-300 text-black w-full font-medium rounded-lg hover:bg-gray-400 flex gap-2">
+                <button className="p-2 justify-center items-center bg-gray-300 text-black w-full font-medium rounded-md hover:bg-gray-400 flex gap-2">
                     <Share /> Del Dugnaden
                 </button>
             </div>
