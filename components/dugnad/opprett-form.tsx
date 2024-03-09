@@ -99,7 +99,7 @@ const OprettForm = ({ categories }: any) => {
                             Bilde <FormMessage className="text-red-500" />
                           </FormLabel>
                           <FormControl>
-                            <div className="flex flex-col relative items-center justify-center bg-white border-4 border-dashed border-gray-200 hover:border-gray-300">
+                            <div className="flex flex-col rounded-md relative items-center justify-center bg-white border-2 border-dashed border-gray-400 hover:border-gray-400">
                               {preview ? (
                                 <div className="absolute">
                                   <button className="absolute right-0 top-0 text-white bg-black cursor-pointer z-50" onClick={() => setPreview(null)}><X/></button>
@@ -161,7 +161,7 @@ const OprettForm = ({ categories }: any) => {
                             <Textarea
                               {...field}
                               placeholder="Skriv inn beskrivelse"
-                              className="bg-white min-h-[155px]"
+                              className="bg-white min-h-[160px]"
                             />
                           </FormControl>
                         </FormItem>
@@ -177,7 +177,7 @@ const OprettForm = ({ categories }: any) => {
                         )}
 
                       </p>
-                      <img src="/oslomap.webp" alt="" />
+                      <img className="rounded-md outline-gray-400 outline outline-1" src="/oslomap.webp" alt="" />
 
 
                       <FormField
