@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import NavBar from "@/components/navbar/navbar";
 import Footer from "@/components/footer/footer";
+import { Toaster } from "@/components/ui/toaster"
 import { SessionProvider } from "next-auth/react";
 import { auth } from "@/auth";
 import "./globals.css";
@@ -26,6 +27,7 @@ export default async function RootLayout({
           <NavBar />
           <div className="grow">
           {children}
+          <Toaster />
           </div>
           <Footer />
         </SessionProvider>

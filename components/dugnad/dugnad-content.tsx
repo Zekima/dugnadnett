@@ -6,6 +6,7 @@ import { requestToJoin, getJoinRequest, removeJoinRequest } from "@/actions/dugn
 import { revalidatePath } from "next/cache";
 import EditDugnadButton from '@/components/dugnad/edit-dugnad-button'
 import DugnadInfo from '@/components/dugnad/dugnad-info'
+import ShareButton from '@/components/dugnad/share-button'
 
 const DugnadContent = async ({ dugnad, isOwner }: any) => {
     const activeRequest = await getJoinRequest(dugnad.id)
@@ -20,6 +21,16 @@ const DugnadContent = async ({ dugnad, isOwner }: any) => {
         await removeJoinRequest(participationId)
     }
 
+    const formattedDate = new Intl.DateTimeFormat('nb-NO', {
+        month: 'long',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: false
+    }).format(new Date(dugnad.date));
+
+    const dateString = formattedDate.replace("kl.", "-")
+
     return (
         <>
             <div className="flex justify-between md:flex-row flex-col gap-2">
@@ -32,11 +43,12 @@ const DugnadContent = async ({ dugnad, isOwner }: any) => {
                             <Badge key={category.id}>{category.name}</Badge>
                         ))}
                     </div>
-
-
                 </div>
                 <div>
-                    <div className="flex gap-2 items-center mt-3 md:mt-0 text-sm font-medium p-4 bg-gray-300 justify-center rounded-md min-w-[175px]"><span>31. mars 16:30</span> <Calendar size={16} /></div>         
+                    <div className="flex gap-2 items-center mt-3 md:mt-0 text-sm font-medium p-4 bg-gray-300 justify-center rounded-md min-w-[175px]">
+                        <span>{dateString}</span>
+                        <Calendar size={16} />
+                    </div>
                 </div>
             </div>
             <div className="mt-5 flex gap-2 lg:max-w-[380px] w-full">
@@ -46,9 +58,9 @@ const DugnadContent = async ({ dugnad, isOwner }: any) => {
                     }
                 </div>
 
-                <button className="p-2 justify-center items-center bg-gray-300 text-black w-full font-medium rounded-md hover:bg-gray-400 flex gap-2">
-                    <Share /> Del Dugnaden
-                </button>
+                <ShareButton/>
+
+                
             </div>
             <DugnadInfo dugnadInfo={dugnad.info}></DugnadInfo>
         </>

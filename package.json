@@ -23,6 +23,7 @@
     "@radix-ui/react-slider": "^1.1.2",
     "@radix-ui/react-slot": "^1.0.2",
     "@radix-ui/react-tabs": "^1.0.4",
+    "@radix-ui/react-toast": "^1.1.5",
     "@types/backblaze-b2": "^1.5.6",
     "@vercel/blob": "^0.22.0",
     "axios": "^1.6.7",
