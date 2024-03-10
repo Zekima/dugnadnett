@@ -31,7 +31,8 @@ import Link from "next/link";
 
 
 const EditForm = ({ categories, dugnad, handleDelete }: any) => {
-  const [selectedCategories, setSelectedCategories] = useState(dugnad.categories.map((category: {id: number, name: string}) => category.name))
+  const [selectedCategories, setSelectedCategories] = useState(dugnad.categories.map((category: { id: number, name: string }) => category.name))
+  const [imageChanged, setImageChanged] = useState(false);
 
   const form = useForm<z.infer<typeof DugnadSchema>>({
     resolver: zodResolver(DugnadSchema),
@@ -58,6 +59,7 @@ const EditForm = ({ categories, dugnad, handleDelete }: any) => {
     formData.append("date", data.date);
     formData.append("info", data.info);
     formData.append("categories", JSON.stringify(data.categories));
+    formData.append("imageChanged", JSON.stringify(imageChanged));
 
     try {
       await updateDugnad(formData, dugnad.id);
@@ -66,13 +68,14 @@ const EditForm = ({ categories, dugnad, handleDelete }: any) => {
     }
   };
 
-  const prevImage = dugnad.image ?  dugnad.image + "-900.webp" : null
+  const prevImage = dugnad.image ? dugnad.image + "-900.webp" : null
 
   const [preview, setPreview] = useState<any>(prevImage);
 
   const handlePreviewChange = (event: any) => {
     const file = event.target.files[0];
     if (!file) return
+    setImageChanged(true);
     if (file.type.startsWith("image")) {
       const reader = new FileReader();
       reader.onloadend = () => setPreview(reader.result);
@@ -82,6 +85,10 @@ const EditForm = ({ categories, dugnad, handleDelete }: any) => {
     }
   }
 
+  const handlePreviewDelete = () => {
+    setPreview(null);
+    setImageChanged(true);
+  }
 
   return (
     <div className="">
@@ -90,7 +97,6 @@ const EditForm = ({ categories, dugnad, handleDelete }: any) => {
           <div className="p-6 mt-3 rounded-md">
             <h1 className="text-2xl font-semibold">Rediger Dugnad</h1>
             <Separator className="my-4" />
-
             <Form {...form}>
               <form onSubmit={form.handleSubmit(onSubmit)}>
                 <div className="flex flex-col md:flex-row justify-between gap-x-5 gap-y-3">
@@ -107,7 +113,7 @@ const EditForm = ({ categories, dugnad, handleDelete }: any) => {
                             <div className="flex flex-col rounded-md relative items-center justify-center bg-white border-2 border-dashed border-gray-400 hover:border-gray-400">
                               {preview ? (
                                 <div className="absolute">
-                                  <button className="absolute right-0 top-0 text-white bg-black cursor-pointer z-50" onClick={() => setPreview(null)}><X /></button>
+                                  <button className="absolute right-0 top-0 text-white bg-black cursor-pointer z-50" onClick={() => handlePreviewDelete()}><X /></button>
                                   <img src={preview} alt="Preview" style={{ position: 'relative', maxHeight: 300 }} />
                                 </div>
                               ) : (
@@ -183,8 +189,6 @@ const EditForm = ({ categories, dugnad, handleDelete }: any) => {
 
                       </p>
                       <img className="rounded-md outline-gray-400 outline outline-1" src="/oslomap.webp" alt="" />
-
-
                       <FormField
                         control={form.control}
                         name="area"
@@ -201,7 +205,6 @@ const EditForm = ({ categories, dugnad, handleDelete }: any) => {
                         )}
                       />
                     </div>
-
                     <FormField
                       control={form.control}
                       name="categories"
@@ -211,14 +214,11 @@ const EditForm = ({ categories, dugnad, handleDelete }: any) => {
                             Kategorier <FormMessage className="text-red-500" />
                           </FormLabel>
                           <FormControl>
-                            <BadgeSelect {...field} categories={categories}  />
+                            <BadgeSelect {...field} categories={categories} />
                           </FormControl>
                         </FormItem>
                       )}
                     />
-
-
-
                     <FormField
                       control={form.control}
                       name="date"
@@ -237,7 +237,6 @@ const EditForm = ({ categories, dugnad, handleDelete }: any) => {
                         </FormItem>
                       )}
                     />
-
                   </div>
                 </div>
                 <div className="gap-2 flex justify-between my-10 rounded-md bg-gray-200 p-4">

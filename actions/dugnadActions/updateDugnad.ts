@@ -60,14 +60,20 @@ export const updateDugnad = async (formData: FormData, dugnadId: number) => {
         connect: categories.map((category) => ({ name: category })),
       },
     };
-    
-    if (imageUrl !== "undefined") {
-      //@ts-ignore
-      data.image = imageUrl;
-    } else {
-      //@ts-ignore
-      data.image = null
+
+    const imageChanged = formData.get("imageChanged") === "true";
+
+    if (imageChanged) {
+      if (imageUrl !== "undefined") {
+        //@ts-ignore
+        data.image = imageUrl;
+      } else {
+        //@ts-ignore
+        data.image = null
+      }
     }
+    
+
   
     try {
       await db.dugnad.update({
