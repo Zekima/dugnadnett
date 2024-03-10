@@ -8,57 +8,51 @@ import { Check, X } from 'lucide-react'
 
 const DeltakereNavigation = ({ isOwner, participants, joinRequests, declineRequest, acceptRequest }: any) => {
 
-    const [activeTab, setActiveTab] = useState('participants'); 
+    const [activeTab, setActiveTab] = useState('participants');
+
+    console.log(activeTab)
 
     return (
         <>
-            {participants && participants.length > 0 ? (
-                <div>
-                    <div className="flex gap-2 text-sm text-gray-600 mb-3 mt-3 font-medium">
+            <div>
+                <div className="flex gap-2 text-sm text-gray-600 mb-3 mt-3 font-medium">
+                    <p
+                        onClick={() => setActiveTab('participants')}
+                        className={`hover:text-black cursor-pointer ${activeTab === 'participants' ? 'underline text-black' : ''}`}
+                    >
+                        Deltakere ({participants.length})
+                    </p>
+                    {isOwner && (
                         <p
-                            onClick={() => setActiveTab('participants')}
-                            className={`hover:text-black cursor-pointer ${activeTab === 'participants' ? 'underline text-black' : ''}`}
+                            onClick={() => setActiveTab('requests')}
+                            className={`hover:text-black cursor-pointer ${activeTab === 'requests' ? 'underline text-black' : ''}`}
                         >
-                            Deltakere ({participants.length})
+                            Forespørsler ({joinRequests?.length})
                         </p>
-                        {isOwner && (
-                            <p
-                                onClick={() => setActiveTab('requests')}
-                                className={`hover:text-black cursor-pointer ${activeTab === 'requests' ? 'underline text-black' : ''}`}
-                            >
-                                Forespørsler ({joinRequests?.length})
-                            </p>
-                        )}
-                    </div>
-
-                    {participants && participants.length > 0 ? (
-                        <div className="gap-2 flex flex-col">
-                            {activeTab === 'participants' && participants.map((participant: { id: string; }) => (
-                                <ParticipantItem
-                                    key={participant.id}
-                                    participant={participant}
-                                />
-                            ))}
-                            {activeTab === 'requests' && joinRequests?.map((request: any) => (
-                                <RequestItem
-                                    key={request.id}
-                                    request={request}
-                                    declineRequest={declineRequest}
-                                    acceptRequest={acceptRequest}
-                                />
-                            ))}
-                        </div>
-                    ) : (
-                        <div className="flex justify-center items-center min-h-[29vw]">
-                            <p>Ingen Deltakere</p>
-                        </div>
                     )}
                 </div>
-            ) : (
-                <div className="flex justify-center items-center min-h-[29vw]">
-                    <p>Ingen Deltakere</p>
+
+                <div className="gap-2 flex flex-col">
+                    {activeTab === 'participants' && participants.length === 0 ? (
+                        <div className="flex items-center justify-center h-[300px]">Ingen deltakere</div>
+                    ) : (
+                        activeTab === 'participants' && participants.map((participant: any) => (
+                            <ParticipantItem
+                                key={participant.id}
+                                participant={participant}
+                            />
+                        ))
+                    )}
+                    {activeTab === 'requests' && joinRequests?.map((request: any) => (
+                        <RequestItem
+                            key={request.id}
+                            request={request}
+                            declineRequest={declineRequest}
+                            acceptRequest={acceptRequest}
+                        />
+                    ))}
                 </div>
-            )}
+            </div>
         </>
     );
 }

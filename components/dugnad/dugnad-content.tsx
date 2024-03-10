@@ -21,7 +21,7 @@ const DugnadContent = async ({ dugnad, isOwner }: any) => {
 
     return (
         <>
-            <div className="flex justify-between">
+            <div className="flex justify-between md:flex-row flex-col gap-2">
                 <div>
                     <h1 className="text-2xl text-bold font-semibold">
                         {dugnad?.title}
@@ -31,19 +31,14 @@ const DugnadContent = async ({ dugnad, isOwner }: any) => {
                             <Badge key={category.id}>{category.name}</Badge>
                         ))}
                     </div>
-                </div>
 
-                <div className="flex flex-col gap-2 text-sm">
-                    <div className="flex gap-2 justify-end">
-                        <p>Gullbringvegen 28, 3800 Bø</p>
-                        <MapPin size={18} />
-                    </div>
-                    <div className="flex gap-2 justify-end">
-                        <p>31.02.2024 16:30 </p> <Calendar size={18} />
-                    </div>
+
+                </div>
+                <div>
+                    <div className="flex gap-2 items-center mt-3 md:mt-0 text-sm font-medium p-4 bg-gray-300 justify-center rounded-md min-w-[175px]"><span>31. mars 16:30</span> <Calendar size={16} /></div>         
                 </div>
             </div>
-            <div className="mt-5 flex gap-2 max-w-[380px]">
+            <div className="mt-5 flex gap-2 lg:max-w-[380px] w-full">
                 <div className="text-white w-full font-medium rounded-md flex">
                     {isOwner ?
                         <EditDugnadButton dugnadId={dugnad.id} /> : <RequestButton activeRequest={activeRequest} onLeave={onLeave} onJoin={onJoin} />
