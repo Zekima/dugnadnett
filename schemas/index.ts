@@ -35,7 +35,7 @@ export const DugnadSchema = z.object({
   area: z.string().min(1, "Område er påkrevd"),
   date: z.string().min(1, "Dato er påkrevd"),
   info: z.string().min(1, "Informasjon er påkrevd"),
-  categories: z.array(z.string()).min(1, "Velg minst en kategori"),
+  categories: z.array(z.string()).min(1, "Velg minst en kategori").max(3, "Maks 3 kategorier"),
   image: z.unknown().optional().refine((files: any) => {
     let allowedImage = true;
     
