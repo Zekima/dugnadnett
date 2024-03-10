@@ -88,6 +88,6 @@ export const updateDugnad = async (formData: FormData, dugnadId: number) => {
       return { error: "Error ved oppdatering av dugnad" };
     }
   
-    return redirect("/utforsk");
+    return redirect(`/dugnad/${dugnadId}`);
   };
   

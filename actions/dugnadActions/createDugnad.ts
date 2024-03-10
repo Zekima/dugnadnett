@@ -55,8 +55,9 @@ export const createDugnad = async (formData: FormData) => {
   const user = await getCurrentUser();
   const userId = user?.id;
 
+  let dugnad;
   try {
-    await db.dugnad.create({
+      dugnad = await db.dugnad.create({
       data: {
         ownerId: userId as string,
         area: area,
@@ -76,5 +77,5 @@ export const createDugnad = async (formData: FormData) => {
     return { error: "Error ved oppretting av dugnad" };
   }
 
-  return redirect("/utforsk")
+  return redirect(`/dugnad/${dugnad.id}`)
 };
