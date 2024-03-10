@@ -10,8 +10,6 @@ const DeltakereNavigation = ({ isOwner, participants, joinRequests, declineReque
 
     const [activeTab, setActiveTab] = useState('participants');
 
-    console.log(activeTab)
-
     return (
         <>
             <div>

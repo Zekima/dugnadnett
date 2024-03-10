@@ -5,6 +5,7 @@ import RequestButton from "@/components/dugnad/request-button";
 import { requestToJoin, getJoinRequest, removeJoinRequest } from "@/actions/dugnadActions/joinRequests";
 import { revalidatePath } from "next/cache";
 import EditDugnadButton from '@/components/dugnad/edit-dugnad-button'
+import DugnadInfo from '@/components/dugnad/dugnad-info'
 
 const DugnadContent = async ({ dugnad, isOwner }: any) => {
     const activeRequest = await getJoinRequest(dugnad.id)
@@ -49,7 +50,7 @@ const DugnadContent = async ({ dugnad, isOwner }: any) => {
                     <Share /> Del Dugnaden
                 </button>
             </div>
-            <p className="mt-4">{dugnad.info}</p>
+            <DugnadInfo dugnadInfo={dugnad.info}></DugnadInfo>
         </>
     );
 }

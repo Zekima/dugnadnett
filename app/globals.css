@@ -52,3 +52,70 @@ button {
     @apply bg-background text-foreground;
   }
 }
+
+.markdown h1 {
+  @apply text-2xl font-bold;
+}
+.markdown h2 {
+  @apply text-xl font-semibold;
+}
+.markdown h3 {
+  @apply text-lg font-medium;
+}
+.markdown p {
+  @apply text-base;
+}
+
+
+.markdown ul {
+  @apply list-disc pl-5;
+}
+
+.markdown ol {
+  @apply list-decimal pl-5;
+}
+
+.markdown li {
+  @apply mb-2;
+}
+
+.markdown a {
+  @apply text-blue-500 underline;
+}
+
+.markdown img {
+  @apply max-w-full h-auto;
+}
+
+.markdown blockquote {
+  @apply pl-4 border-l-4 border-gray-200 italic;
+}
+
+.markdown pre {
+  @apply bg-gray-100 p-3;
+}
+
+.markdown code {
+  @apply font-mono text-sm bg-gray-100 rounded p-1;
+}
+
+.markdown table {
+  @apply min-w-full divide-y divide-gray-200 table-auto;
+}
+
+.markdown th,
+.markdown td {
+  @apply text-left py-2 px-4;
+}
+
+.markdown strong {
+  @apply font-bold;
+}
+
+.markdown em {
+  @apply italic;
+}
+
+.markdown hr {
+  @apply my-4 border-t border-gray-200;
+}
