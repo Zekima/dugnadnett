@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { useDebouncedCallback } from 'use-debounce';
 import BadgeSelect from '@/components/utforsk/badge-select'
 
+
 import { CiSearch } from "react-icons/ci";
 import Image from "next/image";
 import { useSearchParams, usePathname, useRouter } from 'next/navigation';

@@ -72,7 +72,7 @@ const NavBar = () => {
             </div>
 
             <div
-              className={`top-0 left-0 lg:hidden h-full  gap-3 absolute flex-col p-3 text-xl bg-green-200 w-2/6 z-10 ${
+              className={`top-0 left-0 lg:hidden h-full  gap-3 absolute flex-col p-3 text-xl bg-green-300 w-2/6 z-10 ${
                 isMenuOpen ? "flex" : "hidden"
               }`}
             >

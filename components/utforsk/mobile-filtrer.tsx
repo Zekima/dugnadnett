@@ -1,80 +1,19 @@
-'use client'
+import React from "react";
 
-import React, { useState } from "react";
-import { Input } from "@/components/ui/input";
-import { Badge } from "@/components/ui/badge";
-import { useDebouncedCallback } from 'use-debounce';
-import BadgeSelect from '@/components/utforsk/badge-select'
+import Filtrer from "@/components/utforsk/filtrer";
 
-import { CiSearch } from "react-icons/ci";
-import Image from "next/image";
-import { useSearchParams, usePathname, useRouter } from 'next/navigation';
 import {
     Drawer,
-    DrawerClose,
     DrawerContent,
-    DrawerDescription,
-    DrawerFooter,
-    DrawerHeader,
-    DrawerTitle,
     DrawerTrigger,
 } from "@/components/ui/drawer"
-//         <button className="py-1 px-2 rounded-md text-sm bg-white border-2 hover:bg-gray-100">Filtrer</button>
 
-
-const MobileFiltrer = ({ categories, categoryParams }: any) => {
-    const searchParams = useSearchParams();
-    const pathname = usePathname();
-    const { replace } = useRouter();
-
-    const handleSearch = useDebouncedCallback((term) => {
-        const params = new URLSearchParams(searchParams);
-        if (term) {
-            params.set('query', term);
-        } else {
-            params.delete('query');
-        }
-        replace(`${pathname}?${params.toString()}`);
-    }, 350);
-
-    const [selectedCategories, setSelectedCategories] = useState(categoryParams);
-
-    const handleCategoryChange = (newCategories: any) => {
-        setSelectedCategories(newCategories)
-        const params = new URLSearchParams(searchParams);
-        const categoriesJoined = newCategories.join(',');
-        if (categoriesJoined) {
-            params.set('categories', categoriesJoined);
-        } else {
-            params.delete('categories');
-        }
-        replace(`${pathname}?${params.toString()}`);
-    }
-
+const MobileFiltrer = (props: any) => {
     return (
         <Drawer>
             <DrawerTrigger className="py-1 px-2 rounded-md text-sm bg-white border-2 hover:bg-gray-100">Filtrer</DrawerTrigger>
-            <DrawerContent className="bg-white  h-2/3 p-5">
-                <div className="gap-y-6 flex flex-col">
-                    <div className="relative">
-                        <CiSearch size={24} className="absolute right-2 bottom-2" />
-                        <Input
-                            placeholder="Søk i dugnader"
-                            className="bg-white"
-                            onChange={(e) => {
-                                handleSearch(e.target.value);
-                            }}
-                            defaultValue={searchParams.get('query')?.toString()}
-                        />
-                    </div>
-
-                    <div>
-                        <h1 className="font-bold">Kategorier</h1>
-                        <div className="flex gap-1 mt-2 flex-wrap">
-                            <BadgeSelect categories={categories} value={selectedCategories} onChange={handleCategoryChange} />
-                        </div>
-                    </div>
-                </div>
+            <DrawerContent className="bg-white h-2/3 p-5">
+                <Filtrer {...props} />
             </DrawerContent>
         </Drawer>
     );
