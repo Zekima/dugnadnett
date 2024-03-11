@@ -8,6 +8,7 @@ import { getDugnadsPages } from "@/actions/dugnadActions/getDugnads";
 
 import Pagination from "@/components/pagination";
 import { getCategories } from "@/actions/category";
+import MobileFiltrer from '@/components/utforsk/mobile-filtrer'
 
 const UtforskPage = async ({
   searchParams,
@@ -35,9 +36,9 @@ const UtforskPage = async ({
       </div>
       <div className="w-full h-full min-h-screen mt-5 lg:w-3/4">
         <div className="flex justify-between mb-3 gap-2 items-center">
-          <button className="visible lg:invisible py-1 px-2 rounded-md text-sm bg-white border-2">
-            Filtrer
-          </button>
+          <div className="visible lg:invisible">
+            <MobileFiltrer categories={categories} categoryParams={categoryParams} />
+          </div>
           <div className="flex gap-2 items-center">
             <p>Sorter på</p>
             <Sorter />
