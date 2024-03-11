@@ -30,7 +30,7 @@ const UtforskPage = async ({
   const totalPages = await getDugnadsPages(query, categoryParams);
 
   return (
-    <div className="h-full m-auto max-w-[1280px] flex flex-col sm:flex-row">
+    <div className="h-full m-auto max-w-[1280px] flex flex-col sm:flex-row px-5 xl:px-0">
       <div className="w-full min-h-screen hidden lg:block mt-5 mr-8 lg:w-1/4">
         <Filtrer categories={categories} categoryParams={categoryParams} />
       </div>
