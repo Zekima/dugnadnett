@@ -31,16 +31,14 @@ const DeltakereNavigation = ({ isOwner, participants, joinRequests, declineReque
                 </div>
 
                 <div className="gap-2 flex flex-col">
-                    {activeTab === 'participants' && participants.length === 0 ? (
-                        <div className="flex items-center justify-center h-[300px]">Ingen deltakere</div>
-                    ) : (
+                    {
                         activeTab === 'participants' && participants.map((participant: any) => (
                             <ParticipantItem
                                 key={participant.id}
                                 participant={participant}
                             />
                         ))
-                    )}
+                    }
                     {activeTab === 'requests' && joinRequests?.map((request: any) => (
                         <RequestItem
                             key={request.id}
@@ -60,7 +58,7 @@ export default DeltakereNavigation
 
 
 const ParticipantItem = ({ participant }: any) => (
-    <div className="p-2 bg-gray-300 flex gap-2">
+    <div className="p-2 bg-gray-200 rounded-md flex gap-2">
         <div className="flex gap-2 items-center">
             <UserImage user={participant} size={36} />
             {participant.name}
@@ -71,7 +69,7 @@ const ParticipantItem = ({ participant }: any) => (
 const RequestItem = ({ request, declineRequest, acceptRequest }: any) => {
 
     return (
-        <div className="p-2 bg-gray-300 flex gap-2 justify-between">
+        <div className="p-2 bg-gray-200 rounded-md flex gap-2 justify-between">
             <div className="flex gap-2 items-center">
                 <UserImage user={request} size={36} />
                 {request.name}

@@ -53,12 +53,12 @@ export default async function DugnadPage({
           </div>
         </div>
       </div>
-      <div className="bg-gray-100 w-full h-fill flex lg:flex-row flex-col">
-        <div className="lg:w-2/3 p-5 w-full min-h-[450px]">
+      <div className="w-full h-fill flex lg:flex-row flex-col">
+        <div className="lg:w-2/3 mt-5 xl:p-0 px-5 w-full min-h-[450px]">
             <DugnadContent dugnad={dugnad} isOwner={isOwner}/>
         </div>
 
-        <div className="lg:w-1/3 w-full min-h-[550px] bg-gray-200 p-5 gap-y-3 flex flex-col">
+        <div className="lg:w-1/3 w-full min-h-[550px] p-5 gap-y-3 flex flex-col">
           <DugnadTabs dugnadId={dugnad.id} isOwner={isOwner} />
         </div>
       </div>

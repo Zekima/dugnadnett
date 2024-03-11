@@ -6,7 +6,7 @@ const DugnadInfo = ({dugnadInfo} : any) => {
         html: true
     })
     return (
-        <div className="mt-3 markdown flex flex-col gap-2" dangerouslySetInnerHTML={{ __html: md.render(dugnadInfo) }} />
+        <div className="mt-5 markdown flex flex-col gap-2 mb-10" dangerouslySetInnerHTML={{ __html: md.render(dugnadInfo) }} />
     );
 }
 

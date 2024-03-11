@@ -30,10 +30,10 @@ const UtforskPage = async ({
 
   return (
     <div className="h-full m-auto max-w-[1280px] flex flex-col sm:flex-row">
-      <div className="w-full min-h-screen hidden lg:block bg-gray-200 p-4 lg:w-1/4">
+      <div className="w-full min-h-screen hidden lg:block mt-5 mr-8 lg:w-1/4">
         <Filtrer categories={categories} categoryParams={categoryParams} />
       </div>
-      <div className="w-full h-full min-h-screen bg-gray-100 p-4 lg:w-3/4">
+      <div className="w-full h-full min-h-screen mt-5 lg:w-3/4">
         <div className="flex justify-between mb-3 gap-2 items-center">
           <button className="visible lg:invisible py-1 px-2 rounded-md text-sm bg-white border-2">
             Filtrer

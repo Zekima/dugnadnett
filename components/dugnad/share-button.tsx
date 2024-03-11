@@ -20,7 +20,7 @@ const ShareButton = () => {
     return (
         <button
             onClick={() => handleShare()}
-            className="p-2 justify-center items-center bg-gray-300 text-black w-full font-medium rounded-md hover:bg-gray-400 flex gap-2">
+            className="p-2 justify-center items-center bg-gray-200 text-black w-full font-medium rounded-md hover:bg-gray-300 flex gap-2">
             <Share /> Del Dugnaden
         </button>
     );
