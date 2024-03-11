@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 import {
   getDugnadById,
   getOwnerByDugnadId,
@@ -9,6 +9,7 @@ import DugnadContent from "@/components/dugnad/dugnad-content"
 import { FaStar } from "react-icons/fa";
 import { getUserById } from "@/data/user";
 import { getCurrentUser } from "@/lib/auth";
+import { ProgressiveImage } from '@/components/progressive-image'
 
 
 export default async function DugnadPage({
@@ -29,10 +30,11 @@ export default async function DugnadPage({
       <div className="flex h-[350px]">
         <div className="w-2/3 ">
           {dugnad.image ? (
-            <img
-              src={`${dugnad?.image}-900.webp`}
-              className="w-full h-full object-cover"
+            <ProgressiveImage
+              low={`${dugnad.image}-500.webp`}
+              high={`${dugnad.image}-900.webp`}
               alt={dugnad.title}
+              className="w-full h-full object-cover"
             />
           ) : (
             <div className="bg-green-200 h-full w-full"></div>
@@ -55,7 +57,7 @@ export default async function DugnadPage({
       </div>
       <div className="w-full h-fill flex lg:flex-row flex-col">
         <div className="lg:w-2/3 mt-5 xl:p-0 px-5 w-full min-h-[450px]">
-            <DugnadContent dugnad={dugnad} isOwner={isOwner}/>
+          <DugnadContent dugnad={dugnad} isOwner={isOwner} />
         </div>
 
         <div className="lg:w-1/3 w-full min-h-[550px] p-5 gap-y-3 flex flex-col">
