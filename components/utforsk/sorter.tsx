@@ -37,7 +37,7 @@ export default function Sorter() {
       <SelectTrigger className="w-[180px] bg-white">
         <SelectValue placeholder="Select a fruit" />
       </SelectTrigger>
-      <SelectContent className="bg-white">
+      <SelectContent className="bg-white z-50">
         <SelectGroup>
           <SelectItem value="publisert">Publisert</SelectItem>
           <SelectItem value="eldste">Eldste</SelectItem>
