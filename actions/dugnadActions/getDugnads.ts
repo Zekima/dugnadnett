@@ -149,6 +149,7 @@ export async function getDugnadById(dugnadId: string) {
       },
       include: {
         categories: true,
+        location: true,
       },
     });
     return dugnad;

@@ -1,6 +1,6 @@
 "use server"
 
-import { DugnadSchema } from "@/schemas/index";
+import { DugnadSchema2 } from "@/schemas/index";
 import uploadImage from "@/actions/uploadImage";
 import { db } from "@/lib/db";
 import { redirect } from "next/navigation";
@@ -20,23 +20,31 @@ export const updateDugnad = async (formData: FormData, dugnadId: number) => {
     if (typeof dateValue === "string") {
       formattedDate = new Date(dateValue).toISOString();
     }
+
+    const locationAddress = formData.get("locationAddress") as string;
+    const locationLatitude = parseFloat(formData.get("locationLatitude") as string);
+    const locationLongitude = parseFloat(formData.get("locationLongitude") as string);
   
     const values = {
-      area: formData.get("area"),
       title: formData.get("title"),
       date: formattedDate,
       info: formData.get("info"),
       categories: categoriesArray,
       image: formData.get("image"),
+      location: {
+        address: locationAddress,
+        latitude: locationLatitude,
+        longitude: locationLongitude,
+      },
     };
-    const validatedFields = DugnadSchema.safeParse(values);
+    const validatedFields = DugnadSchema2.safeParse(values);
   
     if (!validatedFields.success) {
       console.log("Validation errors:", validatedFields.error.issues);
       return { error: "Ugyldig data" };
     }
   
-    const { area, title, date, info, categories } = validatedFields.data;
+    const { location, title, date, info, categories } = validatedFields.data;
   
     let imageUrl = values.image;
   
@@ -51,7 +59,6 @@ export const updateDugnad = async (formData: FormData, dugnadId: number) => {
     }
 
     let data = {
-      area: area,
       date: date,
       info: info,
       title: title,
@@ -72,15 +79,23 @@ export const updateDugnad = async (formData: FormData, dugnadId: number) => {
         data.image = null
       }
     }
-    
-
   
     try {
-      await db.dugnad.update({
+      const updatedDugnad = await db.dugnad.update({
         where: {
           id: dugnadId,
         },
-        data: data
+        data: data,
+        include: {location: true}
+      });
+
+      await db.location.update({
+        where: { id: updatedDugnad.locationId },
+        data: {
+          address: location.address,
+          latitude: location.latitude,
+          longitude: location.longitude,
+        },
       });
   
     } catch (error) {

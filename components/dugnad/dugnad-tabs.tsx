@@ -2,14 +2,16 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { getDugnadParticipants } from "@/actions/dugnadActions/getDugnads";
 import React, { useState } from "react";
 import { getJoinRequests } from "@/actions/dugnadActions/joinRequests";
+import { Map } from "lucide-react";
 import DeltakereNavigation from '@/components/dugnad/deltakere-navigation'
 import { declineJoinRequest, acceptJoinRequest } from "@/actions/dugnadActions/joinRequests";
+import DugnadMap from '@/components/maps/dugnadMap'
 
 
-const DugnadTabs = async ({ dugnadId, isOwner }: any) => {
+const DugnadTabs = async ({ dugnad, isOwner }: any) => {
 
-    const participants = await getDugnadParticipants(dugnadId);
-    const joinRequests = await getJoinRequests(dugnadId);
+    const participants = await getDugnadParticipants(dugnad.id);
+    const joinRequests = await getJoinRequests(dugnad.id);
 
     const declineRequest = async (requestId: any) => {
         "use server"
@@ -37,6 +39,12 @@ const DugnadTabs = async ({ dugnadId, isOwner }: any) => {
                             declineRequest={declineRequest}
                             acceptRequest={acceptRequest}
                         />
+                    </TabsContent>
+                    <TabsContent value="kart">
+                    <div className="flex items-center gap-1.5 mt-2 bg-gray-200 p-3 rounded-md mb-2"><Map/> <p>{dugnad.location.address}</p></div>
+
+                        <DugnadMap latitude={dugnad.location.latitude} longitude={dugnad.location.longitude}/>
+
                     </TabsContent>
             </Tabs>
         </div>

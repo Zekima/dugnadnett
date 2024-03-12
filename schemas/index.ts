@@ -61,6 +61,41 @@ export const DugnadSchema = z.object({
 
 });
 
+export const DugnadSchema2 = z.object({
+  title: z.string().min(1, "Tittel er påkrevd"),
+  location: z.object({
+    address: z.string().min(1, "Område er påkrevd"),
+    latitude: z.number(),
+    longitude: z.number(),
+  }),
+  date: z.string().min(1, "Dato er påkrevd"),
+  info: z.string().min(1, "Informasjon er påkrevd"),
+  categories: z.array(z.string()).min(1, "Velg minst en kategori").max(3, "Maks 3 kategorier"),
+  image: z.unknown().optional().refine((files: any) => {
+    let allowedImage = true;
+    
+    if (!files || !Array.isArray(files)) {
+      return true;
+    }
+
+    for (let i = 0; i < files.length; i++) {
+      if (
+        // @ts-expect-error
+        files.item(i)!.size > MAX_FILE_SIZE ||
+        // @ts-expect-error
+        !ACCEPTED_IMAGE_TYPES.includes(files.item(i)!.type)
+      ) {
+        allowedImage = false
+        break
+      }
+      
+    }
+
+    return allowedImage;
+  }, "Maks filstørelse er 4.5MB"),
+
+});
+
 
 export const ReviewSchema = z.object({
   title: z.string().min(1, {

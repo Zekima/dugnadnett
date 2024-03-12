@@ -7,8 +7,9 @@ import { Loader2, X } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import BadgeSelect from "@/components/utforsk/badge-select";
-import { DugnadSchema } from "@/schemas/index";
+import { DugnadSchema, DugnadSchema2 } from "@/schemas/index";
 import { redirect } from "next/navigation";
+import CreateEditMap from '@/components/maps/createEditMap'
 
 import { Button } from "@/components/ui/button";
 
@@ -26,15 +27,17 @@ import * as z from "zod";
 import React, { useState } from "react";
 import { createDugnad } from "@/actions/dugnadActions/createDugnad";
 import { Separator } from "@/components/ui/separator"
-import { relative } from "path";
+import { Location } from "@/types";
 
 
 const OprettForm = ({ categories }: any) => {
-  const form = useForm<z.infer<typeof DugnadSchema>>({
-    resolver: zodResolver(DugnadSchema),
+  const form = useForm<z.infer<typeof DugnadSchema2>>({
+    resolver: zodResolver(DugnadSchema2),
     defaultValues: {
       title: "",
-      area: "",
+      location: {
+        
+      },
       date: "",
       info: "",
       categories: [],
@@ -42,7 +45,7 @@ const OprettForm = ({ categories }: any) => {
     },
   });
 
-  const onSubmit = async (data: z.infer<typeof DugnadSchema>) => {
+  const onSubmit = async (data: z.infer<typeof DugnadSchema2>) => {
     const formData = new FormData();
 
     if (data.image) {
@@ -51,12 +54,14 @@ const OprettForm = ({ categories }: any) => {
     }
 
     formData.append("title", data.title);
-    formData.append("area", data.area);
+    formData.append("locationAddress", data.location.address);
+    formData.append("locationLatitude", String(data.location.latitude));
+    formData.append("locationLongitude", String(data.location.longitude));
     formData.append("date", data.date);
     formData.append("info", data.info);
     formData.append("categories", JSON.stringify(data.categories));
 
-    
+
 
     try {
       await createDugnad(formData);
@@ -66,6 +71,7 @@ const OprettForm = ({ categories }: any) => {
   };
 
   const [preview, setPreview] = useState<any>();
+  const [location, setLocation] = useState({ address: "", latitude: 59.9139, longitude: 10.7522 }); // oslo
 
   const handlePreviewChange = (event: any) => {
     const file = event.target.files[0];
@@ -79,11 +85,17 @@ const OprettForm = ({ categories }: any) => {
     }
   }
 
+  const handleAreaChange = (newLocation: Location) => {
+    setLocation(newLocation);
+    form.setValue('location.address', newLocation.address);
+    form.setValue('location.latitude', newLocation.latitude);
+    form.setValue('location.longitude', newLocation.longitude);
+  };
 
   return (
     <div className="">
       <div className="min-h-screen flex justify-center relative">
-        <div className="max-w-[1280px]">
+        <div className="max-w-[1280px]"> 
           <div className="p-6 mt-3 rounded-md">
             <h1 className="text-2xl font-semibold">Opprett en ny Dugnad</h1>
             <Separator className="my-4" />
@@ -104,7 +116,7 @@ const OprettForm = ({ categories }: any) => {
                             <div className="flex flex-col rounded-md relative items-center justify-center bg-white border-2 border-dashed border-gray-400 hover:border-gray-400">
                               {preview ? (
                                 <div className="absolute">
-                                  <button className="absolute right-0 top-0 text-white bg-black cursor-pointer z-50" onClick={() => setPreview(null)}><X/></button>
+                                  <button className="absolute right-0 top-0 text-white bg-black cursor-pointer z-50" onClick={() => setPreview(null)}><X /></button>
                                   <img src={preview} alt="Preview" style={{ position: 'relative', maxHeight: 300 }} />
                                 </div>
                               ) : (
@@ -174,28 +186,15 @@ const OprettForm = ({ categories }: any) => {
                     <div>
                       <p className="leading-none font-medium text-sm mb-2">Område
 
-                        {form.formState.errors.area && (
-                          <span className="text-red-500 ml-2">{form.formState.errors.area.message}</span>
+                        {form.formState.errors.location?.address && (
+                          <span className="text-red-500 ml-2">{form.formState.errors.location?.address.message}</span>
                         )}
 
                       </p>
-                      <img className="rounded-md outline-gray-400 outline outline-1" src="/oslomap.webp" alt="" />
-
-
-                      <FormField
-                        control={form.control}
-                        name="area"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormControl>
-                              <Input
-                                {...field}
-                                placeholder="Skriv inn område"
-                                className="bg-white mt-2"
-                              />
-                            </FormControl>
-                          </FormItem>
-                        )}
+                      <CreateEditMap
+                        areaValue={location}
+                        onAreaChange={handleAreaChange}
+                        isNew={true}
                       />
                     </div>
 

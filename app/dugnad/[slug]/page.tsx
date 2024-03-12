@@ -60,8 +60,8 @@ export default async function DugnadPage({
           <DugnadContent dugnad={dugnad} isOwner={isOwner} />
         </div>
 
-        <div className="lg:w-1/3 w-full min-h-[550px] p-5 gap-y-3 flex flex-col">
-          <DugnadTabs dugnadId={dugnad.id} isOwner={isOwner} />
+        <div className="lg:w-1/3 w-full min-h-[550px] p-5 gap-y-3 flex flex-col border">
+          <DugnadTabs dugnad={dugnad} isOwner={isOwner} />
         </div>
       </div>
     </div>

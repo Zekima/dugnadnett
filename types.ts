@@ -33,24 +33,8 @@ export interface Dugnad {
   status: string;
 }
 
-export interface Address {
+export interface Location {
   latitude: number;
   longitude: number;
-  geometry: {
-    type: string;
-    coordinates: [number, number];
-  };
-  country: string;
-  countryCode: string;
-  countryFlag: string;
-  distance: number;
-  city: string;
-  number: string;
-  postalCode: string;
-  stateCode: string;
-  state: string;
-  street: string;
-  layer: string;
-  formattedAddress: string;
-  addressLabel: string;
+  address: string;
 }

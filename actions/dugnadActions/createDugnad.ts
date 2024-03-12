@@ -1,6 +1,6 @@
 "use server";
 
-import { DugnadSchema } from "@/schemas/index";
+import { DugnadSchema2 } from "@/schemas/index";
 import uploadImage from "@/actions/uploadImage";
 import { db } from "@/lib/db";
 import { getCurrentUser } from "@/lib/auth";
@@ -21,22 +21,34 @@ export const createDugnad = async (formData: FormData) => {
     formattedDate = new Date(dateValue).toISOString();
   }
 
+  const locationAddress = formData.get("locationAddress") as string;
+  const locationLatitude = parseFloat(
+    formData.get("locationLatitude") as string
+  );
+  const locationLongitude = parseFloat(
+    formData.get("locationLongitude") as string
+  );
+
   const values = {
-    area: formData.get("area"),
     title: formData.get("title"),
     date: formattedDate,
     info: formData.get("info"),
     categories: categoriesArray,
     image: formData.get("image"),
+    location: {
+      address: locationAddress,
+      latitude: locationLatitude,
+      longitude: locationLongitude,
+    },
   };
-  const validatedFields = DugnadSchema.safeParse(values);
+  const validatedFields = DugnadSchema2.safeParse(values);
 
   if (!validatedFields.success) {
     console.log("Validation errors:", validatedFields.error.issues);
     return { error: "Ugyldig data" };
   }
 
-  const { area, title, date, info, categories } = validatedFields.data;
+  const { title, date, info, categories, location } = validatedFields.data;
 
   let imageUrl = "";
 
@@ -57,25 +69,32 @@ export const createDugnad = async (formData: FormData) => {
 
   let dugnad;
   try {
-      dugnad = await db.dugnad.create({
+    const newLocation = await db.location.create({
+      data: {
+        address: location.address,
+        latitude: location.latitude,
+        longitude: location.longitude,
+      },
+    });
+
+    dugnad = await db.dugnad.create({
       data: {
         ownerId: userId as string,
-        area: area,
+        locationId: newLocation.id,
         date: date,
         info: info,
         title: title,
         image: imageUrl,
-        status: 'ACTIVE',
+        status: "ACTIVE",
         categories: {
           connect: categories.map((category) => ({ name: category })),
         },
       },
     });
-
   } catch (error) {
     console.error("Error ved oppretting av dugnad:", error);
     return { error: "Error ved oppretting av dugnad" };
   }
 
-  return redirect(`/dugnad/${dugnad.id}`)
+  return redirect(`/dugnad/${dugnad.id}`);
 };

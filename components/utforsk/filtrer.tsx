@@ -1,17 +1,19 @@
 'use client'
 
-import React, {useState} from "react";
+import React, { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { useDebouncedCallback } from 'use-debounce';
 import BadgeSelect from '@/components/utforsk/badge-select'
+import { Location } from "@/types";
 
 
 import { CiSearch } from "react-icons/ci";
 import Image from "next/image";
 import { useSearchParams, usePathname, useRouter } from 'next/navigation';
+import UtforskMap from "../maps/utforskMap";
 
-export default function Filtrer({categories, categoryParams}: any) {
+export default function Filtrer({ categories, categoryParams }: any) {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();
@@ -27,6 +29,8 @@ export default function Filtrer({categories, categoryParams}: any) {
   }, 350);
 
   const [selectedCategories, setSelectedCategories] = useState(categoryParams);
+  const [distance, setDistance] = useState(1500);
+  const [location, setLocation] = useState({ address: "", latitude: 0, longitude: 0 });
 
   const handleCategoryChange = (newCategories: any) => {
     setSelectedCategories(newCategories)
@@ -39,7 +43,28 @@ export default function Filtrer({categories, categoryParams}: any) {
     }
     replace(`${pathname}?${params.toString()}`);
   }
+
+  const handleAreaChange = (newLocation: Location) => {
+    setLocation(newLocation);
+    setShowCircle(true)
+  };
+
+  const handleDistanceChange = (distance: number) => {
+    if (showCircle) {
+      setDistance(distance)
+    }
+  }
   
+
+  const handleClearDistance = () => {
+    setDistance(1500)
+    circle?.setOptions({visible: false})
+    setShowCircle(false)
+    setLocation({address: '', latitude: 0, longitude: 0})
+  }
+
+  const [showCircle, setShowCircle] = useState(false);
+  const [circle, setCircle] = useState<google.maps.Circle | null>(null);
 
   return (
     <div className="gap-y-6 flex flex-col">
@@ -58,13 +83,23 @@ export default function Filtrer({categories, categoryParams}: any) {
       <div>
         <h1 className="font-bold">Kategorier</h1>
         <div className="flex gap-1 mt-2 flex-wrap">
-          <BadgeSelect categories={categories} value={selectedCategories} onChange={handleCategoryChange}/>
+          <BadgeSelect categories={categories} value={selectedCategories} onChange={handleCategoryChange} />
         </div>
       </div>
 
-      {/* <div>
+      <div>
         <h1 className="font-bold">Område</h1>
-      </div> */}
+        <UtforskMap
+          distance={distance}
+          onDistanceChange={handleDistanceChange}
+          areaValue={location}
+          onAreaChange={handleAreaChange}
+          circle={circle}
+          setCircle={setCircle}
+          handleClearDistance={handleClearDistance}
+          showCircle={showCircle}
+        />
+      </div>
     </div>
   );
 }

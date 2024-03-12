@@ -7,7 +7,7 @@ import { Loader2, X } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import BadgeSelect from "@/components/utforsk/badge-select";
-import { DugnadSchema } from "@/schemas/index";
+import { DugnadSchema2 } from "@/schemas/index";
 import { redirect } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
@@ -26,8 +26,9 @@ import * as z from "zod";
 import React, { useState } from "react";
 import { updateDugnad } from "@/actions/dugnadActions/updateDugnad";
 import { Separator } from "@/components/ui/separator"
-import { relative } from "path";
+import { Location } from "@/types";
 import Link from "next/link";
+import CreateEditMap from "../maps/createEditMap";
 
 import {
   AlertDialog,
@@ -46,11 +47,15 @@ const EditForm = ({ categories, dugnad, handleDelete }: any) => {
   const [selectedCategories, setSelectedCategories] = useState(dugnad.categories.map((category: { id: number, name: string }) => category.name))
   const [imageChanged, setImageChanged] = useState(false);
 
-  const form = useForm<z.infer<typeof DugnadSchema>>({
-    resolver: zodResolver(DugnadSchema),
+  const form = useForm<z.infer<typeof DugnadSchema2>>({
+    resolver: zodResolver(DugnadSchema2),
     defaultValues: {
       title: dugnad.title,
-      area: dugnad.area,
+      location: {
+        address: dugnad.location.address,
+        latitude: dugnad.location.latitude,
+        longitude: dugnad.location.longitude
+      },
       date: new Date(dugnad.date).toISOString().slice(0, 16),
       info: dugnad.info,
       categories: selectedCategories,
@@ -58,7 +63,7 @@ const EditForm = ({ categories, dugnad, handleDelete }: any) => {
     },
   });
 
-  const onSubmit = async (data: z.infer<typeof DugnadSchema>) => {
+  const onSubmit = async (data: z.infer<typeof DugnadSchema2>) => {
     const formData = new FormData();
 
     if (data.image && data.image != dugnad.image) {
@@ -67,8 +72,10 @@ const EditForm = ({ categories, dugnad, handleDelete }: any) => {
     }
 
     formData.append("title", data.title);
-    formData.append("area", data.area);
     formData.append("date", data.date);
+    formData.append("locationAddress", data.location.address);
+    formData.append("locationLatitude", String(data.location.latitude));
+    formData.append("locationLongitude", String(data.location.longitude));
     formData.append("info", data.info);
     formData.append("categories", JSON.stringify(data.categories));
     formData.append("imageChanged", JSON.stringify(imageChanged));
@@ -101,6 +108,19 @@ const EditForm = ({ categories, dugnad, handleDelete }: any) => {
     setPreview(null);
     setImageChanged(true);
   }
+
+  const [location, setLocation] = useState({
+    address: dugnad.location.address,
+    latitude: dugnad.location.latitude,
+    longitude: dugnad.location.longitude
+  });
+
+  const handleAreaChange = (newLocation: Location) => {
+    setLocation(newLocation);
+    form.setValue('location.address', newLocation.address);
+    form.setValue('location.latitude', newLocation.latitude);
+    form.setValue('location.longitude', newLocation.longitude);
+  };
 
   return (
     <div className="">
@@ -195,26 +215,15 @@ const EditForm = ({ categories, dugnad, handleDelete }: any) => {
                     <div>
                       <p className="leading-none font-medium text-sm mb-2">Område
 
-                        {form.formState.errors.area && (
-                          <span className="text-red-500 ml-2">{form.formState.errors.area.message}</span>
+                        {form.formState.errors.location?.address && (
+                          <span className="text-red-500 ml-2">{form.formState.errors.location?.address.message}</span>
                         )}
 
                       </p>
-                      <img className="rounded-md outline-gray-400 outline outline-1" src="/oslomap.webp" alt="" />
-                      <FormField
-                        control={form.control}
-                        name="area"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormControl>
-                              <Input
-                                {...field}
-                                placeholder="Skriv inn område"
-                                className="bg-white mt-2"
-                              />
-                            </FormControl>
-                          </FormItem>
-                        )}
+                      <CreateEditMap
+                        areaValue={location}
+                        onAreaChange={handleAreaChange}
+                        isNew={false}
                       />
                     </div>
                     <FormField
@@ -257,25 +266,25 @@ const EditForm = ({ categories, dugnad, handleDelete }: any) => {
                   </div>
                   <div className="gap-2 flex justify-end w-full rounded-md bg-gray-200">
 
-                  <AlertDialog>
-                <AlertDialogTrigger asChild>
-                    <button className="p-2 justify-center disabled:opacity-75 items-center bg-red-800 disabled:hover:bg-red-800 text-white w-full md:w-1/4 font-medium rounded-md hover:bg-red-900 flex gap-2">Slett dugnad</button>
-                </AlertDialogTrigger>
-                <AlertDialogContent className="bg-white">
-                    <AlertDialogHeader>
-                        <AlertDialogTitle>Er du sikker?</AlertDialogTitle>
-                        <AlertDialogDescription>
-                        Denne handlingen kan ikke angres. Sletting av dugnaden vil fjerne all tilknyttet informasjon og data permanent.
-                        </AlertDialogDescription>
-                    </AlertDialogHeader>
-                    <AlertDialogFooter>
-                        <AlertDialogCancel>Avbryt</AlertDialogCancel>
-                        <AlertDialogAction asChild>
+                    <AlertDialog>
+                      <AlertDialogTrigger asChild>
+                        <button className="p-2 justify-center disabled:opacity-75 items-center bg-red-800 disabled:hover:bg-red-800 text-white w-full md:w-1/4 font-medium rounded-md hover:bg-red-900 flex gap-2">Slett dugnad</button>
+                      </AlertDialogTrigger>
+                      <AlertDialogContent className="bg-white">
+                        <AlertDialogHeader>
+                          <AlertDialogTitle>Er du sikker?</AlertDialogTitle>
+                          <AlertDialogDescription>
+                            Denne handlingen kan ikke angres. Sletting av dugnaden vil fjerne all tilknyttet informasjon og data permanent.
+                          </AlertDialogDescription>
+                        </AlertDialogHeader>
+                        <AlertDialogFooter>
+                          <AlertDialogCancel>Avbryt</AlertDialogCancel>
+                          <AlertDialogAction asChild>
                             <button onClick={() => handleDelete()} className="p-2 justify-center items-center bg-red-800 text-white font-medium rounded-md hover:bg-red-900">Slett</button>
-                        </AlertDialogAction>
-                    </AlertDialogFooter>
-                </AlertDialogContent>
-            </AlertDialog>
+                          </AlertDialogAction>
+                        </AlertDialogFooter>
+                      </AlertDialogContent>
+                    </AlertDialog>
                     <Button
                       type="submit"
                       disabled={form.formState.isSubmitting}

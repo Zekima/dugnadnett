@@ -32,9 +32,10 @@ enum Status {
   DECLINED
 }
 
-enum DugStatus { 
+enum DugStatus {
   ACTIVE
   CANCELLED
+  SUSPENDED
   COMPLETED
 }
 
@@ -58,16 +59,16 @@ model Dugnad {
   ownerId      String
   image        String?
   title        String
-  area         String
   date         DateTime
   info         String
   createdAt    DateTime        @default(now())
-  status DugStatus
+  status       DugStatus
   participants Participation[]
   categories   Category[]
   reviews      Review[]
-
-
+  locationId   Int @unique
+  
+  location   Location @relation(fields: [locationId], references: [id])
   owner User @relation(fields: [ownerId], references: [id], name: "UserDugnad")
 }
 
@@ -87,6 +88,14 @@ model Category {
   id      Int      @id @default(autoincrement())
   name    String   @unique
   dugnads Dugnad[]
+}
+
+model Location {
+  id        Int    @id @default(autoincrement())
+  address   String
+  latitude  Float
+  longitude Float
+  dugnad    Dugnad?
 }
 
 model Review {

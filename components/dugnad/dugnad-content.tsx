@@ -45,7 +45,7 @@ const DugnadContent = async ({ dugnad, isOwner }: any) => {
                     </div>
                 </div>
                 <div>
-                    <div className="flex gap-2 items-center mt-3 md:mt-0 text-sm font-medium p-4 bg-gray-200 justify-center rounded-md min-w-[175px]">
+                    <div className="flex gap-2 items-center mt-3 md:mt-0 text-sm font-medium p-4 bg-gray-200 justify-center rounded-md min-w-[175px] mr-3">
                         <span>{dateString}</span>
                         <Calendar size={16} />
                     </div>
