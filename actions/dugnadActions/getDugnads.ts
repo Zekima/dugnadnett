@@ -20,6 +20,7 @@ export const getUserOwnesDugnads = async () => {
 
         include: {
           categories: true,
+          location: true,
         }
     }
     )
@@ -35,6 +36,7 @@ export const getUserParticpatesInDugnads = async () => {
       include: {
         categories: true,
         participants: true,
+        location: true,
       }
   }
   )

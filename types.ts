@@ -25,7 +25,12 @@ export interface Dugnad {
   ownerId: string;
   image?: string | null;
   title: string;
-  area: string;
+  location: {
+    id: number;
+    address: string;
+    latitude: number;
+    longitude: number;
+  };
   date: Date;
   info: string;
   createdAt: Date;
