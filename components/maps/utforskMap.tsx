@@ -5,6 +5,7 @@ import { GoogleMap, Autocomplete, useJsApiLoader, Libraries } from '@react-googl
 import {Trash} from 'lucide-react'
 import { Input } from '../ui/input';
 import { Slider } from '../ui/slider';
+import { metersToKilometers } from '@/lib/utils';
 
 const containerStyle = {
     width: 'auto',
@@ -124,7 +125,8 @@ const UtforskMap = ({ areaValue, onAreaChange, distance, onDistanceChange, circl
 
             </GoogleMap>
             </div>
-            <p className='mb-1'>{distance} meter</p>
+
+            <p className='mb-1'>{metersToKilometers(distance)}</p>
             
 
             <Slider

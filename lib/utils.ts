@@ -28,3 +28,12 @@ export const generatePagination = (currentPage: number, totalPages: number) => {
     totalPages,
   ];
 };
+
+
+export const metersToKilometers = (meters: number) => {
+  if (meters >= 1000) {
+    return meters / 1000 + " km"
+  } else {
+    return meters + " m"
+  }
+}

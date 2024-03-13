@@ -13,12 +13,12 @@ const DugnadTabs = async ({ dugnad, isOwner }: any) => {
     const participants = await getDugnadParticipants(dugnad.id);
     const joinRequests = await getJoinRequests(dugnad.id);
 
-    const declineRequest = async (requestId: any) => {
+    const declineRequest = async (requestId: number) => {
         "use server"
         await declineJoinRequest(requestId)
     }
 
-    const acceptRequest = async (requestId: any) => {
+    const acceptRequest = async (requestId: number) => {
         "use server"
         await acceptJoinRequest(requestId)
     }
@@ -27,25 +27,23 @@ const DugnadTabs = async ({ dugnad, isOwner }: any) => {
         <div className="flex gap-1 min-h-[35vw]">
             <Tabs defaultValue="deltakere" className="w-full">
                 <TabsList className="grid w-full grid-cols-3 ">
-                <TabsTrigger value="kart">Område</TabsTrigger>
+                    <TabsTrigger value="kart">Område</TabsTrigger>
                     <TabsTrigger value="deltakere">Deltakere</TabsTrigger>
                     <TabsTrigger value="chat">Gruppechat</TabsTrigger>
                 </TabsList>
-                    <TabsContent value="deltakere">
-                        <DeltakereNavigation
-                            isOwner={isOwner}
-                            participants={participants}
-                            joinRequests={joinRequests}
-                            declineRequest={declineRequest}
-                            acceptRequest={acceptRequest}
-                        />
-                    </TabsContent>
-                    <TabsContent value="kart">
-                    <div className="flex items-center gap-1.5 mt-2 bg-gray-200 p-3 rounded-md mb-2"><Map/> <p>{dugnad.location.address}</p></div>
-
-                        <DugnadMap latitude={dugnad.location.latitude} longitude={dugnad.location.longitude}/>
-
-                    </TabsContent>
+                <TabsContent value="deltakere">
+                    <DeltakereNavigation
+                        isOwner={isOwner}
+                        participants={participants}
+                        joinRequests={joinRequests}
+                        declineRequest={declineRequest}
+                        acceptRequest={acceptRequest}
+                    />
+                </TabsContent>
+                <TabsContent value="kart">
+                    <div className="flex items-center gap-1.5 mt-2 bg-gray-200 p-3 rounded-md mb-2"><Map /> <p>{dugnad.location.address}</p></div>
+                    <DugnadMap latitude={dugnad.location.latitude} longitude={dugnad.location.longitude} />
+                </TabsContent>
             </Tabs>
         </div>
     );
