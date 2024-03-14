@@ -6,12 +6,16 @@ import { Map } from "lucide-react";
 import DeltakereNavigation from '@/components/dugnad/deltakere-navigation'
 import { declineJoinRequest, acceptJoinRequest } from "@/actions/dugnadActions/joinRequests";
 import DugnadMap from '@/components/maps/dugnadMap'
+import GroupChat from '@/components/dugnad/group-chat'
+import { getCurrentUser } from "@/lib/auth";
+import DugnadAddress from '@/components/dugnad/dugnad-address'
 
 
 const DugnadTabs = async ({ dugnad, isOwner }: any) => {
 
     const participants = await getDugnadParticipants(dugnad.id);
     const joinRequests = await getJoinRequests(dugnad.id);
+    const currentUser = await getCurrentUser();
 
     const declineRequest = async (requestId: number) => {
         "use server"
@@ -41,8 +45,11 @@ const DugnadTabs = async ({ dugnad, isOwner }: any) => {
                     />
                 </TabsContent>
                 <TabsContent value="kart">
-                    <div className="flex items-center gap-1.5 mt-2 bg-gray-200 p-3 rounded-md mb-2"><Map /> <p>{dugnad.location.address}</p></div>
+                    <DugnadAddress address={dugnad.location.address} />
                     <DugnadMap latitude={dugnad.location.latitude} longitude={dugnad.location.longitude} />
+                </TabsContent>
+                <TabsContent value="chat">
+                    <GroupChat user={currentUser} />
                 </TabsContent>
             </Tabs>
         </div>
