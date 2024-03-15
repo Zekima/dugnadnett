@@ -43,4 +43,5 @@ const MinsideCard = ({ dugnad }: { dugnad?: Dugnad }) => {
 };
 
 
+
 export default MinsideCard;
