@@ -52,6 +52,17 @@ model User {
   dugnads        Dugnad[]        @relation("UserDugnad")
   friends        User[]          @relation("UserFriends")
   befriended     User[]          @relation("UserFriends")
+  
+}
+
+model DugMessages {
+  id             Int          @id @default(autoincrement())
+  message        String
+  ownerId        String
+  dugnadId       Int
+  postedAt    DateTime        @default(now())
+
+  dugnad         Dugnad @relation(fields: [dugnadId], references: [id])
 }
 
 model Dugnad {
@@ -66,6 +77,7 @@ model Dugnad {
   participants Participation[]
   categories   Category[]
   reviews      Review[]
+  dugMessages  DugMessages[]
   locationId   Int @unique
   
   location   Location @relation(fields: [locationId], references: [id])
