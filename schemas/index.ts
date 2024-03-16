@@ -31,7 +31,7 @@ const ACCEPTED_IMAGE_TYPES = [
 ];
 
 export const DugnadSchema = z.object({
-  title: z.string().min(1, "Tittel er påkrevd"),
+  title: z.string().min(1, "Tittel er påkrevd").max(100, "Maks 100 bokstaver"),
   area: z.string().min(1, "Område er påkrevd"),
   date: z.string().min(1, "Dato er påkrevd"),
   info: z.string().min(1, "Informasjon er påkrevd"),
