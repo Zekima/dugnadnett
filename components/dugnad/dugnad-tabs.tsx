@@ -8,6 +8,7 @@ import { declineJoinRequest, acceptJoinRequest } from "@/actions/dugnadActions/j
 import DugnadMap from '@/components/maps/dugnadMap'
 import { getCurrentUser } from "@/lib/auth";
 import DugnadAddress from '@/components/dugnad/dugnad-address'
+import GroupChat from '@/components/dugnad/group-chat'
 
 
 const DugnadTabs = async ({ dugnad, isOwner }: any) => {
@@ -46,6 +47,9 @@ const DugnadTabs = async ({ dugnad, isOwner }: any) => {
                 <TabsContent value="kart">
                     <DugnadAddress address={dugnad.location.address} />
                     <DugnadMap latitude={dugnad.location.latitude} longitude={dugnad.location.longitude} />
+                </TabsContent>
+                <TabsContent value="chat">
+                     <GroupChat userId={currentUser?.id} dugnadId={dugnad.id} />
                 </TabsContent>
             </Tabs>
         </div>

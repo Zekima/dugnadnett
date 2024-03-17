@@ -43,3 +43,10 @@ export interface Location {
   longitude: number;
   address: string;
 }
+
+export interface IncomingMessage {
+  username: string;
+  message: string;
+  ownerId: string;
+  dugnadId: number;
+}
