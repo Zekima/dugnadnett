@@ -1,7 +1,22 @@
-import { createServer } from "http";
+import { createServer as createHttpServer } from "http";
+import { createServer as createHttpsServer } from "https";
 import { Server } from "socket.io";
+import { readFileSync } from "fs";
 
 import { getUserById } from "@/data/user";
+
+function createServer() {
+  if (process.env.NODE_ENV === 'production') {
+    const options = {
+      key: readFileSync("/etc/letsencrypt/live/dugnadnett.no/privkey.pem"),
+      cert: readFileSync("/etc/letsencrypt/live/dugnadnett.no/cert.pem"),
+      ca: [readFileSync('/etc/letsencrypt/live/dugnadnett.no/chain.pem')]
+    };
+    return createHttpsServer(options);
+  } else {
+    return createHttpServer();
+  }
+}
 
 const httpServer = createServer();
 

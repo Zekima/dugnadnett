@@ -3,7 +3,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { SendHorizontal } from 'lucide-react';
 import { io, Socket } from "socket.io-client";
-import { User, IncomingMessage } from "@/types";
+import { IncomingMessage } from "@/types";
 
 interface GroupChatProps {
     userId?: string;
@@ -16,7 +16,7 @@ const GroupChat = ({ userId, dugnadId }: GroupChatProps) => {
     const [input, setInput] = useState<string>('');
 
     useEffect(() => {
-        const currentSocket = io(process.env.NODE_ENV === 'production' ? "https://dugnadnett.no/ws" : "http://localhost:5000");
+        const currentSocket = io(process.env.NODE_ENV === 'production' ? "wss://185.175.56.164:5000" : "http://localhost:5000");
         setSocket(currentSocket);
         return () => { currentSocket.close(); }
     }, []);
