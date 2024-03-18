@@ -1,5 +1,6 @@
 import { createServer as createHttpServer } from "http";
 import { createServer as createHttpsServer } from "https";
+import "dotenv/config.js";
 import { Server } from "socket.io";
 import { readFileSync } from "fs";
 
