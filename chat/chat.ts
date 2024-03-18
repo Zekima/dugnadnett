@@ -1,13 +1,13 @@
 import { createServer as createHttpServer } from "http";
 import { createServer as createHttpsServer } from "https";
-import "dotenv/config.js";
+import 'dotenv/config';
 import { Server } from "socket.io";
 import { readFileSync } from "fs";
 
 import { getUserById } from "@/data/user";
 
 function createServer() {
-  if (process.env.NODE_ENV === 'production') {
+  if (process.env.USE_HTTPS === "TRUE") {
     const options = {
       key: readFileSync("/etc/letsencrypt/live/dugnadnett.no/privkey.pem"),
       cert: readFileSync("/etc/letsencrypt/live/dugnadnett.no/cert.pem"),
@@ -49,5 +49,6 @@ io.on("connection", (socket) => {
 });
 
 httpServer.listen(5000, () => {
+  console.log(process.env.USE_HTTPS)
   console.log("Server is listening on port 5000");
 });
