@@ -2,18 +2,19 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { getDugnadParticipants } from "@/actions/dugnadActions/getDugnads";
 import React, { useState } from "react";
 import { getJoinRequests } from "@/actions/dugnadActions/joinRequests";
-import { Map } from "lucide-react";
+import { getJoinRequest } from "@/actions/dugnadActions/joinRequests";
 import DeltakereNavigation from '@/components/dugnad/deltakere-navigation'
 import { declineJoinRequest, acceptJoinRequest } from "@/actions/dugnadActions/joinRequests";
 import DugnadMap from '@/components/maps/dugnadMap'
 import { getCurrentUser } from "@/lib/auth";
 import DugnadAddress from '@/components/dugnad/dugnad-address'
 import GroupChat from '@/components/dugnad/group-chat'
+import { Participation } from '@prisma/client';
 
 
 const DugnadTabs = async ({ dugnad, isOwner }: any) => {
-
     const participants = await getDugnadParticipants(dugnad.id);
+    const activeRequest = await getJoinRequest(dugnad.id) as Participation;
     const joinRequests = await getJoinRequests(dugnad.id);
     const currentUser = await getCurrentUser();
 
@@ -49,7 +50,13 @@ const DugnadTabs = async ({ dugnad, isOwner }: any) => {
                     <DugnadMap latitude={dugnad.location.latitude} longitude={dugnad.location.longitude} />
                 </TabsContent>
                 <TabsContent value="chat">
-                     <GroupChat userId={currentUser?.id} dugnadId={dugnad.id} />
+                    {(activeRequest && activeRequest.status === "ACCEPTED" || isOwner) ? (
+                        <GroupChat userId={currentUser?.id} dugnadId={dugnad.id} />
+                    ) : (
+                        <div className="h-[300px] flex items-center justify-center w-full text-center">
+                            <p>Du har ikke tilgang til denne gruppechatten</p>
+                        </div>
+                    )}
                 </TabsContent>
             </Tabs>
         </div>

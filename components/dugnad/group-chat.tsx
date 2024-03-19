@@ -18,17 +18,22 @@ const GroupChat = ({ userId, dugnadId }: GroupChatProps) => {
     useEffect(() => {
         const currentSocket = io(process.env.NODE_ENV === 'production' ? "wss://dugnadnett.no:5000/" : "http://localhost:5000");
         setSocket(currentSocket);
-        return () => { currentSocket.close(); }
-    }, []);
-
-    useEffect(() => {
-        if (socket) {
-            socket.on("receiveMessage", (data) => {
+    
+        if (dugnadId) {
+            currentSocket.emit("joinRoom", { dugnadId });
+        }
+    
+        if (currentSocket) {
+            currentSocket.on("receiveMessage", (data) => {
                 console.log(data.message, data.ownerId);
                 setMessages((prevMessages) => [...prevMessages, data]);
             });
         }
-    }, [socket]);
+    
+        return () => { 
+            currentSocket.close(); 
+        };
+    }, [dugnadId]);
 
     const messagesContainerRef = useRef<HTMLDivElement | null>(null);
     useEffect(() => {
@@ -52,7 +57,7 @@ const GroupChat = ({ userId, dugnadId }: GroupChatProps) => {
 
     return (
         <div>
-            <div ref={messagesContainerRef} className="max-h-[444px] overflow-scroll overflow-x-hidden">
+            <div ref={messagesContainerRef} className="h-[400px] overflow-scroll overflow-x-hidden">
                 {messages.map((message, index) => (
                     <div key={index} className={`my-1 rounded-md p-1.5 ${message.ownerId === userId ? "bg-green-300" : "bg-gray-200"}`}>
                         <div className="flex flex-col">
