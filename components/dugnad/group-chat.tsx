@@ -18,20 +18,20 @@ const GroupChat = ({ userId, dugnadId }: GroupChatProps) => {
     useEffect(() => {
         const currentSocket = io(process.env.NODE_ENV === 'production' ? "wss://dugnadnett.no:5000/" : "http://localhost:5000");
         setSocket(currentSocket);
-    
+
         if (dugnadId) {
             currentSocket.emit("joinRoom", { dugnadId });
         }
-    
+
         if (currentSocket) {
             currentSocket.on("receiveMessage", (data) => {
                 console.log(data.message, data.ownerId);
                 setMessages((prevMessages) => [...prevMessages, data]);
             });
         }
-    
-        return () => { 
-            currentSocket.close(); 
+
+        return () => {
+            currentSocket.close();
         };
     }, [dugnadId]);
 
@@ -68,7 +68,7 @@ const GroupChat = ({ userId, dugnadId }: GroupChatProps) => {
                 ))}
             </div>
             <div className="relative">
-                <input type="text" className="w-full p-2 rounded-md border-gray-400 border" placeholder="Skriv melding" value={input} onChange={(e) => setInput(e.target.value)} />
+                <input type="text" className="w-full p-2 rounded-md border-gray-400 border" placeholder="Skriv melding" value={input} onChange={(e) => setInput(e.target.value)} onKeyDown={(e) => e.key === 'Enter' && sendMessage()} />
                 <button className={`absolute right-4 top-2 ${input ? "text-gray-800" : "text-gray-400"}`} onClick={sendMessage}><SendHorizontal /></button>
             </div>
         </div>
