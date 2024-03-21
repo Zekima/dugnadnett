@@ -29,8 +29,7 @@ const UtforskCard = ({ dugnad }: { dugnad?: Dugnad }) => {
       </div>
 
       <div className="p-2">
-        <p className="font-semibold text-sm mb-2">{dugnad.title}</p>
-
+        <p className="font-semibold text-sm mb-2 overflow-hidden overflow-ellipsis whitespace-nowrap">{dugnad.title}</p>
         <div className="gap-1 flex">
           {dugnad.categories.map((category) => (
             //@ts-ignore
