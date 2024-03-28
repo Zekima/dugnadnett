@@ -16,7 +16,7 @@ const GroupChat = ({ userId, dugnadId, fetchDugnadMessages }: GroupChatProps) =>
     const [isLoading, setIsLoading] = useState(false);
     const [hasMore, setHasMore] = useState(true);
     const [hasNewMessages, setHasNewMessages] = useState(false);
-    const [isAtBottom, setIsAtBottom] = useState(false);
+    const [isAtBottom, setIsAtBottom] = useState(true);
     const [socket, setSocket] = useState<Socket | null>(null);
     const [messages, setMessages] = useState<IncomingMessage[]>([]);
     const [input, setInput] = useState<string>('');
@@ -114,7 +114,7 @@ const GroupChat = ({ userId, dugnadId, fetchDugnadMessages }: GroupChatProps) =>
                 </div>
             )}
 
-            <div ref={messagesContainerRef} onScrollCapture={handleScroll} className="h-[400px] overflow-scroll overflow-x-hidden flex flex-col gap-2" onScroll={() => {
+            <div ref={messagesContainerRef} style={{}} onScrollCapture={handleScroll} className="h-[400px] overflow-scroll overflow-x-hidden flex flex-col gap-2 chat-scrollbar" onScroll={() => {
                 if (messagesContainerRef.current?.scrollTop === 0 && hasMore && !isLoading) {
                     loadMessages();
                 }
@@ -125,15 +125,13 @@ const GroupChat = ({ userId, dugnadId, fetchDugnadMessages }: GroupChatProps) =>
                         {message.ownerId === userId ?
                             <div className="flex flex-col items-end">
                                 <div className={`rounded-md p-2.5 w-fit max-w-[70%] bg-black text-white`}>
-                                    <p>{message.message}</p>
+                                    <p className="break-words">{message.message}</p>
                                 </div>
                             </div> : <>
                                 <p className="text-xs mb-1">{message.username}</p>
 
                                 <div className={`rounded-md p-2.5 w-fit max-w-[70%] bg-green-400`}>
-                                    <div className="flex flex-col">
-                                        <p>{message.message}</p>
-                                    </div>
+                                    <p className="break-words">{message.message}</p>
                                 </div>
                             </>
                         }
@@ -149,18 +147,24 @@ const GroupChat = ({ userId, dugnadId, fetchDugnadMessages }: GroupChatProps) =>
                     placeholder="Skriv melding"
                     value={input}
                     onChange={(e) => setInput(e.target.value)}
-                    onKeyDown={(e) => e.key === 'Enter' && sendMessage()}
+                    onKeyDown={(e) => {
+                        if (e.key === "Enter") {
+                            e.preventDefault()
+                            sendMessage();
+                        }
+                    }}
                     rows={1}
-                    style={{ height: 'auto', minHeight: '35px' }}
+                    style={{ height: "auto", minHeight: "35px" }}
                     ref={(textarea) => {
                         if (textarea) {
-                            textarea.style.height = 'auto';
+                            textarea.style.height = "auto";
                             textarea.style.height = `${textarea.scrollHeight}px`;
                         }
                     }}
                 />
                 <button
-                    className={`absolute right-3 top-1/2 -translate-y-[60%] ${input.trim() ? 'text-gray-800' : 'text-gray-400 cursor-default'}`}
+                    className={`absolute right-3 top-1/2 -translate-y-[60%] ${input.trim() ? "text-gray-800" : "text-gray-400 cursor-default"
+                        }`}
                     onClick={sendMessage}
                 >
                     <SendHorizontal />
