@@ -1,5 +1,7 @@
 import { createServer as createHttpServer } from "http";
 import { createServer as createHttpsServer } from "https";
+import { db } from "@/lib/db";
+
 import "dotenv/config";
 import { Server } from "socket.io";
 import { readFileSync } from "fs";
@@ -37,12 +39,22 @@ io.on("connection", (socket) => {
     const user = await getUserById(ownerId);
     const username = user?.name || "Ukjent bruker";
 
-    io.to(`dugnad_${dugnadId}`).emit("receiveMessage", {
-      message,
-      ownerId,
-      username,
-      dugnadId,
-    });
+    try {
+      const savedMessage = await db.dugMessages.create({
+        data: {
+          message: message,
+          ownerId: ownerId,
+          dugnadId: dugnadId,
+        },
+      });
+  
+      io.to(`dugnad_${dugnadId}`).emit("receiveMessage", {
+        ...savedMessage,
+        username,
+      });
+    } catch (error) {
+      console.error("Kunne ikke lagre melding til database:", error);
+    }
   });
 });
 

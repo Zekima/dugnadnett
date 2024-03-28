@@ -52,17 +52,18 @@ model User {
   dugnads        Dugnad[]        @relation("UserDugnad")
   friends        User[]          @relation("UserFriends")
   befriended     User[]          @relation("UserFriends")
-  
+  dugMessages    DugMessages[]
 }
 
 model DugMessages {
-  id             Int          @id @default(autoincrement())
-  message        String
-  ownerId        String
-  dugnadId       Int
-  postedAt    DateTime        @default(now())
+  id       Int      @id @default(autoincrement())
+  message  String
+  ownerId  String
+  dugnadId Int
+  postedAt DateTime @default(now())
 
-  dugnad         Dugnad @relation(fields: [dugnadId], references: [id])
+  owner  User   @relation(fields: [ownerId], references: [id])
+  dugnad Dugnad @relation(fields: [dugnadId], references: [id], onDelete: Cascade)
 }
 
 model Dugnad {
@@ -78,10 +79,10 @@ model Dugnad {
   categories   Category[]
   reviews      Review[]
   dugMessages  DugMessages[]
-  locationId   Int @unique
-  
-  location   Location @relation(fields: [locationId], references: [id])
-  owner User @relation(fields: [ownerId], references: [id], name: "UserDugnad")
+  locationId   Int             @unique
+
+  location Location @relation(fields: [locationId], references: [id])
+  owner    User     @relation(fields: [ownerId], references: [id], name: "UserDugnad")
 }
 
 model Participation {
@@ -103,7 +104,7 @@ model Category {
 }
 
 model Location {
-  id        Int    @id @default(autoincrement())
+  id        Int     @id @default(autoincrement())
   address   String
   latitude  Float
   longitude Float
