@@ -124,13 +124,13 @@ const GroupChat = ({ userId, dugnadId, fetchDugnadMessages }: GroupChatProps) =>
                     <div key={index}>
                         {message.ownerId === userId ?
                             <div className="flex flex-col items-end">
-                                <div className={`rounded-md p-3 w-fit max-w-[250px] bg-black text-white`}>
+                                <div className={`rounded-md p-2.5 w-fit max-w-[70%] bg-black text-white`}>
                                     <p>{message.message}</p>
                                 </div>
                             </div> : <>
-                                <p className="text-xs my-1">{message.username}</p>
+                                <p className="text-xs mb-1">{message.username}</p>
 
-                                <div className={`rounded-md p-3 w-fit max-w-[250px] bg-green-400`}>
+                                <div className={`rounded-md p-2.5 w-fit max-w-[70%] bg-green-400`}>
                                     <div className="flex flex-col">
                                         <p>{message.message}</p>
                                     </div>
@@ -143,16 +143,28 @@ const GroupChat = ({ userId, dugnadId, fetchDugnadMessages }: GroupChatProps) =>
                 ))}
                 {isLoading && <div className="w-full h-1/6 flex justify-center items-center"><Loader2 className="animate-spin" /></div>}
             </div>
-            <div className="relative mt-2">
-                <input
-                    type="text"
-                    className="w-full p-2 rounded-md border-gray-400 border"
+            <div className="relative mt-3">
+                <textarea
+                    className="w-full p-2 rounded-md border-gray-400 border pr-10 resize-none overflow-hidden"
                     placeholder="Skriv melding"
                     value={input}
                     onChange={(e) => setInput(e.target.value)}
                     onKeyDown={(e) => e.key === 'Enter' && sendMessage()}
+                    rows={1}
+                    style={{ height: 'auto', minHeight: '35px' }}
+                    ref={(textarea) => {
+                        if (textarea) {
+                            textarea.style.height = 'auto';
+                            textarea.style.height = `${textarea.scrollHeight}px`;
+                        }
+                    }}
                 />
-                <button className={`absolute right-4 top-2 ${input.trim() ? "text-gray-800" : "text-gray-400"}`} onClick={sendMessage}><SendHorizontal /></button>
+                <button
+                    className={`absolute right-3 top-1/2 -translate-y-[60%] ${input.trim() ? 'text-gray-800' : 'text-gray-400 cursor-default'}`}
+                    onClick={sendMessage}
+                >
+                    <SendHorizontal />
+                </button>
             </div>
         </div>
     );
