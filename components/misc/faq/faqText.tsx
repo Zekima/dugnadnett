@@ -12,3 +12,5 @@ const FaqText = ({ strs }: { strs?: string }) => {
 };
 
 export default FaqText;
+
+  
