@@ -52,6 +52,7 @@ model User {
   dugnads        Dugnad[]        @relation("UserDugnad")
   friends        User[]          @relation("UserFriends")
   befriended     User[]          @relation("UserFriends")
+  threadsMsg ThreadMessages[]
   
 }
 
@@ -78,10 +79,31 @@ model Dugnad {
   categories   Category[]
   reviews      Review[]
   dugMessages  DugMessages[]
+  dugThreads Thread []
   locationId   Int @unique
   
   location   Location @relation(fields: [locationId], references: [id])
   owner User @relation(fields: [ownerId], references: [id], name: "UserDugnad")
+}
+
+model Thread {
+  id Int @id @default(autoincrement())
+  title String
+  desc String
+  dugnadId Int
+  threadMsgs ThreadMessages[]
+
+  dugnad Dugnad @relation(fields: [dugnadId], references: [id])
+}
+
+model ThreadMessages {
+  id Int @id @default(autoincrement())
+  text String
+  userId String
+  threadId Int
+
+  user User @relation(fields:[userId], references: [id] )
+  thread Thread @relation(fields: [threadId], references: [id])
 }
 
 model Participation {

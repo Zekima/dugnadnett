@@ -7,6 +7,9 @@ import { revalidatePath } from "next/cache";
 import EditDugnadButton from '@/components/dugnad/edit-dugnad-button'
 import DugnadInfo from '@/components/dugnad/dugnad-info'
 import ShareButton from '@/components/dugnad/share-button'
+import ForumContainer from "./forum-container";
+import { getThreadsByDugnadid } from "@/actions/dugnadActions/threadActions";
+
 
 const DugnadContent = async ({ dugnad, isOwner }: any) => {
     const activeRequest = await getJoinRequest(dugnad.id)
@@ -31,6 +34,7 @@ const DugnadContent = async ({ dugnad, isOwner }: any) => {
 
     const dateString = formattedDate.replace("kl.", "-")
 
+    const fetchThreads  = await getThreadsByDugnadid(dugnad.id);
     return (
         <>
             <div className="flex justify-between md:flex-row flex-col gap-2">
@@ -61,6 +65,9 @@ const DugnadContent = async ({ dugnad, isOwner }: any) => {
                 <ShareButton/>
 
                 
+            </div>¨
+            <div>
+                <ForumContainer dugnad={dugnad} />
             </div>
             <DugnadInfo dugnadInfo={dugnad.info}></DugnadInfo>
         </>
