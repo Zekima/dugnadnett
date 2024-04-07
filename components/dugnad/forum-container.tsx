@@ -31,7 +31,7 @@ const ForumContainer = async ({ dugnad }: { dugnad: Dugnad }) => {
     <div>
       <div className="">
         {threads.map((threadProp) => (
-          <ThreadCard threadProp={threadProp} user={user} /> // Modified to pass the user prop
+          <ThreadCard key={threadProp.thread.id} threadProp={threadProp} user={user} /> // Modified to add the key prop
         ))}
       </div>
     </div>

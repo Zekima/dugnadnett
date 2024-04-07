@@ -6,7 +6,6 @@ import { ThreadProps, User } from "@/types";
 import { sendThreadMessage } from "@/actions/dugnadActions/threadActions";
 
 const ThreadCard = ({ threadProp, user }: { threadProp: ThreadProps , user: any }) => {
-if (!threadProp) return null;
 const [extend, setExtend] = useState(false);
 const [inputText, setInputText] = useState("");
 const [msgs, setMsgs] = useState<ThreadMessages[]>([]); // Update the type to an empty array initially
@@ -33,11 +32,11 @@ return (
         <div>
 
             {extend && threadProp.msgs && threadProp.msgs.map((msg) => (
-                    <div>
-                        <div>{msg.userId}</div>
-                        <div>{msg.text}</div>
-                    </div>
-                ))}
+                <div key={msg.id}>
+                    <div>{msg.userId}</div>
+                    <div>{msg.text}</div>
+                </div>
+            ))}
             <div>
                 <input
                     type="text"
