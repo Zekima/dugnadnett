@@ -3,8 +3,8 @@ import React, { useState } from "react";
 import { Faq } from "@/types";
 import FaqText from "./faqText";
 const FaqCard = ({ faq }: { faq?: Faq }) => {
-  if (!faq) return;
   const [extend, setExtend] = useState(false);
+  if (!faq) return;
 
   function handleExtend() {
     setExtend(!extend);
