@@ -1,4 +1,3 @@
-import MinsideCard from "@/components/minside/minside-card";
 import React from "react";
 import { User } from "@/types";
 import {
@@ -6,6 +5,7 @@ import {
   getUserParticpatesInDugnads,
 } from "@/actions/dugnadActions/getDugnads";
 import { getCurrentUser } from "@/lib/auth";
+import UtforskCard from "../utforsk/utforsk-card";
 
 const MinsideContainer = async () => {
   const ownesDugnads = await getUserOwnesDugnads();
@@ -21,7 +21,7 @@ const MinsideContainer = async () => {
           </h2>
           <div className="grid grid-cols-1">
             {ownesDugnads.map((dugnad) => (
-              <MinsideCard dugnad={dugnad} key={dugnad.id} />
+              <UtforskCard dugnad={dugnad} key={dugnad.id} />
             ))}
           </div>
         </div>
@@ -31,7 +31,7 @@ const MinsideContainer = async () => {
           </h2>
           <div className="grid grid-cols-1 gap-1">
             {partDugnads.map((dugnad) => (
-              <MinsideCard dugnad={dugnad} key={dugnad.id} />
+              <UtforskCard dugnad={dugnad} key={dugnad.id} />
             ))}
           </div>
         </div>

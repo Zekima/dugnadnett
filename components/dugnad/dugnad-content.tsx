@@ -24,6 +24,7 @@ const DugnadContent = async ({ dugnad, isOwner }: any) => {
         await removeJoinRequest(participationId)
     }
 
+
     const formattedDate = new Intl.DateTimeFormat('nb-NO', {
         month: 'long',
         day: 'numeric',
