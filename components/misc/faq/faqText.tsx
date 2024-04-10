@@ -6,7 +6,7 @@ const FaqText = ({ strs }: { strs?: string }) => {
   const md = new MarkdownIt();
   return (
     <div className="max-w-96">
-      <div dangerouslySetInnerHTML={{ __html: md.render(strs) }} />   
+      <div className="faqText" dangerouslySetInnerHTML={{ __html: md.render(strs) }} />   
     </div>
   );
 };
