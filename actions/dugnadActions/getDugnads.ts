@@ -3,14 +3,6 @@ import { redirect } from "next/navigation";
 import { off } from "process";
 import { getCurrentUser } from "@/lib/auth";
 
-/*export const getDugnads = async () => {
-  return db.dugnad.findMany({
-    include: {
-      categories: true,
-    },
-  });
-};*/ // Old function not used anymore 
-
 export const getUserOwnesDugnads = async () => {
     const user = await getCurrentUser();
     return db.dugnad.findMany({
@@ -21,7 +13,9 @@ export const getUserOwnesDugnads = async () => {
         include: {
           categories: true,
           location: true,
-        }
+        } 
+
+       
     }
     )
 }
@@ -38,6 +32,8 @@ export const getUserParticpatesInDugnads = async () => {
         participants: true,
         location: true,
       }
+
+      
   }
   )
 }
@@ -141,7 +137,6 @@ export async function getDugnadsPages(query: string, categories: string[]) {
     console.error("Feil ved uthenting av getDugnadsPages: ", error);
   }
 }
-
 
 export async function getDugnadById(dugnadId: string) {
   try {
