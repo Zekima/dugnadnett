@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import { Faq } from "@/types";
 import FaqText from "./faqText";
+import MarkdownIt from "markdown-it";
 const FaqCard = ({ faq }: { faq?: Faq }) => {
   const [extend, setExtend] = useState(false);
   if (!faq) return;
@@ -9,7 +10,7 @@ const FaqCard = ({ faq }: { faq?: Faq }) => {
   function handleExtend() {
     setExtend(!extend);
   }
-
+  
   return (
     <div className="m-auto max-w-[1280px] flex-row py-10 ">
       <div className="flex flex-row text-center">
