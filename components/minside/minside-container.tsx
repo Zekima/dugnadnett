@@ -6,11 +6,16 @@ import {
 } from "@/actions/dugnadActions/getDugnads";
 import { getCurrentUser } from "@/lib/auth";
 import UtforskCard from "../utforsk/utforsk-card";
+import Pagination from "@/components/pagination";
+import MinSideHolder from "./minside-holder";
+
+
 
 const MinsideContainer = async () => {
-  const ownesDugnads = await getUserOwnesDugnads();
-  const partDugnads = await getUserParticpatesInDugnads();
   const user = await getCurrentUser();
+  const ownesDugnads = await getUserOwnesDugnads();
+  const partDugnads = await getUserParticpatesInDugnads(); 
+
   return (
     <div className="flex flex-col w-full">
       <h1 className="text-3xl font-bold mb-3 text-center">{user?.name} :</h1>
@@ -19,21 +24,13 @@ const MinsideContainer = async () => {
           <h2 className="text-2xl font-bold mb-3 sm:pt-[100px] pt-[10px]">
             mine:
           </h2>
-          <div className="grid grid-cols-1">
-            {ownesDugnads.map((dugnad) => (
-              <UtforskCard dugnad={dugnad} key={dugnad.id} />
-            ))}
-          </div>
+          <MinSideHolder dugnads={ownesDugnads} />
         </div>
         <div className="flex flex-col w-1/3">
           <h2 className="text-2xl font-bold mb-3 sm:pt-[100px] pt-[10px]">
             deltar i:
           </h2>
-          <div className="grid grid-cols-1 gap-1">
-            {partDugnads.map((dugnad) => (
-              <UtforskCard dugnad={dugnad} key={dugnad.id} />
-            ))}
-          </div>
+          <MinSideHolder dugnads={partDugnads} />
         </div>
       </div>
     </div>
