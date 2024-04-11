@@ -73,6 +73,10 @@ const RequestButton = ({ activeRequest, onLeave, onJoin }: any) => {
         //<button className="p-2 justify-center disabled:opacity-75 items-center bg-red-800 disabled:hover:bg-red-800 text-white w-full font-medium rounded-md hover:bg-red-900 flex gap-2" onClick={() => handleLeave(activeRequest.id)}>Forlat dugnad</button>;
     }
 
+    if (activeRequest && activeRequest.status === "DECLINED") {
+        return <button disabled className="p-2 justify-center disabled:opacity-75 items-center bg-blue-900 disabled:hover:bg-blue-800 text-white w-full font-medium rounded-md hover:bg-green-900 flex gap-2">Ikke godkjent</button>;
+    }
+
     return <button disabled className="p-2 justify-center disabled:opacity-75 items-center bg-green-800 disabled:hover:bg-green-800 text-white w-full font-medium rounded-md hover:bg-green-900 flex gap-2">Forespørsel sendt</button>;
 }
 

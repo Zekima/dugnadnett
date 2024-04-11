@@ -14,6 +14,7 @@ import { getDugnadMessages } from "@/actions/dugnadActions/messages/getDugnadMes
 
 
 const DugnadTabs = async ({ dugnad, isOwner }: any) => {
+    
     const participants = await getDugnadParticipants(dugnad.id);
     const activeRequest = await getJoinRequest(dugnad.id) as Participation;
     const joinRequests = await getJoinRequests(dugnad.id);
@@ -39,7 +40,6 @@ const DugnadTabs = async ({ dugnad, isOwner }: any) => {
             dugnadId: msg.dugnadId
         }));
     }
-
 
     return (
         <div className="flex gap-1 min-h-[35vw]">

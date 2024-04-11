@@ -66,7 +66,7 @@ const DugnadContent = async ({ dugnad, isOwner }: any) => {
                 <ShareButton/>
 
                 
-            </div>¨
+            </div>
             <div>
                 <ForumContainer dugnad={dugnad} />
             </div>
