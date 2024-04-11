@@ -10,7 +10,7 @@ const DugnadAddress = ({address}: any) => {
 
 
     const handleShare = () => {
-        navigator.clipboard.writeText(`${window.location}`)
+        navigator.clipboard.writeText(`${address}`)
         toast({
             className: "bg-green-800 border-none",
             description: <div className='flex gap-3 items-center text-white font-bold'><Check /> <p>Adressen er kopiert til utklippstavlen</p></div>,
