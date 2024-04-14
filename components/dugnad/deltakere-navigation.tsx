@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import UserImage from "../user-image";
 import { Check, X } from "lucide-react";
 import ClientPagination from "../client-pagination";
+import Link from "next/link";
 
 const DeltakereNavigation = ({
   isOwner,
@@ -98,8 +99,10 @@ export default DeltakereNavigation;
 const ParticipantItem = ({ participant }: any) => (
   <div className="p-2 bg-gray-200 rounded-md flex gap-2">
     <div className="flex gap-2 items-center">
+    
+      
       <UserImage user={participant} size={36} />
-      {participant.name}
+      <Link href={`/profil/${participant.id}`}>{participant.name}</Link>
     </div>
   </div>
 );
@@ -109,7 +112,7 @@ const RequestItem = ({ request, declineRequest, acceptRequest }: any) => {
     <div className="p-2 bg-gray-200 rounded-md flex gap-2 justify-between">
       <div className="flex gap-2 items-center">
         <UserImage user={request} size={36} />
-        {request.name}
+        <Link href={`/profil/${request.id}`}>{request.name}</Link>
       </div>
       <div className="flex gap-2">
         <button
