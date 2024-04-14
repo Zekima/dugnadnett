@@ -40,10 +40,7 @@ export const {
         return token;
       },
       async redirect({ url, baseUrl }) {
-        console.log(baseUrl, url)
-        if (url.startsWith("/")) return `${baseUrl}${url}`
-        else if (new URL(url).origin === baseUrl) return url
-        return baseUrl
+        return url
       }
     
     },
