@@ -39,6 +39,13 @@ export const {
 
         return token;
       },
+      async redirect({ url, baseUrl }) {
+        console.log(baseUrl, url)
+        if (url.startsWith("/")) return `${baseUrl}${url}`
+        else if (new URL(url).origin === baseUrl) return url
+        return baseUrl
+      }
+    
     },
     session: { strategy: "jwt"},
     adapter: PrismaAdapter(db),
