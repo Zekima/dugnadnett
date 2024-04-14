@@ -76,7 +76,7 @@ export default async function ProfilePage({
               {userFollowers.length > 0 ? (
                 <div className="flex flex-wrap">
                   {userFollowers.map((follower) => (
-                    <div title={follower.name as string} className="mr-1 mb-1">
+                    <div title={follower.name as string} className="mr-1 mb-1" key={follower.id}>
                         <UserImage user={follower} size={40} />
                     </div>
                   ))}
