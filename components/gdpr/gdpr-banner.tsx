@@ -27,8 +27,8 @@ const GDPRBanner = () => {
   }
 
   return (
-    <div className="fixed bottom-6 left-1/2 -translate-x-1/2 rounded-full bg-green-100 py-4 px-5 shadow-md text-center flex justify-center outline outline-green-800 items-center">
-      <p className="text-sm text-gray-700 max-w-[500px]">
+    <div className="fixed bottom-3 z-50 left-1/2 gap-4 flex-col -translate-x-1/2 rounded-full bg-green-100 px-10 py-4 shadow-md text-center flex justify-center outline outline-green-800 items-center">
+      <p className="text-sm text-gray-700 min-w-[350px] max-w-[550px]">
         Vi bruker informasjonskapsler for å forbedre opplevelsen din på vår
         nettside. Ved å godta samtykker du til vår bruk av informasjonskapsler.
       </p>

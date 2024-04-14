@@ -50,10 +50,11 @@ model User {
   reviews        Review[]
   participations Participation[]
   dugnads        Dugnad[]        @relation("UserDugnad")
-  friends        User[]          @relation("UserFriends")
-  befriended     User[]          @relation("UserFriends")
+  following      User[]          @relation("UserFollows")
+  followers      User[]          @relation("UserFollows")
   threadsMsg ThreadMessages[]
   dugMessages    DugMessages[]
+  createdAt      DateTime        @default(now())
 }
 
 model DugMessages {
