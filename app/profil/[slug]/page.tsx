@@ -2,7 +2,11 @@ import {
   getUserParticpatesInDugnads,
   getUserOwnesDugnads,
 } from "@/actions/dugnadActions/getDugnads";
-import { checkIfUserFollows, followUser, getFollowers } from "@/actions/profileActions/follow";
+import {
+  checkIfUserFollows,
+  followUser,
+  getFollowers,
+} from "@/actions/profileActions/follow";
 import { FollowButton } from "@/components/profile/follow-button";
 import { Separator } from "@/components/ui/separator";
 import UserImage from "@/components/user-image";
@@ -63,18 +67,19 @@ export default async function ProfilePage({
             )}
 
             <div>
-              <h1 className="text-lg">Følgere</h1>
+              <h1 className="text-lg">
+                Følgere{" "}
+                {userFollowers.length > 0 && ` (${userFollowers.length})`}
+              </h1>
               <Separator className="my-2" />
 
               {userFollowers.length > 0 ? (
-                <div className="flex"> 
-                {userFollowers.map((follower) => (
-                  <Link key={follower.id} href={`/profil/${follower.id}`}>
-                    <div title={follower.name as string}>
-                    <UserImage user={follower} size={40} />
+                <div className="flex flex-wrap">
+                  {userFollowers.map((follower) => (
+                    <div title={follower.name as string} className="mr-1 mb-1">
+                        <UserImage user={follower} size={40} />
                     </div>
-                  </Link>
-                ))}
+                  ))}
                 </div>
               ) : (
                 <p className="text-sm text-gray-600">
@@ -89,7 +94,6 @@ export default async function ProfilePage({
           <div className="h-[750px] p-4 bg-gray-200 rounded-md">
             <p>TBD</p>
           </div>
-
         </div>
       </div>
       <p></p>
