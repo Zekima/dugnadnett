@@ -39,10 +39,6 @@ export const {
 
         return token;
       },
-      async redirect({ url, baseUrl }) {
-        return url
-      }
-    
     },
     session: { strategy: "jwt"},
     adapter: PrismaAdapter(db),
