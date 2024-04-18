@@ -1,6 +1,7 @@
 import { FaPeopleCarry, FaSortAmountUp, FaStar } from "react-icons/fa";
 import Image from "next/image";
 import { BsFillGeoAltFill } from "react-icons/bs";
+import Link from "next/link";
 
 export default function CTASection() {
   return (
@@ -28,16 +29,24 @@ export default function CTASection() {
             <h3 className="font-bold text-xl mt-2">Tilbakemeldinger</h3>
           </div>
         </div>
-
-
       </div>
-      <div className="bg-gray-200 px-5 py-10 mt-[120px] text-center">
+      <div className="bg-gray-200 px-5 py-10 mt-[120px] text-center flex justify-center">
+        <img src="/norway.svg" className="hidden xl:block"></img>
+
+        <div className="gap-3 flex justify-center my-5 flex-col">
           <h1 className="font-medium text-2xl mt-5">Jeg ønsker å</h1>
-          <div className="gap-3 flex justify-center my-5">
-            <button className="bg-black py-20 w-1/3 hover:bg-green-900 text-white font-bold text-lg">Organisere En Dugnad</button>
-            <button className="bg-black py-20 w-1/3 hover:bg-green-900 text-white font-bold text-lg">Delta i En Dugnad</button>
-          </div>
+          <Link href={"/dugnad/opprett"}>
+            <button className="bg-black rounded-md p-20 w-1/3 hover:bg-green-900 text-white font-bold text-lg w-full">
+              Organisere Dugnad
+            </button>
+          </Link>
+          <Link href={"/utforsk"}>
+            <button className="bg-black rounded-md p-20 w-1/3 hover:bg-green-900 text-white font-bold text-lg w-full">
+              Delta i Dugnader
+            </button>
+          </Link>
         </div>
+      </div>
     </div>
   );
 }

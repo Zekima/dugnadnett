@@ -6,6 +6,7 @@ import { Toaster } from "@/components/ui/toaster"
 import { SessionProvider } from "next-auth/react";
 import { auth } from "@/auth";
 import "./globals.css";
+import GDPRBanner from "@/components/gdpr/gdpr-banner";
 
 const inter = Inter({ subsets: ["latin"], weight: ["400", "700", "800", "500"] });
 
@@ -29,6 +30,7 @@ export default async function RootLayout({
           {children}
           <Toaster />
           </div>
+          <GDPRBanner/>
           <Footer />
         </SessionProvider>
       </body>

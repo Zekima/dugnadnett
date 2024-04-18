@@ -14,6 +14,7 @@ import { getDugnadMessages } from "@/actions/dugnadActions/messages/getDugnadMes
 
 
 const DugnadTabs = async ({ dugnad, isOwner }: any) => {
+    
     const participants = await getDugnadParticipants(dugnad.id);
     const activeRequest = await getJoinRequest(dugnad.id) as Participation;
     const joinRequests = await getJoinRequests(dugnad.id);
@@ -40,7 +41,6 @@ const DugnadTabs = async ({ dugnad, isOwner }: any) => {
         }));
     }
 
-
     return (
         <div className="flex gap-1 min-h-[35vw]">
             <Tabs defaultValue="deltakere" className="w-full">
@@ -56,6 +56,7 @@ const DugnadTabs = async ({ dugnad, isOwner }: any) => {
                         joinRequests={joinRequests}
                         declineRequest={declineRequest}
                         acceptRequest={acceptRequest}
+                        dugnadStatus={dugnad.status}
                     />
                 </TabsContent>
                 <TabsContent value="kart">
@@ -64,7 +65,7 @@ const DugnadTabs = async ({ dugnad, isOwner }: any) => {
                 </TabsContent>
                 <TabsContent value="chat">
                     {(activeRequest && activeRequest.status === "ACCEPTED" || isOwner) ? (
-                        <GroupChat userId={currentUser?.id} dugnadId={dugnad.id} fetchDugnadMessages={fetchDugnadMessages} />
+                        <GroupChat userId={currentUser?.id} dugnadId={dugnad.id} dugnadStatus={dugnad.status} fetchDugnadMessages={fetchDugnadMessages} />
                     ) : (
                         <div className="h-[300px] flex items-center justify-center w-full text-center">
                             <p>Du har ikke tilgang til denne gruppechatten</p>

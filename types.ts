@@ -1,3 +1,5 @@
+import { Thread, ThreadMessages } from "@prisma/client";
+
 export type Category = {
   id: number;
   name: string;
@@ -49,4 +51,9 @@ export interface IncomingMessage {
   message: string;
   ownerId: string;
   dugnadId: number;
+}
+
+export interface ThreadProps {
+  thread: Thread;
+  msgs: ThreadMessages[] | null;
 }

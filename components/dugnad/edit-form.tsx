@@ -43,7 +43,7 @@ import {
 } from "@/components/ui/alert-dialog"
 
 
-const EditForm = ({ categories, dugnad, handleDelete }: any) => {
+const EditForm = ({ categories, dugnad }: any) => {
   const [selectedCategories, setSelectedCategories] = useState(dugnad.categories.map((category: { id: number, name: string }) => category.name))
   const [imageChanged, setImageChanged] = useState(false);
 
@@ -262,29 +262,10 @@ const EditForm = ({ categories, dugnad, handleDelete }: any) => {
                 </div>
                 <div className="gap-2 flex justify-between my-10 rounded-md bg-gray-200 p-4">
                   <div className="w-1/2 ml-6 flex items-center">
-                    <Link href={`/dugnad/${dugnad.id}`}><button>← Gå tilbake</button></Link>
+                    <Link href={`/dugnad/${dugnad.id}`}><button className="flex items-center gap-2"><div className="rotate-180">➜</div>Gå tilbake</button></Link>
                   </div>
                   <div className="gap-2 flex justify-end w-full rounded-md bg-gray-200">
 
-                    <AlertDialog>
-                      <AlertDialogTrigger asChild>
-                        <button className="p-2 justify-center disabled:opacity-75 items-center bg-red-800 disabled:hover:bg-red-800 text-white w-full md:w-1/4 font-medium rounded-md hover:bg-red-900 flex gap-2">Slett dugnad</button>
-                      </AlertDialogTrigger>
-                      <AlertDialogContent className="bg-white">
-                        <AlertDialogHeader>
-                          <AlertDialogTitle>Er du sikker?</AlertDialogTitle>
-                          <AlertDialogDescription>
-                            Denne handlingen kan ikke angres. Sletting av dugnaden vil fjerne all tilknyttet informasjon og data permanent.
-                          </AlertDialogDescription>
-                        </AlertDialogHeader>
-                        <AlertDialogFooter>
-                          <AlertDialogCancel>Avbryt</AlertDialogCancel>
-                          <AlertDialogAction asChild>
-                            <button onClick={() => handleDelete()} className="p-2 justify-center items-center bg-red-800 text-white font-medium rounded-md hover:bg-red-900">Slett</button>
-                          </AlertDialogAction>
-                        </AlertDialogFooter>
-                      </AlertDialogContent>
-                    </AlertDialog>
                     <Button
                       type="submit"
                       disabled={form.formState.isSubmitting}

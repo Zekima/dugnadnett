@@ -16,7 +16,7 @@ const UtforskContainer = async ({
   const dugnads = await getFilteredDugnads(query, currentPage, sort, categories);
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 lg:grid-cols-3">
+    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 lg:grid-cols-2">
       {dugnads?.map((dugnad) => (
         //@ts-ignore
         <UtforskCard key={dugnad.id} dugnad={dugnad} />

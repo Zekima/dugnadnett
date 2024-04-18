@@ -42,5 +42,17 @@ export const {
     },
     session: { strategy: "jwt"},
     adapter: PrismaAdapter(db),
+    cookies: {
+      pkceCodeVerifier: {
+        name: "next-auth.pkce.code_verifier",
+        options: {
+          httpOnly: true,
+          sameSite: "none",
+          path: "/",
+          secure: true,
+        },
+      },
+    },
+
     ...authConfig,
 })

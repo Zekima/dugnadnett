@@ -136,3 +136,8 @@ button {
   background: #444846;
   border-radius: 10px;
 }
+
+.faqText a {
+  color: blue;
+  text-decoration: underline;
+}

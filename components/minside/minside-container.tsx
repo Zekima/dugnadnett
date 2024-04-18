@@ -1,39 +1,61 @@
 import React from "react";
 import { User } from "@/types";
 import {
+  getCompletedDugnads,
   getUserOwnesDugnads,
   getUserParticpatesInDugnads,
 } from "@/actions/dugnadActions/getDugnads";
 import { getCurrentUser } from "@/lib/auth";
 import UtforskCard from "../utforsk/utforsk-card";
+import Pagination from "@/components/pagination";
+import MinSideHolder from "./minside-holder";
+import { Separator } from "../ui/separator";
 
 const MinsideContainer = async () => {
-  const ownesDugnads = await getUserOwnesDugnads();
-  const partDugnads = await getUserParticpatesInDugnads();
   const user = await getCurrentUser();
+  const ownedDugnads = await getUserOwnesDugnads();
+  const activeDugnads = await getUserParticpatesInDugnads();
+  const completedDugnads = await getCompletedDugnads();
+
   return (
-    <div className="flex flex-col w-full">
-      <h1 className="text-3xl font-bold mb-3 text-center">{user?.name} :</h1>
-      <div className="flex flex-row">
+    <div className="flex flex-col w-full mt-8">
+      <h1 className="text-2xl font-bold mb-6">
+        {" "}
+        Velkommen tilbake {user?.name}!
+      </h1>
+      <div className="flex gap-3 flex-row">
         <div className="flex flex-col w-1/3">
-          <h2 className="text-2xl font-bold mb-3 sm:pt-[100px] pt-[10px]">
-            mine:
+          <h2 className="text-xl mb-3">
+            Aktive dugnader
+            <Separator />
           </h2>
-          <div className="grid grid-cols-1">
-            {ownesDugnads.map((dugnad) => (
-              <UtforskCard dugnad={dugnad} key={dugnad.id} />
-            ))}
-          </div>
+          {ownedDugnads.length == 0 ? (
+            <p className="text-gray-600 text-sm">
+              Du deltar for øyeblikket ikke i noen dugnader
+            </p>
+          ) : (
+            <MinSideHolder dugnads={activeDugnads} />
+          )}
         </div>
         <div className="flex flex-col w-1/3">
-          <h2 className="text-2xl font-bold mb-3 sm:pt-[100px] pt-[10px]">
-            deltar i:
+          <h2 className="text-xl mb-3">
+            Mine dugnader
+            <Separator />
           </h2>
-          <div className="grid grid-cols-1 gap-1">
-            {partDugnads.map((dugnad) => (
-              <UtforskCard dugnad={dugnad} key={dugnad.id} />
-            ))}
-          </div>
+          {ownedDugnads.length == 0 ? (
+            <p className="text-gray-600 text-sm">
+              Start en ny dugnad for å se den her
+            </p>
+          ) : (
+            <MinSideHolder dugnads={ownedDugnads} />
+          )}
+        </div>
+        <div className="flex flex-col w-1/3">
+          <h2 className="text-xl mb-3">
+            Ferdige dugnader
+            <Separator />
+          </h2>
+          <MinSideHolder dugnads={completedDugnads} />
         </div>
       </div>
     </div>

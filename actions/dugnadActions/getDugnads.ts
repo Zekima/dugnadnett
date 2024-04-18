@@ -3,72 +3,93 @@ import { redirect } from "next/navigation";
 import { off } from "process";
 import { getCurrentUser } from "@/lib/auth";
 
-/*export const getDugnads = async () => {
+export const getUserOwnesDugnads = async () => {
+  const user = await getCurrentUser();
   return db.dugnad.findMany({
+    where: {
+      ownerId: user?.id,
+      status: "ACTIVE"
+    },
+
     include: {
       categories: true,
+      location: true,
     },
   });
-};*/ // Old function not used anymore 
+};
 
-export const getUserOwnesDugnads = async () => {
-    const user = await getCurrentUser();
-    return db.dugnad.findMany({
-        where: {
-            ownerId: user?.id
+
+export const getCompletedDugnads = async () => {
+  const user = await getCurrentUser();
+  return db.dugnad.findMany({
+    where: {
+      OR: [
+        {
+          participants: {
+            some: {
+              userId: user?.id,
+              status: "ACCEPTED"
+            }
+          }
         },
-
-        include: {
-          categories: true,
-          location: true,
+        {
+          ownerId: user?.id
         }
-    }
-    )
-}
+      ],
+      status: "COMPLETED"
+    },
+
+    include: {
+      categories: true,
+      participants: true,
+      location: true,
+    },
+  });
+};
+
+
 
 export const getUserParticpatesInDugnads = async () => {
   const user = await getCurrentUser();
   return db.dugnad.findMany({
-      where: {
-          participants: {some: {userId: user?.id, status: 'ACCEPTED'} }
-      },
+    where: {
+      participants: { some: { userId: user?.id, status: "ACCEPTED" } },
+      status: "ACTIVE"
+    },
 
-      include: {
-        categories: true,
-        participants: true,
-        location: true,
-      }
-  }
-  )
-}
+    include: {
+      categories: true,
+      participants: true,
+      location: true,
+    },
+  });
+};
 
 export const getDugnadParticipants = async (dugnadId: number) => {
-    try {
-      const participations = await db.participation.findMany({
-        where: {
-          dugnadId: dugnadId,
-          status: 'ACCEPTED'
-        },
-        include: {
-          user: true 
-        }
-      });
-      
-      const users = participations.map(participation => participation.user);
+  try {
+    const participations = await db.participation.findMany({
+      where: {
+        dugnadId: dugnadId,
+        status: "ACCEPTED",
+      },
+      include: {
+        user: true,
+      },
+    });
 
-      return users;
-    } catch (e) {
-      console.error("Kunne ikke hente ut deltakere for denne dugnaden:", e)
-    }
-}
+    const users = participations.map((participation) => participation.user);
 
+    return users;
+  } catch (e) {
+    console.error("Kunne ikke hente ut deltakere for denne dugnaden:", e);
+  }
+};
 
+const ITEMS_PER_PAGE = 8;
 
-const ITEMS_PER_PAGE = 9;
+//todo: area filter
 
-//todo: area filter 
-
-function generateFilters(query: string, categories: string[]){
+function generateFilters(query: string, categories: string[]) {
   let filters = {
     title: {
       contains: query,
@@ -77,7 +98,7 @@ function generateFilters(query: string, categories: string[]){
   };
 
   if (categories.length > 0) {
-    const categoryFilters = categories.map(category => ({
+    const categoryFilters = categories.map((category) => ({
       categories: {
         some: {
           name: {
@@ -88,7 +109,7 @@ function generateFilters(query: string, categories: string[]){
     }));
 
     //@ts-ignore
-    filters['AND'] = categoryFilters;
+    filters["AND"] = categoryFilters;
   }
 
   return filters;
@@ -111,13 +132,13 @@ export const getFilteredDugnads = async (
   try {
     return db.dugnad.findMany({
       //@ts-ignore
-      where: filters,
+      where: { ...filters, status: "ACTIVE" },
       skip: offset,
       take: ITEMS_PER_PAGE,
       include: {
         categories: true,
       },
-      orderBy: {      
+      orderBy: {
         //@ts-ignore
         createdAt: sortBy[sort] || "desc",
       },
@@ -133,7 +154,7 @@ export async function getDugnadsPages(query: string, categories: string[]) {
   try {
     const count = await db.dugnad.count({
       //@ts-ignore
-      where: whereComputed,
+      where: {...whereComputed, status: "ACTIVE"},
     });
 
     return Math.ceil(count / ITEMS_PER_PAGE);
@@ -142,12 +163,11 @@ export async function getDugnadsPages(query: string, categories: string[]) {
   }
 }
 
-
 export async function getDugnadById(dugnadId: string) {
   try {
     const dugnad = await db.dugnad.findFirst({
       where: {
-        id: parseInt(dugnadId)
+        id: parseInt(dugnadId),
       },
       include: {
         categories: true,
@@ -155,23 +175,22 @@ export async function getDugnadById(dugnadId: string) {
       },
     });
     return dugnad;
-  } catch(error) {
-    console.error("Kunne ikke finne dugnad:", error)
+  } catch (error) {
+    console.error("Kunne ikke finne dugnad:", error);
   }
-  redirect(`/utforsk`)
+  redirect(`/utforsk`);
 }
 
 export async function getOwnerByDugnadId(ownerId: string) {
   try {
     const dugnadOwner = await db.user.findFirst({
       where: {
-        id: ownerId
+        id: ownerId,
       },
-      
     });
     return dugnadOwner;
-  } catch(error) {
-    console.error("Kunne ikke finne eier av dugnad:", error)
+  } catch (error) {
+    console.error("Kunne ikke finne eier av dugnad:", error);
   }
-  redirect(`/utforsk`)
+  redirect(`/utforsk`);
 }

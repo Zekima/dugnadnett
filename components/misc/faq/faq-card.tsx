@@ -1,25 +1,32 @@
 "use client";
 import React, { useState } from "react";
 import { Faq } from "@/types";
+import FaqText from "./faqText";
+import MarkdownIt from "markdown-it";
 const FaqCard = ({ faq }: { faq?: Faq }) => {
   const [extend, setExtend] = useState(false);
+  if (!faq) return;
 
   function handleExtend() {
     setExtend(!extend);
   }
-
-  if (!faq) return;
-
+  
   return (
-    <div className="flex-basis-0.5 flex-column flex-gap-5 place-items-center justify-center">
-      <div className="flex-gap-10 flex flex-row ">
-        <h2 className="text-lg font-bold">{faq.title}</h2>
-        <button className="" onClick={handleExtend}>
-          {" "}
-          {!extend ? "⋁" : "⋀"}{" "}
-        </button>
+    <div className="m-auto max-w-[1280px] flex-row py-10 ">
+      <div className="flex flex-row text-center">
+        <div className="m-auto max-w-[1280px] py-10 text-left">
+          <h2 className="text-center text-lg font-bold">{faq.title}</h2>
+        </div>
+        <div className="min-w-100 grid grid-cols-3 gap-4">
+          <button className="bg-green-200" onClick={handleExtend}>
+            {" "}
+            {!extend ? "⋁" : "⋀"}
+          </button>
+        </div>
       </div>
-      {extend && <p className="mb-2 text-lg"> {faq.text} </p>}
+      <div className="m-auto max-w-[1280px] py-10 text-left">
+        {extend && <FaqText strs={faq?.text} />}
+      </div>
     </div>
   );
 };
