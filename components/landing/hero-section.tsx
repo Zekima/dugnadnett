@@ -13,12 +13,16 @@ const HeroSection = () => {
           Oppdag og delta i lokale dugnader enkelt og effektivt.
         </h2>
         <div className="flex gap-2 m-auto justify-center pt-10 pb-[30px]">
-        <Link href="/utforsk"><button className="px-4 py-3 bg-green-500 font-medium rounded-md text-white hover:bg-green-600">
-            Utforsk Dugnader →
-          </button></Link>
-          <Link href="/auth/register"><button className="px-4 outline-offset-[-2px] py-3 outline outline-2 font-semibold outline-green-500 rounded-md text-green-500 hover:bg-green-100 hover:text-green-900">
-            Registrer Deg for å Delta
-          </button></Link>
+          <Link href="/utforsk">
+            <button className="px-4 py-3 bg-green-500 font-medium rounded-md text-white hover:bg-green-600">
+              Utforsk Dugnader ➜
+            </button>
+          </Link>
+          <Link href="/auth/register">
+            <button className="px-4 outline-offset-[-2px] py-3 outline outline-2 font-semibold outline-green-500 rounded-md text-green-500 hover:bg-green-100 hover:text-green-900">
+              Registrer Deg for å Delta
+            </button>
+          </Link>
         </div>
       </div>
       <Image
@@ -29,8 +33,6 @@ const HeroSection = () => {
         className="py-8"
         priority
       />
-
-
     </div>
   );
 };

@@ -14,7 +14,7 @@ const UtforskCard = ({ dugnad }: { dugnad?: Dugnad }) => {
   return (
     <Link href={`/dugnad/${dugnad.id}`}>
       <div className="border-2 border-gray-300 rounded-md cursor-pointer hover:shadow-md">
-        <div className="h-40 relative select-none">
+        <div className="h-48 relative select-none">
           {dugnad && dugnad.image ? (
             // eslint-disable-next-line
             <img

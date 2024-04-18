@@ -25,6 +25,8 @@ const ClientPagination = ({
 
   const allPages = generatePagination(currentPage, totalPages);
 
+  if (Number(allPages) == 1 || 0) return;
+
   return (
     <>
       <div className="inline-flex w-full items-center justify-center my-10">

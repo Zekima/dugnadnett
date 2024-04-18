@@ -40,21 +40,24 @@ enum DugStatus {
 }
 
 model User {
-  id             String          @id @default(cuid())
-  name           String?
-  email          String?         @unique
-  emailVerified  DateTime?
-  image          String?
-  password       String?
-  accounts       Account[]
-  reviews        Review[]
-  participations Participation[]
-  dugnads        Dugnad[]        @relation("UserDugnad")
-  following      User[]          @relation("UserFollows")
-  followers      User[]          @relation("UserFollows")
-  threadsMsg ThreadMessages[]
-  dugMessages    DugMessages[]
-  createdAt      DateTime        @default(now())
+  id               String           @id @default(cuid())
+  name             String?
+  email            String?          @unique
+  emailVerified    DateTime?
+  image            String?
+  password         String?
+  accounts         Account[]
+  reviews          Review[]
+  participations   Participation[]
+  dugnads          Dugnad[]         @relation("UserDugnad")
+  following        User[]           @relation("UserFollows")
+  followers        User[]           @relation("UserFollows")
+  sentMessages     DirectMessage[]  @relation("sentMessages")
+  receivedMessages DirectMessage[]  @relation("receivedMessages")
+  conversations    Conversation[] 
+  threadsMsg       ThreadMessages[]
+  dugMessages      DugMessages[]
+  createdAt        DateTime         @default(now())
 }
 
 model DugMessages {
@@ -66,6 +69,25 @@ model DugMessages {
 
   owner  User   @relation(fields: [ownerId], references: [id])
   dugnad Dugnad @relation(fields: [dugnadId], references: [id], onDelete: Cascade)
+}
+
+model Conversation {
+  id       Int             @id @default(autoincrement())
+  users    User[]
+  messages DirectMessage[]
+}
+
+model DirectMessage {
+  id             Int      @id @default(autoincrement())
+  content        String
+  senderId       String
+  receiverId     String
+  conversationId Int
+  sentAt         DateTime @default(now())
+
+  sender         User         @relation("sentMessages", fields: [senderId], references: [id])
+  receiver       User         @relation("receivedMessages", fields: [receiverId], references: [id])
+  conversation   Conversation @relation(fields: [conversationId], references: [id])
 }
 
 model Dugnad {
@@ -81,7 +103,7 @@ model Dugnad {
   categories   Category[]
   reviews      Review[]
   dugMessages  DugMessages[]
-  dugThreads Thread []
+  dugThreads   Thread[]
   locationId   Int             @unique
 
   location Location @relation(fields: [locationId], references: [id])
@@ -89,22 +111,22 @@ model Dugnad {
 }
 
 model Thread {
-  id Int @id @default(autoincrement())
-  title String
-  desc String
-  dugnadId Int
+  id         Int              @id @default(autoincrement())
+  title      String
+  desc       String
+  dugnadId   Int
   threadMsgs ThreadMessages[]
 
   dugnad Dugnad @relation(fields: [dugnadId], references: [id])
 }
 
 model ThreadMessages {
-  id Int @id @default(autoincrement())
-  text String
-  userId String
+  id       Int    @id @default(autoincrement())
+  text     String
+  userId   String
   threadId Int
 
-  user User @relation(fields:[userId], references: [id] )
+  user   User   @relation(fields: [userId], references: [id])
   thread Thread @relation(fields: [threadId], references: [id])
 }
 

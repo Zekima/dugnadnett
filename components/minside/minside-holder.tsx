@@ -19,7 +19,7 @@ const MinSideHolder = ({ dugnads }: { dugnads: any }) => {
   if (!dugnads || dugnads.length == 0) return;
   return (
     <div>
-      <div className="grid grid-cols-1">
+      <div className="grid grid-cols-1 gap-y-3">
         {currentDugnads.map((dugnad: any) => (
           <UtforskCard dugnad={dugnad} key={dugnad.id} />
         ))}

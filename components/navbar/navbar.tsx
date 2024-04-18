@@ -131,7 +131,7 @@ const NavBar = () => {
                     }}
                   >
                     <MdLogout className="mr-2 h-4 w-4" />
-                    Logout
+                    Logg ut
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>

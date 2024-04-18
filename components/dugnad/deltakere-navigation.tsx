@@ -12,6 +12,7 @@ const DeltakereNavigation = ({
   participants,
   joinRequests,
   declineRequest,
+  dugnadStatus,
   acceptRequest,
 }: any) => {
   const [activeTab, setActiveTab] = useState("participants");
@@ -53,7 +54,7 @@ const DeltakereNavigation = ({
           >
             Deltakere ({participants.length})
           </p>
-          {isOwner && (
+          {isOwner && dugnadStatus == "ACTIVE" && (
             <p
               onClick={() => setActiveTab("requests")}
               className={`hover:text-black cursor-pointer ${
