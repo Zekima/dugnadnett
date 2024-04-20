@@ -18,13 +18,13 @@ const MinsideContainer = async () => {
   const completedDugnads = await getCompletedDugnads();
 
   return (
-    <div className="flex flex-col w-full mt-8">
+    <div className="flex flex-col w-full mt-8 mx-5 xl:mx-0">
       <h1 className="text-2xl font-bold mb-6">
         {" "}
         Velkommen tilbake {user?.name}!
       </h1>
-      <div className="flex gap-3 flex-row">
-        <div className="flex flex-col w-1/3">
+      <div className="flex gap-3 flex-col xl:flex-row ">
+        <div className="flex flex-col w-full">
           <h2 className="text-xl mb-3">
             Aktive dugnader
             <Separator />
@@ -37,20 +37,20 @@ const MinsideContainer = async () => {
             <MinSideHolder dugnads={activeDugnads} />
           )}
         </div>
-        <div className="flex flex-col w-1/3">
+        <div className="flex flex-col w-full">
           <h2 className="text-xl mb-3">
             Mine dugnader
             <Separator />
           </h2>
           {ownedDugnads.length == 0 ? (
-            <p className="text-gray-600 text-sm">
+            <p className="text-gray-600 text-sm ">
               Start en ny dugnad for å se den her
             </p>
           ) : (
             <MinSideHolder dugnads={ownedDugnads} />
           )}
         </div>
-        <div className="flex flex-col w-1/3">
+        <div className="flex flex-col w-full">
           <h2 className="text-xl mb-3">
             Ferdige dugnader
             <Separator />
