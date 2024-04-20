@@ -17,11 +17,12 @@ import {
 
 import React, { useState, useEffect } from "react";
 
-import { redirect, usePathname} from "next/navigation";
+import { redirect, usePathname } from "next/navigation";
 
 import { IoIosArrowDropdownCircle } from "react-icons/io";
 import { useRouter } from "next/navigation";
 import { X } from "lucide-react";
+import DirectMessage from "../direct-message";
 
 const NavBar = () => {
   const pathname = usePathname();
@@ -31,6 +32,8 @@ const NavBar = () => {
 
   const userProfileHref = `/profil/${user?.id}`;
 
+  const [showChat, setShowChat] = useState(false);
+
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   useEffect(() => {
@@ -39,13 +42,16 @@ const NavBar = () => {
 
   useEffect(() => {
     if (isMenuOpen) {
-      document.body.classList.add("overflow-y-hidden")
+      document.body.classList.add("overflow-y-hidden");
     } else {
-      document.body.classList.remove("overflow-y-hidden")
+      document.body.classList.remove("overflow-y-hidden");
     }
   }, [isMenuOpen]);
 
   return (
+    <>
+    {showChat && <DirectMessage setShowChat={setShowChat} showChat={showChat}/>}
+    
     <div className="border-b-2 border-gray">
       <div className="flex py-5 h-16 px-5 2xl:px-0 justify-between m-auto max-w-[1280px] items-center">
         {user ? (
@@ -93,8 +99,8 @@ const NavBar = () => {
               </Link>
             </div>
             <div className="flex items-center gap-3.5">
-              <MessageCircle size={26} />
-
+                <MessageCircle size={26} onClick={() => setShowChat(!showChat)}/>
+                
               <Bell size={26} />
 
               <DropdownMenu>
@@ -126,8 +132,8 @@ const NavBar = () => {
                   <DropdownMenuItem
                     className="cursor-pointer hover:bg-gray-200"
                     onClick={async () => {
-                      await signOut({redirect: false});
-                      router.push('/auth/login')
+                      await signOut({ redirect: false });
+                      router.push("/auth/login");
                     }}
                   >
                     <MdLogout className="mr-2 h-4 w-4" />
@@ -147,6 +153,7 @@ const NavBar = () => {
         )}
       </div>
     </div>
+    </>
   );
 };
 

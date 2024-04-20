@@ -47,13 +47,48 @@ io.on("connection", (socket) => {
           dugnadId: dugnadId,
         },
       });
-  
+
       io.to(`dugnad_${dugnadId}`).emit("receiveMessage", {
         ...savedMessage,
         username,
       });
     } catch (error) {
       console.error("Kunne ikke lagre melding til database:", error);
+    }
+  });
+  socket.on("startOrJoinConversation", async ({ senderId, receiverId }) => {
+    try {
+      let conversation = await db.conversation.findFirst({
+        where: {
+          users: {
+            some: {
+              OR: [{ id: senderId }, { id: receiverId }],
+            },
+          },
+        },
+        include: {
+          users: true,
+        },
+      });
+
+      if (!conversation) {
+        conversation = await db.conversation.create({
+          data: {
+            users: {
+              connect: [{ id: senderId }, { id: receiverId }],
+            },
+          },
+          include: {
+            users: true
+          }
+        });
+      }
+
+      socket.join(`conversation_${conversation.id}`);
+
+      socket.emit("conversationStarted", { conversationId: conversation.id });
+    } catch (error) {
+      console.error("Kunne ikke starte eller joine:", error);
     }
   });
 });
