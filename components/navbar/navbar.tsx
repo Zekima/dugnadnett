@@ -30,7 +30,6 @@ const NavBar = () => {
   const user = session.data?.user;
 
   const userProfileHref = `/profil/${user?.id}`;
-  const userInstillingereHref = `/innstillinger/${user?.id}`;
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -117,7 +116,7 @@ const NavBar = () => {
                       Profil
                     </DropdownMenuItem>
                   </Link>
-                  <Link href={userInstillingereHref} passHref legacyBehavior>
+                  <Link href="/innstillinger">
                     <DropdownMenuItem className="cursor-pointer hover:bg-gray-200">
                       <MdSettings className="mr-2 h-4 w-4" />
                       Innstillinger
