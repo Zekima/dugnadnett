@@ -76,8 +76,12 @@ export default async function ProfilePage({
               {userFollowers.length > 0 ? (
                 <div className="flex flex-wrap">
                   {userFollowers.map((follower) => (
-                    <div title={follower.name as string} className="mr-1 mb-1" key={follower.id}>
-                        <UserImage user={follower} size={40} />
+                    <div
+                      title={follower.name as string}
+                      className="mr-1 mb-1"
+                      key={follower.id}
+                    >
+                      <UserImage user={follower} size={40} />
                     </div>
                   ))}
                 </div>
@@ -91,8 +95,19 @@ export default async function ProfilePage({
         </div>
 
         <div className="flex flex-col gap-3 w-full">
-          <div className="h-[750px] p-4 bg-gray-200 rounded-md">
-            <p>TBD</p>
+          <div className="h-[750px] rounded-md w-full">
+            <div className="flex gap-6 w-full">
+              <div className="w-full">
+              <h1 className="font-medium text-lg">Biografi</h1>
+              <Separator className="my-3 w-full"/>
+              <p className="text-gray-400 text-sm">Ingen bio.</p>
+              </div>
+              <div className="w-full">
+              <h1 className="font-medium text-lg">Ferdigheter</h1>
+              <Separator className="my-3"/>
+              <p className="text-gray-400 text-sm">Ingen ferdigheter satt opp.</p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
