@@ -5,6 +5,7 @@ import uploadImage from "@/actions/uploadImage";
 import { db } from "@/lib/db";
 import { getCurrentUser } from "@/lib/auth";
 import { redirect } from "next/navigation";
+import { revalidatePath } from "next/cache";
 
 export const createDugnad = async (formData: FormData) => {
   const categoriesString = formData.get("categories");
@@ -96,5 +97,6 @@ export const createDugnad = async (formData: FormData) => {
     return { error: "Error ved oppretting av dugnad" };
   }
 
+  revalidatePath(`/dugnad/${dugnad.id}`)
   return redirect(`/dugnad/${dugnad.id}`);
 };
