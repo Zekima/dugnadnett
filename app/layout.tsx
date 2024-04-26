@@ -7,6 +7,8 @@ import { SessionProvider } from "next-auth/react";
 import { auth } from "@/auth";
 import "./globals.css";
 import GDPRBanner from "@/components/gdpr/gdpr-banner";
+import { AppProgressBar as ProgressBar } from 'next-nprogress-bar';
+
 
 const inter = Inter({ subsets: ["latin"], weight: ["400", "700", "800", "500"] });
 
@@ -14,6 +16,8 @@ export const metadata: Metadata = {
   title: "DugnadNett",
   description: "Oppdag og delta i lokale dugnader enkelt",
 };
+
+
 
 export default async function RootLayout({
   children,
