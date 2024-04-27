@@ -10,11 +10,9 @@ import {
 import { FollowButton } from "@/components/profile/follow-button";
 import { Separator } from "@/components/ui/separator";
 import UserImage from "@/components/user-image";
-import UtforskCard from "@/components/utforsk/utforsk-card";
 import { getUserById } from "@/data/user";
 import { getCurrentUser } from "@/lib/auth";
 import { Calendar, User } from "lucide-react";
-import Link from "next/link";
 
 export default async function ProfilePage({
   params,
@@ -26,8 +24,6 @@ export default async function ProfilePage({
   if (!currentUser?.id || !userProfile?.id) return;
 
   const isCurrentUser = userProfile.id === currentUser.id;
-  const ownedDugnads = (await getUserOwnesDugnads()).slice(2, 5);
-  const particpantDugnads = await getUserParticpatesInDugnads();
   const userFollowers = await getFollowers({ userId: userProfile.id });
 
   const isFollowing = await checkIfUserFollows({
@@ -98,14 +94,28 @@ export default async function ProfilePage({
           <div className="h-[750px] rounded-md w-full">
             <div className="flex gap-6 w-full">
               <div className="w-full">
-              <h1 className="font-medium text-lg">Biografi</h1>
-              <Separator className="my-3 w-full"/>
-              <p className="text-gray-400 text-sm">Ingen bio.</p>
+                <h1 className="font-medium text-lg">Biografi</h1>
+                <Separator className="my-3 w-full" />
+                {userProfile.bio ? (
+                  <p className="text-gray-600 text-sm">{userProfile.bio} </p>
+                ) : (
+                  <p className="text-gray-600 text-sm">Ingen bio.</p>
+                )}
               </div>
               <div className="w-full">
-              <h1 className="font-medium text-lg">Ferdigheter</h1>
-              <Separator className="my-3"/>
-              <p className="text-gray-400 text-sm">Ingen ferdigheter satt opp.</p>
+                <h1 className="font-medium text-lg">Ferdigheter</h1>
+                <Separator className="my-3" />
+                {userProfile.skills.length != 0 ? (
+                  <div className="flex gap-1">
+                  {userProfile.skills.map((skill, i) => (
+                    <div key={i} className="text-gray-700 text-sm px-2 py-1 rounded-full bg-gray-200">{skill}</div>
+                  ))}
+                  </div>
+                ) : (
+                  <p className="text-gray-600 text-sm">
+                    Ingen ferdigheter satt opp.
+                  </p>
+                )}
               </div>
             </div>
           </div>

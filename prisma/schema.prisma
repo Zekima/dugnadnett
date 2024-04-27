@@ -46,6 +46,8 @@ model User {
   emailVerified    DateTime?
   image            String?
   password         String?
+  bio              String?
+  skills           String[]
   accounts         Account[]
   reviews          Review[]
   participations   Participation[]
@@ -54,7 +56,7 @@ model User {
   followers        User[]           @relation("UserFollows")
   sentMessages     DirectMessage[]  @relation("sentMessages")
   receivedMessages DirectMessage[]  @relation("receivedMessages")
-  conversations    Conversation[] 
+  conversations    Conversation[]
   threadsMsg       ThreadMessages[]
   dugMessages      DugMessages[]
   createdAt        DateTime         @default(now())
@@ -85,9 +87,9 @@ model DirectMessage {
   conversationId Int
   sentAt         DateTime @default(now())
 
-  sender         User         @relation("sentMessages", fields: [senderId], references: [id])
-  receiver       User         @relation("receivedMessages", fields: [receiverId], references: [id])
-  conversation   Conversation @relation(fields: [conversationId], references: [id])
+  sender       User         @relation("sentMessages", fields: [senderId], references: [id])
+  receiver     User         @relation("receivedMessages", fields: [receiverId], references: [id])
+  conversation Conversation @relation(fields: [conversationId], references: [id])
 }
 
 model Dugnad {

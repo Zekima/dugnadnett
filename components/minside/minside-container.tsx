@@ -19,8 +19,7 @@ const MinsideContainer = async () => {
 
   return (
     <div className="flex flex-col w-full mt-8 mx-5 xl:mx-0">
-      <h1 className="text-2xl font-bold mb-6">
-        {" "}
+      <h1 className="text-2xl font-bold mb-6">      
         Velkommen tilbake {user?.name}!
       </h1>
       <div className="flex gap-3 flex-col xl:flex-row ">
@@ -29,7 +28,7 @@ const MinsideContainer = async () => {
             Aktive dugnader
             <Separator />
           </h2>
-          {ownedDugnads.length == 0 ? (
+          {activeDugnads.length == 0 ? (
             <p className="text-gray-600 text-sm">
               Du deltar for øyeblikket ikke i noen dugnader
             </p>

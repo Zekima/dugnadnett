@@ -1,9 +1,16 @@
+import Bio from "@/components/innstillinger/bio";
+import Skills from "@/components/innstillinger/skills"
 import { Separator } from "@/components/ui/separator";
 import UserImage from "@/components/user-image";
+import { getUserById } from "@/data/user";
 import { getCurrentUser } from "@/lib/auth";
+import { useState } from "react";
 
 const SettingsPage = async () => {
   const user = await getCurrentUser();
+  if (!user?.id) return;
+  const userInfo = await getUserById(user.id);
+
   return (
     <div>
       <h1 className="text-xl font-medium">Min profil</h1>
@@ -20,21 +27,8 @@ const SettingsPage = async () => {
             </button>
           </div>
         </div>
-        <div>
-          <h2 className="font-medium mb-2">Biografi</h2>
-          <textarea placeholder="Skriv en biografi" className="border border-gray-400 rounded-md p-2 resize-none w-[500px] h-[150px]"></textarea>
-        </div>
-        <div>
-          <h2 className="font-medium mb-2">Ferdigheter</h2>
-          <div className="flex gap-1">
-          <input placeholder="Organisering" className="border rounded-md p-2 border-gray-400 w-[500px]"/>
-          <button className="px-4 py-2 text-white h-full bg-green-700 rounded-md border hover:bg-green-800 border-green-700">+</button>
-          </div>
-        </div>
-
-        <button className="bg-black text-white py-2 px-4 w-[190px] rounded-md hover:bg-gray-800">
-            Lagre endringer
-        </button>
+        <Bio initalBio={userInfo?.bio as string}/>
+        <Skills initalSkills={userInfo?.skills as string[]}/>
       </div>
     </div>
   );
