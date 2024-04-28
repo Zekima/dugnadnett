@@ -22,9 +22,12 @@ import { Button } from "../ui/button";
 import { CardWrapper } from "./card-wrapper";
 import { FormError } from "../form-error";
 import { register } from "@/actions/register";
+import { useToast } from "../ui/use-toast";
+import { Check, X } from "lucide-react";
 
 const RegisterForm = () => {
-  const [error, setError] = useState("")
+  const [error, setError] = useState("");
+  const {toast} = useToast();
 
   const [isPending, startTransition] = useTransition();
   const form = useForm<z.infer<typeof RegisterSchema>>({
@@ -37,15 +40,18 @@ const RegisterForm = () => {
   });
 
   const onSubmit = (values: z.infer<typeof RegisterSchema>) => {
-    setError("")
+    setError("");
 
     startTransition(() => {
-      register(values)
-        .then((data) => {
-          if (data?.error) {
-            setError(data.error)
-          }
-        })
+      register(values).then((data) => {
+        if (data?.error) {
+          setError(data.error);
+          toast({
+            description: <div className='flex gap-3 items-center text-white font-medium'><X size={16} />{data.error}</div>,
+            className: "bg-red-800 text-white border-none"
+          })
+        }
+      });
     });
   };
 
@@ -59,7 +65,7 @@ const RegisterForm = () => {
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
           <div className="space-y-2">
-          <FormField
+            <FormField
               control={form.control}
               name="name"
               render={({ field }) => (
