@@ -11,8 +11,8 @@ const ShareButton = () => {
     const handleShare = () => {
         navigator.clipboard.writeText(`${window.location}`)
         toast({
-            className: "bg-green-800 border-none",
-            description: <div className='flex gap-3 items-center text-white font-bold'><Check /> <p>Linken er kopiert til utklippstavlen</p></div>,
+            className: "bg-green-800 border-none font-thin",
+            description: <div className='flex gap-3 items-center text-white font-medium'><Check /> <p>Linken er kopiert til utklippstavlen</p></div>,
             duration: 1500,
         })
     }

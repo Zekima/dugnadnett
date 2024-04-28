@@ -1,15 +1,21 @@
+import { updateBio } from "@/actions/settingsActions/profileSettings";
 import Bio from "@/components/innstillinger/bio";
 import Skills from "@/components/innstillinger/skills"
 import { Separator } from "@/components/ui/separator";
 import UserImage from "@/components/user-image";
 import { getUserById } from "@/data/user";
 import { getCurrentUser } from "@/lib/auth";
-import { useState } from "react";
 
 const SettingsPage = async () => {
   const user = await getCurrentUser();
   if (!user?.id) return;
   const userInfo = await getUserById(user.id);
+
+  const handleBioUpdate = async (content: string) => {
+    "use server"
+    const status = await updateBio(content)
+    return status;
+  }
 
   return (
     <div>
@@ -27,7 +33,7 @@ const SettingsPage = async () => {
             </button>
           </div>
         </div>
-        <Bio initalBio={userInfo?.bio as string}/>
+        <Bio updateBio={handleBioUpdate} initalBio={userInfo?.bio as string}/>
         <Skills initalSkills={userInfo?.skills as string[]}/>
       </div>
     </div>
