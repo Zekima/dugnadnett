@@ -25,13 +25,6 @@ const SettingsLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <div className="min-h-screen max-w-[1280px] m-auto">
       <div className="mt-10">
-        <div>
-          <h1 className="text-2xl font-bold">Innstillinger</h1>
-          <h2>
-            Administrer kontoinnstillingene dine.
-          </h2>
-        </div>
-        <Separator className="my-4" />
         <div className="flex gap-10">
           <SideBarNav settingsNavItems={settingsNavItems}/>
           <div className="mt-2 w-full">

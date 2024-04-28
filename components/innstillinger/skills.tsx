@@ -26,7 +26,7 @@ const Skills = ({ initalSkills }: { initalSkills: string[] }) => {
       <h2 className="font-medium">Ferdigheter</h2>
       <div className="flex gap-1">
         <input
-          placeholder="Organisering"
+          placeholder="Legg til ferdigheter"
           onChange={handleSkillChange}
           className="border rounded-md p-2 border-gray-400 w-[500px]"
         />

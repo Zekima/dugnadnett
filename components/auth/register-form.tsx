@@ -46,10 +46,10 @@ const RegisterForm = () => {
       register(values).then((data) => {
         if (data?.error) {
           setError(data.error);
-          toast({
-            description: <div className='flex gap-3 items-center text-white font-medium'><X size={16} />{data.error}</div>,
-            className: "bg-red-800 text-white border-none"
-          })
+          // toast({
+          //   description: <div className='flex gap-3 items-center text-white font-medium'><X size={16} />{data.error}</div>,
+          //   className: "bg-red-800 text-white border-none"
+          // })
         }
       });
     });
@@ -120,6 +120,7 @@ const RegisterForm = () => {
               )}
             />
           </div>
+          <FormError message={error} />
           <Button type="submit" disabled={isPending} className="w-full mt-2">
             Registrer
           </Button>
