@@ -1,4 +1,4 @@
-import { updateBio } from "@/actions/settingsActions/profileSettings";
+import { updateBio, updateSkills } from "@/actions/settingsActions/profileSettings";
 import Bio from "@/components/innstillinger/bio";
 import Skills from "@/components/innstillinger/skills"
 import { Separator } from "@/components/ui/separator";
@@ -16,6 +16,11 @@ const SettingsPage = async () => {
     "use server"
     const status = await updateBio(content)
     return status;
+  }
+
+  const handleSkillsUpdate = async (listOfSkills: string[]) => {
+    "use server"
+    await updateSkills(listOfSkills)
   }
 
   return (
@@ -38,7 +43,7 @@ const SettingsPage = async () => {
           </div>
         </div>
         <Bio updateBio={handleBioUpdate} initalBio={userInfo?.bio as string}/>
-        <Skills initalSkills={userInfo?.skills as string[]}/>
+        <Skills updateSkills={handleSkillsUpdate} initalSkills={userInfo?.skills as string[]}/>
       </div>
     </div>
   );

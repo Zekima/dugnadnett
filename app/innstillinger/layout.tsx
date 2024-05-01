@@ -23,11 +23,11 @@ const SettingsLayout = ({ children }: { children: React.ReactNode }) => {
   ];
 
   return (
-    <div className="min-h-screen max-w-[1280px] m-auto">
+    <div className="min-h-screen pb-[200px] max-w-[1280px] m-auto">
       <div className="mt-10">
-        <div className="flex gap-10">
+        <div className="flex sm:flex-row flex-col gap-10">
           <SideBarNav settingsNavItems={settingsNavItems}/>
-          <div className="mt-2 w-full">
+          <div className="mt-2 sm:px-0 px-3 w-full">
           {children}
           </div>
         </div>

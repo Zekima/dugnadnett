@@ -32,7 +32,7 @@ const Bio = ({ initalBio, updateBio }: { initalBio: string, updateBio: (content:
         placeholder="Skriv en biografi"
         value={bio}
         onChange={handleBioChange}
-        className="border border-gray-400 rounded-md p-2 resize-none w-[500px] h-[150px]"
+        className="border border-gray-400 rounded-md p-2 resize-none max-w-[500px] h-[150px]"
       ></textarea>
 
       <button onClick={() => handleUpdate()} className="bg-green-700 text-white py-2 px-4 w-[100px] rounded-md hover:bg-green-800">

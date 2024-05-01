@@ -106,7 +106,7 @@ export default async function ProfilePage({
                 <h1 className="font-medium text-lg">Ferdigheter</h1>
                 <Separator className="my-3" />
                 {userProfile.skills.length != 0 ? (
-                  <div className="flex gap-1">
+                  <div className="flex flex-wrap gap-1.5">
                   {userProfile.skills.map((skill, i) => (
                     <div key={i} className="text-gray-700 text-sm px-2 py-1 rounded-full bg-gray-200">{skill}</div>
                   ))}

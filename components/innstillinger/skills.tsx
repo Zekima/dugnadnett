@@ -1,9 +1,9 @@
 "use client";
 
 import { X } from "lucide-react";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
-const Skills = ({ initalSkills }: { initalSkills: string[] }) => {
+const Skills = ({ initalSkills, updateSkills }: { initalSkills: string[], updateSkills: (listOfSkills: string[]) => void }) => {
   const [skills, setSkills] = useState(initalSkills);
   const [skillsText, setSkillsText] = useState("");
 
@@ -11,14 +11,19 @@ const Skills = ({ initalSkills }: { initalSkills: string[] }) => {
     setSkillsText(event.target.value);
   };
 
-  const addSkill = (skill: string) => {
-    setSkills((prevSkills) => [...prevSkills, skill]);
+  const addSkill = (skillName: string) => {
+    if (!skillName.trim()) return
+
+    const newSkills = [...skills, skillName];
+    setSkills(newSkills);
+    setSkillsText("")
+    updateSkills(newSkills);
   };
 
   const removeSkill = (skillName: string) => {
-    setSkills((prevSkills) =>
-      prevSkills.filter((skill) => skill !== skillName)
-    );
+    const newSkills = skills.filter((skill) => skill !== skillName);
+    setSkills(newSkills);
+    updateSkills(newSkills);
   };
 
   return (
@@ -28,22 +33,24 @@ const Skills = ({ initalSkills }: { initalSkills: string[] }) => {
         <input
           placeholder="Legg til ferdigheter"
           onChange={handleSkillChange}
-          className="border rounded-md p-2 border-gray-400 w-[500px]"
+          value={skillsText}
+          onKeyDown={(e) => e.key === 'Enter' && addSkill(skillsText)}
+          className="border h-10 rounded-md p-2 border-gray-400 w-[500px]"
         />
         <button
           onClick={() => addSkill(skillsText)}
-          className="px-4 py-2 text-white h-full bg-green-700 rounded-md border hover:bg-green-800 border-green-700"
+          className="px-4 h-10 py-2 text-white h-full bg-green-700 rounded-md hover:bg-green-800 border-green-700"
         >
           +
         </button>
       </div>
-      <div className="flex gap-1 max-w-[500px] flex-wrap">
+      <div className="flex gap-1.5 max-w-[500px] flex-wrap">
         {skills.map((skill, index) => (
           <div
             key={index}
             className="text-gray-700 text-sm px-2 py-1 rounded-full bg-gray-200 flex items-center"
           >
-            <button className="te" onClick={() => removeSkill(skill)}>
+            <button onClick={() => removeSkill(skill)}>
               <X size={16} />
             </button>
 
