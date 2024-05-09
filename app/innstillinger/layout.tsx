@@ -12,14 +12,6 @@ const SettingsLayout = ({ children }: { children: React.ReactNode }) => {
       name: "Bruker",
       path: "/innstillinger/bruker",
     },
-    {
-      name: "Sikkerhet",
-      path: "/innstillinger/sikkerhet",
-    },
-    {
-      name: "Notifikasjoner",
-      path: "/innstillinger/notifikasjoner",
-    },
   ];
 
   return (

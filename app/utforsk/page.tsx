@@ -32,10 +32,17 @@ const UtforskPage = async ({
   return (
     <div className="h-full m-auto max-w-[1280px] flex flex-col sm:flex-row px-5 xl:px-0">
       <div className="w-full min-h-screen hidden lg:block mt-5 mr-8 lg:w-1/4">
+
         <Filtrer categories={categories} categoryParams={categoryParams} />
       </div>
       <div className="w-full h-full min-h-screen mt-5 lg:w-3/4">
         <div className="flex justify-between mb-3 gap-2 items-center">
+          <div className="w-[250px] h-fit hidden lg:block">
+
+            <Pagination totalPages={totalPages as number} />
+          </div>
+
+
           <div className="visible lg:invisible">
             <MobileFiltrer categories={categories} categoryParams={categoryParams} />
           </div>
@@ -56,8 +63,9 @@ const UtforskPage = async ({
             categories={categoryParams}
           />
         </Suspense>
-        {/* @ts-ignore */}
-        <Pagination totalPages={totalPages} />
+        <div className="visible lg:invisible mt-8 mb-12">
+        <Pagination totalPages={totalPages as number} />
+          </div>
       </div>
     </div>
   );

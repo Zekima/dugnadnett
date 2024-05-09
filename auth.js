@@ -24,6 +24,12 @@ export const {
         if (token.name && session.user) {
           session.user.name = token.name
         }
+
+        if (session?.user) {
+          session.user.id = token.sub;
+          session.user.name = token.name || '';
+          session.user.image = token.image || '';
+        }
         
         return session;
       },
@@ -36,6 +42,7 @@ export const {
         if (!existingUser) return token;
 
         token.name = existingUser.name;
+        token.image = existingUser.image;
 
         return token;
       },

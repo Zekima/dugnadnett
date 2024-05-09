@@ -85,7 +85,7 @@ export const getDugnadParticipants = async (dugnadId: number) => {
   }
 };
 
-const ITEMS_PER_PAGE = 8;
+const ITEMS_PER_PAGE = 6;
 
 //todo: area filter
 

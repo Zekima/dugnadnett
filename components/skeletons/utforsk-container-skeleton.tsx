@@ -4,7 +4,7 @@ const UtforskContainerSkeleton = () => {
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 lg:grid-cols-2">
-      {Array.from({ length: 8 }, (_, index) => (
+      {Array.from({ length: 6 }, (_, index) => (
         <div key={index} className="border-2 border-gray-300 rounded-md cursor-pointer animate-pulse">
           <div className="h-48 bg-gray-200 rounded-t-sm"></div>
           <div className="p-2 space-y-2">

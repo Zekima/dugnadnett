@@ -29,7 +29,7 @@ const Footer = () => {
         <div>
           <h1 className="font-bold text-md mb-4">Nyhetsbrev</h1>
           <div className="flex flex-col">
-            <input type="text" className="p-1 rounded-md" placeholder="Epostadresse" />
+            <input type="text" className="p-2 rounded-md h-10 text-sm" placeholder="Epostadresse" />
             <button className="p-1 bg-green-900 rounded-lg mt-2 text-white">Meld inn</button>
           </div>
         </div>

@@ -2,14 +2,16 @@ import Image from "next/image";
 import Link from "next/link";
 
 export default function UserImage({ user, size }: any) {
+
   if (user.image) {
     return (
       <Link href={`/profil/${user.id}`}>
-        <Image
+        <img
           src={user.image}
           width={size}
           height={size}
           alt="Brukerbilde"
+          style={{ width: `${size}px`, height: `${size}px` }}
           className="rounded-full border border-gray-400"
         />
       </Link>

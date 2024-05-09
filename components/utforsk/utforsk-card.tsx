@@ -1,7 +1,4 @@
 import React from "react";
-import { z } from "zod";
-import { DugnadSchema } from "@/schemas";
-import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
 
@@ -20,7 +17,7 @@ const UtforskCard = ({ dugnad }: { dugnad?: Dugnad }) => {
             <img
               className="rounded-t-sm"
               src={`${dugnad.image}-500.webp`}
-              loading="lazy"
+              loading="eager"
               alt=""
               style={{ objectFit: "cover", width: "100%", height: "100%" }}
             />
