@@ -28,6 +28,7 @@ export const {
         if (session?.user) {
           session.user.id = token.sub;
           session.user.name = token.name || '';
+          session.user.email = token.email || '';
           session.user.image = token.image || '';
         }
         
@@ -43,6 +44,7 @@ export const {
 
         token.name = existingUser.name;
         token.image = existingUser.image;
+        token.email = existingUser.email;
 
         return token;
       },
