@@ -1,4 +1,5 @@
 'use server'
+import * as z from "zod";
 
 
 import { getUserByEmail, getUserById } from "@/data/user";
@@ -33,7 +34,6 @@ export async function updateEmail(content: string) {
     }
 }
 
-const SECRET = process.env.AUTH_SECRET as string;
 
 export async function updatePassword(oldPassword: string, newPassword: string) {
     const user = await getCurrentUser();
@@ -41,28 +41,27 @@ export async function updatePassword(oldPassword: string, newPassword: string) {
     const userInfo = await getUserById(user.id)
     if (!userInfo?.password) return;
 
-    bcrypt.compare(oldPassword, userInfo.password, async function (err, res) {
-        if (err) {
-            console.log("feil")
-            return { message: "Gammelt passord er ikke korrekt!", success: false }
+    if (!oldPassword || !newPassword) return {message: "Tomt felt!", success: false}
+
+    if (newPassword.length < 6) {
+        return { message: "Det nye passordet må være minst 6 tegn.", success: false };
+    }
+
+    try {
+        const isValid = await bcrypt.compare(oldPassword, userInfo.password);
+        if (!isValid) {
+            return { message: "Gammelt passord er ikke korrekt!", success: false };
         }
-        if (res) {
-            const hashedPassword = await bcrypt.hash(newPassword, 10)
 
-            try {
-                await db.user.update({
-                    where: { id: user.id },
-                    data: {
-                        password: hashedPassword
-                    }
-                })
+        const hashedPassword = await bcrypt.hash(newPassword, 10);
+        await db.user.update({
+            where: { id: user.id },
+            data: { password: hashedPassword }
+        });
 
-                return { message: "Passord oppdatert", success: true }
-            } catch (e) {
-                console.log("Kunne ikke oppdatere epost: ", e)
-            }
-        }
-    })
-
-
+        return { message: "Passord oppdatert", success: true };
+    } catch (error) {
+        console.error("Error ved oppdatering av passord: ", error);
+        return { message: "Kunne ikke oppdatere passord.", success: false };
+    }
 }

@@ -3,7 +3,7 @@ import ChangePassword from "@/components/innstillinger/change-password";
 import { Separator } from "@/components/ui/separator";
 import UserImage from "@/components/user-image";
 import { getCurrentUser } from "@/lib/auth";
-import { updateEmail } from "@/actions/settingsActions/userSettings";
+import { updateEmail, updatePassword } from "@/actions/settingsActions/userSettings";
 
 
 const UserSettingsPage = async () => {
@@ -16,15 +16,19 @@ const UserSettingsPage = async () => {
     return status;
   }
 
+  const handlePasswordUpdate = async (oldPass: string, newPass: string) => {
+    "use server"
+    const status = await updatePassword(oldPass, newPass)
+    return status;
+  }
+
   return (
     <div>
       <h1 className="text-2xl font-medium">Brukerinnstillinger</h1>
       <Separator className="my-6" />
       <div className="flex flex-col gap-6">
         <ChangeEmail updateEmail={handleEmailUpdate} user={user}/>
-        <ChangePassword/>
-
-
+        <ChangePassword updatePassword={handlePasswordUpdate}/>
       </div>
     </div>
   );
