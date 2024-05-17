@@ -1,6 +1,8 @@
 import { getCurrentUser } from "@/lib/auth";
 import { db } from "@/lib/db";
+import { Router } from "lucide-react";
 import { revalidatePath } from "next/cache";
+import { redirect } from "next/dist/server/api-utils";
 
 export async function requestToJoin(dugnadId: number) {
   const user = await getCurrentUser();
@@ -33,11 +35,13 @@ export async function removeJoinRequest(participationId: number) {
       }
     });
     revalidatePath(`/dugnad/${dugnadId}`);
-    return;
   } catch (error) {
     console.error("Kunne ikke slette deltakelsen:", error);
     return;
   }
+  
+
+
 }
 
 export async function getJoinRequest(dugnadId: number) {

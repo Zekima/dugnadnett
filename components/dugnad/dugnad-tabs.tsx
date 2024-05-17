@@ -1,7 +1,7 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { getDugnadParticipants } from "@/actions/dugnadActions/getDugnads";
 import React, { useState } from "react";
-import { getJoinRequests } from "@/actions/dugnadActions/joinRequests";
+import { getJoinRequests, removeJoinRequest } from "@/actions/dugnadActions/joinRequests";
 import { getJoinRequest } from "@/actions/dugnadActions/joinRequests";
 import DeltakereNavigation from '@/components/dugnad/deltakere-navigation'
 import { declineJoinRequest, acceptJoinRequest } from "@/actions/dugnadActions/joinRequests";
@@ -23,6 +23,11 @@ const DugnadTabs = async ({ dugnad, isOwner }: any) => {
     const declineRequest = async (requestId: number) => {
         "use server"
         await declineJoinRequest(requestId)
+    }
+
+    const removeRequest = async (requestId: number) => {
+        'use server'
+        await removeJoinRequest(requestId)
     }
 
     const acceptRequest = async (requestId: number) => {
@@ -56,6 +61,7 @@ const DugnadTabs = async ({ dugnad, isOwner }: any) => {
                         joinRequests={joinRequests}
                         declineRequest={declineRequest}
                         acceptRequest={acceptRequest}
+                        removeRequest={removeRequest}
                         dugnadStatus={dugnad.status}
                     />
                 </TabsContent>

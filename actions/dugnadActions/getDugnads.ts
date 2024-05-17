@@ -77,7 +77,10 @@ export const getDugnadParticipants = async (dugnadId: number) => {
       },
     });
 
-    const users = participations.map((participation) => participation.user);
+    const users = participations.map(participant => ({
+      ...participant.user,
+      participationId: participant.id,
+    }));
 
     return users;
   } catch (e) {
