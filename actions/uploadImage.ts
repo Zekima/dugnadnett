@@ -25,15 +25,18 @@ async function uploadImage(data: FormData) {
   const targetWidths = [500, 900];
   const fileName = `${randomstring.generate(8)}`;
 
-  const uploadPromises = targetWidths.map(async (width) => {
-    try {
-      await b2.authorize();
-    } catch (e) {
-      console.error("Kunne ikke autentisere backblaze")
-    }
-    
-    const uploadUrlResponse = await b2.getUploadUrl({ bucketId });
+  try {
+    await b2.authorize();
+  } catch (error) {
+    console.error("Kunne ikke autentisere backblaze", error);
+    throw new Error("Autentisering til Backblaze feilet");
+  }
 
+  const uploadUrlResponse = await b2.getUploadUrl({ bucketId });
+  const uploadUrl = uploadUrlResponse.data.uploadUrl;
+  const authorizationToken = uploadUrlResponse.data.authorizationToken;
+
+  const uploadPromises = targetWidths.map(async (width) => {
     const resizedBuffer = await sharp(buffer)
       .resize(width, null, {
         withoutEnlargement: true,
@@ -43,15 +46,16 @@ async function uploadImage(data: FormData) {
 
     try {
       await b2.uploadFile({
-        uploadUrl: uploadUrlResponse.data.uploadUrl,
-        uploadAuthToken: uploadUrlResponse.data.authorizationToken,
+        uploadUrl,
+        uploadAuthToken: authorizationToken,
         fileName: `${fileName}-${width}.webp`,
         data: resizedBuffer,
         mime: "image/webp",
       });
+      console.log(`Vellykket opplasting av ${width}px bilde`);
     } catch (error) {
       console.error(`Feil ved opplasting av bilde ${width}px:`, error);
-      throw error;
+      throw new Error(`Opplasting feilet for ${width}px bilde`);
     }
   });
 
@@ -60,6 +64,7 @@ async function uploadImage(data: FormData) {
     return `https://dugnadnett.s3.eu-central-003.backblazeb2.com/${fileName}`;
   } catch (error) {
     console.error("Error ved opplasting av bilde:", error);
+    throw new Error("Opplasting av bilde feilet");
   }
 }
 
