@@ -63,7 +63,7 @@ async function uploadImage(data: FormData) {
   }
 }
 
-async function retryUpload(uploadUrl: string, authorizationToken: string, fileName: string, data: Buffer, mime: string, b2: any, bucketId: string, retries = 10, delay = 500) {
+async function retryUpload(uploadUrl: string, authorizationToken: string, fileName: string, data: Buffer, mime: string, b2: any, bucketId: string, retries = 15, delay = 1000) {
   for (let attempt = 1; attempt <= retries; attempt++) {
     try {
       await b2.uploadFile({
@@ -83,7 +83,6 @@ async function retryUpload(uploadUrl: string, authorizationToken: string, fileNa
 
       console.warn(`Forsøk ${attempt} feilet for ${fileName}. Prøver igjen om ${delay}ms...`);
       await new Promise(resolve => setTimeout(resolve, delay));
-      delay *= 1.5;
 
       try {
         await b2.authorize();
