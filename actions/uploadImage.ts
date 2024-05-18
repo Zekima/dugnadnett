@@ -32,11 +32,11 @@ async function uploadImage(data: FormData) {
     throw new Error("Autentisering til Backblaze feilet");
   }
 
-  const uploadUrlResponse = await b2.getUploadUrl({ bucketId });
-  const uploadUrl = uploadUrlResponse.data.uploadUrl;
-  const authorizationToken = uploadUrlResponse.data.authorizationToken;
-
   const uploadPromises = targetWidths.map(async (width) => {
+    const uploadUrlResponse = await b2.getUploadUrl({ bucketId });
+    const uploadUrl = uploadUrlResponse.data.uploadUrl;
+    const authorizationToken = uploadUrlResponse.data.authorizationToken;
+
     const resizedBuffer = await sharp(buffer)
       .resize(width, null, {
         withoutEnlargement: true,
