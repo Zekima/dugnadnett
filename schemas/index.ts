@@ -37,28 +37,19 @@ export const DugnadSchema = z.object({
   info: z.string().min(1, "Informasjon er påkrevd"),
   categories: z.array(z.string()).min(1, "Velg minst en kategori").max(3, "Maks 3 kategorier"),
   image: z.unknown().optional().refine((files: any) => {
-    let allowedImage = true;
-    
     if (!files || !Array.isArray(files)) {
       return true;
     }
 
     for (let i = 0; i < files.length; i++) {
-      if (
-        // @ts-expect-error
-        files.item(i)!.size > MAX_FILE_SIZE ||
-        // @ts-expect-error
-        !ACCEPTED_IMAGE_TYPES.includes(files.item(i)!.type)
-      ) {
-        allowedImage = false
-        break
+      const file = files[i];
+      if (file.size > MAX_FILE_SIZE || !ACCEPTED_IMAGE_TYPES.includes(file.type)) {
+        return false;
       }
-      
     }
 
-    return allowedImage;
-  }, "Maks filstørelse er 4.5MB"),
-
+    return true;
+  }, "Maks filstørrelse er 4.5MB og tillatte filtyper er jpeg, jpg, avif, png og webp"),
 });
 
 export const DugnadSchema2 = z.object({

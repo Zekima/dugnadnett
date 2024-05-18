@@ -151,10 +151,10 @@ const EditForm = ({ categories, dugnad }: any) => {
                               ) : (
                                 <div className="absolute right-50 text-center justify-center text-sm text-gray-600">
                                   <div className="font-medium text-gray-600">
-                                    Dra eller slipp bilde her
+                                    Klikk for å bla i filutforsker
                                   </div>
                                   <div className="text-xs text-gray-500 mt-2">
-                                    (eller klikk for å bla i filutforsker)
+                                    kun jpg, jpeg, avif, png og webp tillat
                                   </div>
                                 </div>
                               )}

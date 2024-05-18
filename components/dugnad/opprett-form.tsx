@@ -36,7 +36,7 @@ const OprettForm = ({ categories }: any) => {
     defaultValues: {
       title: "",
       location: {
-        
+
       },
       date: "",
       info: "",
@@ -95,7 +95,7 @@ const OprettForm = ({ categories }: any) => {
   return (
     <div className="">
       <div className="min-h-screen flex justify-center relative">
-        <div className="max-w-[1280px]"> 
+        <div className="max-w-[1280px]">
           <div className="p-6 mt-3 rounded-md">
             <h1 className="text-2xl font-semibold">Opprett en ny Dugnad</h1>
             <Separator className="my-4" />
@@ -122,10 +122,10 @@ const OprettForm = ({ categories }: any) => {
                               ) : (
                                 <div className="absolute right-50 text-center justify-center text-sm text-gray-600">
                                   <div className="font-medium text-gray-600">
-                                    Dra eller slipp bilde her
+                                    Klikk for å bla i filutforsker
                                   </div>
                                   <div className="text-xs text-gray-500 mt-2">
-                                    (eller klikk for å bla i filutforsker)
+                                    kun jpg, jpeg, avif, png og webp tillat
                                   </div>
                                 </div>
                               )}

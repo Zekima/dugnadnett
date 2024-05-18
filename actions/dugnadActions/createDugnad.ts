@@ -98,5 +98,5 @@ export const createDugnad = async (formData: FormData) => {
   }
 
   revalidatePath(`/dugnad/${dugnad.id}`)
-  return redirect(`/dugnad/${dugnad.id}`);
+  redirect(`/dugnad/${dugnad.id}`);
 };
