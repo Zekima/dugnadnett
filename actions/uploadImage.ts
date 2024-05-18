@@ -33,9 +33,16 @@ async function uploadImage(data: FormData) {
   }
 
   const uploadPromises = targetWidths.map(async (width) => {
-    const uploadUrlResponse = await b2.getUploadUrl({ bucketId });
-    const uploadUrl = uploadUrlResponse.data.uploadUrl;
-    const authorizationToken = uploadUrlResponse.data.authorizationToken;
+    let uploadUrlResponse, uploadUrl, authorizationToken;
+
+    try {
+      uploadUrlResponse = await b2.getUploadUrl({ bucketId });
+      uploadUrl = uploadUrlResponse.data.uploadUrl;
+      authorizationToken = uploadUrlResponse.data.authorizationToken;
+    } catch (error) {
+      console.error("Kunne ikke hente opplastings-URL fra backblaze", error);
+      throw new Error("Feil ved henting av opplastings-URL");
+    }
 
     const resizedBuffer = await sharp(buffer)
       .resize(width, null, {
@@ -44,19 +51,7 @@ async function uploadImage(data: FormData) {
       .webp({ quality: 95 })
       .toBuffer();
 
-    try {
-      await b2.uploadFile({
-        uploadUrl,
-        uploadAuthToken: authorizationToken,
-        fileName: `${fileName}-${width}.webp`,
-        data: resizedBuffer,
-        mime: "image/webp",
-      });
-      console.log(`Vellykket opplasting av ${width}px bilde`);
-    } catch (error) {
-      console.error(`Feil ved opplasting av bilde ${width}px:`, error);
-      throw new Error(`Opplasting feilet for ${width}px bilde`);
-    }
+    return retryUpload(uploadUrl, authorizationToken, `${fileName}-${width}.webp`, resizedBuffer, "image/webp", b2, bucketId);
   });
 
   try {
@@ -65,6 +60,41 @@ async function uploadImage(data: FormData) {
   } catch (error) {
     console.error("Error ved opplasting av bilde:", error);
     throw new Error("Opplasting av bilde feilet");
+  }
+}
+
+async function retryUpload(uploadUrl: string, authorizationToken: string, fileName: string, data: Buffer, mime: string, b2: any, bucketId: string, retries = 3, delay = 1000) {
+  for (let attempt = 1; attempt <= retries; attempt++) {
+    try {
+      await b2.uploadFile({
+        uploadUrl,
+        uploadAuthToken: authorizationToken,
+        fileName,
+        data,
+        mime,
+      });
+      console.log(`Velykket opplasting: ${fileName}`);
+      return;
+    } catch (error: any) {
+      if (attempt === retries || error.response?.status !== 503) {
+        console.error(`Feil ved opplasting av bilde ${fileName}:`, error);
+        throw new Error(`Opplasting feilet for ${fileName}`);
+      }
+
+      console.warn(`Forsøk ${attempt} feilet for ${fileName}. Prøver igjen om ${delay}ms...`);
+      await new Promise(resolve => setTimeout(resolve, delay));
+      delay *= 2;
+
+      try {
+        await b2.authorize();
+        const uploadUrlResponse = await b2.getUploadUrl({ bucketId });
+        uploadUrl = uploadUrlResponse.data.uploadUrl;
+        authorizationToken = uploadUrlResponse.data.authorizationToken;
+      } catch (reauthError) {
+        console.error("Kunne ikke reautentisere og hente ny opplastings URL", reauthError);
+        throw new Error("Feil ved reautentisering");
+      }
+    }
   }
 }
 
